@@ -6,4 +6,4 @@ export { default as ConsultaPageContent } from "./ConsultaPageContent";
 export { default as ConsultaSidebar } from "./ConsultaSidebar";
 export { default as ConsultasList } from "./ConsultasList";
 export { default as CreditoPageContent } from "./CreditoPageContent";
-export { default as CreditReport } from "./CreditReport";
+export { default as CreditReport } from "./report/CreditReport";
