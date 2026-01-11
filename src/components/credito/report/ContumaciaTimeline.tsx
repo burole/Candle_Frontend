@@ -11,7 +11,7 @@ import {
 import { CorporateCreditReportResponse } from "@/types/credit";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatDate } from "./formatters";
+import { formatDate } from "@/lib/formatters";
 
 export default function ContumaciaTimeline({ contumacia }: { contumacia: CorporateCreditReportResponse["contumacia"] }) {
   return (

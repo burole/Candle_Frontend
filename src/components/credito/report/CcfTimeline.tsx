@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { PremiumCreditReportResponse } from "@/types/credit";
 import { Card } from "@/components/ui/card";
-import { formatDate } from "./formatters";
+import { formatDate } from "@/lib/formatters";
 
 export default function CcfTimeline({ ccf }: { ccf: PremiumCreditReportResponse["ccf"] }) {
   return (

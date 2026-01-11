@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { CreditReportResponse } from "@/types/credit";
 import { Card } from "@/components/ui/card";
-import { formatCpf, formatCnpj, formatDate } from "./formatters";
+import { formatCpf, formatCnpj, formatDate } from "@/lib/formatters";
 
 interface PersonalInfoCardProps {
   person: CreditReportResponse["person"];

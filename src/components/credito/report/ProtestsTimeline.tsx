@@ -9,7 +9,7 @@ import {
 import { CreditReportResponse } from "@/types/credit";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency, formatDate } from "./formatters";
+import { formatCurrency, formatDate } from "@/lib/formatters";
 
 export default function ProtestsTimeline({ protests }: { protests: CreditReportResponse["protests"] }) {
   return (

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Clock, Search } from "lucide-react";
 import { CreditReportResponse } from "@/types/credit";
 import { Card } from "@/components/ui/card";
-import { formatDate } from "./formatters";
+import { formatDate } from "@/lib/formatters";
 
 interface QueriesHistoryProps {
   queries: CreditReportResponse["queries"];

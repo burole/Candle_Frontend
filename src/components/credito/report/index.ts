@@ -17,4 +17,4 @@ export { default as QueriesHistory } from "./QueriesHistory";
 export { default as AnimatedNumber } from "./AnimatedNumber";
 
 // Export formatters
-export * from "./formatters";
+export * from "@/lib/formatters";
