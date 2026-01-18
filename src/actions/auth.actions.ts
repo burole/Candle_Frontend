@@ -1,0 +1,279 @@
+'use server';
+
+/**
+ * Auth Server Actions
+ * Actions para autenticação que rodam no servidor
+ */
+
+import { cookies } from 'next/headers';
+import { AuthService } from '@/services/auth.service';
+import type { LoginDTO, RegisterDTO, AuthResponse, User } from '@/types';
+
+// Estado de retorno genérico
+export interface ActionState<T = unknown> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  fieldErrors?: Record<string, string[]>;
+}
+
+/**
+ * Action de Login
+ */
+export async function loginAction(
+  credentials: LoginDTO
+): Promise<ActionState<AuthResponse>> {
+  try {
+    const data = await AuthService.login(credentials);
+
+    // Set httpOnly cookies for authentication
+    const cookieStore = await cookies();
+    cookieStore.set('accessToken', data.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 15, // 15 minutes (access token expiry)
+    });
+    cookieStore.set('refreshToken', data.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days (refresh token expiry)
+    });
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error: any) {
+    console.error('Login error:', error);
+
+    // Erros de validação do backend
+    if (error.response?.status === 400 && error.response?.data?.errors) {
+      return {
+        success: false,
+        fieldErrors: error.response.data.errors,
+      };
+    }
+
+    // Credenciais inválidas
+    if (error.response?.status === 401) {
+      return {
+        success: false,
+        error: 'Email ou senha incorretos',
+      };
+    }
+
+    // Erro genérico
+    return {
+      success: false,
+      error: error.response?.data?.message || 'Erro ao fazer login. Tente novamente.',
+    };
+  }
+}
+
+/**
+ * Action de Registro
+ */
+export async function registerAction(
+  userData: RegisterDTO
+): Promise<ActionState<AuthResponse>> {
+  try {
+    const data = await AuthService.register(userData);
+
+    // Set httpOnly cookies for authentication
+    const cookieStore = await cookies();
+    cookieStore.set('accessToken', data.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 15, // 15 minutes
+    });
+    cookieStore.set('refreshToken', data.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error: any) {
+    console.error('Register error:', error);
+
+    // Erros de validação do backend
+    if (error.response?.status === 400 && error.response?.data?.errors) {
+      return {
+        success: false,
+        fieldErrors: error.response.data.errors,
+      };
+    }
+
+    // Email já cadastrado
+    if (error.response?.status === 409) {
+      return {
+        success: false,
+        error: 'Este email já está cadastrado',
+      };
+    }
+
+    // Erro genérico
+    return {
+      success: false,
+      error: error.response?.data?.message || 'Erro ao criar conta. Tente novamente.',
+    };
+  }
+}
+
+/**
+ * Action para buscar dados do usuário
+ */
+export async function getMeAction(): Promise<ActionState<User>> {
+  try {
+    const data = await AuthService.getMe();
+    return {
+      success: true,
+      data,
+    };
+  } catch (error: any) {
+    console.error('GetMe error:', error);
+    return {
+      success: false,
+      error: 'Erro ao buscar dados do usuário',
+    };
+  }
+}
+
+/**
+ * Action de Logout
+ */
+export async function logoutAction(): Promise<ActionState<void>> {
+  try {
+    await AuthService.logout();
+
+    // Clear authentication cookies
+    const cookieStore = await cookies();
+    cookieStore.delete('accessToken');
+    cookieStore.delete('refreshToken');
+
+    return {
+      success: true,
+    };
+  } catch (error: any) {
+    console.error('Logout error:', error);
+
+    // Clear cookies even if API call fails
+    const cookieStore = await cookies();
+    cookieStore.delete('accessToken');
+    cookieStore.delete('refreshToken');
+
+    // Mesmo com erro, consideramos logout bem-sucedido no cliente
+    return {
+      success: true,
+    };
+  }
+}
+
+/**
+ * Action para alterar senha
+ */
+export async function changePasswordAction(
+  currentPassword: string,
+  newPassword: string
+): Promise<ActionState<void>> {
+  try {
+    await AuthService.changePassword(currentPassword, newPassword);
+    return {
+      success: true,
+    };
+  } catch (error: any) {
+    console.error('Change password error:', error);
+
+    if (error.response?.status === 401) {
+      return {
+        success: false,
+        error: 'Senha atual incorreta',
+      };
+    }
+
+    return {
+      success: false,
+      error: error.response?.data?.message || 'Erro ao alterar senha',
+    };
+  }
+}
+
+/**
+ * Action para atualizar perfil
+ */
+export async function updateProfileAction(
+  data: Partial<User>
+): Promise<ActionState<User>> {
+  try {
+    const updatedUser = await AuthService.updateProfile(data);
+    return {
+      success: true,
+      data: updatedUser,
+    };
+  } catch (error: any) {
+    console.error('Update profile error:', error);
+
+    if (error.response?.status === 400 && error.response?.data?.errors) {
+      return {
+        success: false,
+        fieldErrors: error.response.data.errors,
+      };
+    }
+
+    return {
+      success: false,
+      error: error.response?.data?.message || 'Erro ao atualizar perfil',
+    };
+  }
+}
+
+/**
+ * Action para refresh de token
+ * Atualiza os tokens e os cookies httpOnly
+ */
+export async function refreshTokenAction(
+  refreshToken: string
+): Promise<ActionState<{ accessToken: string; refreshToken: string }>> {
+  try {
+    const tokens = await AuthService.refreshToken(refreshToken);
+
+    // Update httpOnly cookies
+    const cookieStore = await cookies();
+    cookieStore.set('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 15, // 15 minutes
+    });
+    cookieStore.set('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return {
+      success: true,
+      data: tokens,
+    };
+  } catch (error: any) {
+    console.error('Refresh token error:', error);
+
+    // Clear cookies on refresh failure
+    const cookieStore = await cookies();
+    cookieStore.delete('accessToken');
+    cookieStore.delete('refreshToken');
+
+    return {
+      success: false,
+      error: 'Sessão expirada',
+    };
+  }
+}

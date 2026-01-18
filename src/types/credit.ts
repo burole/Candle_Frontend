@@ -169,3 +169,38 @@ export interface CorporateCreditReportResponse extends CreditReportResponse {
    */
   contumacia: ContumaciaEntry[];
 }
+
+/**
+ * Query History Entry
+ * Represents a query executed by the user
+ */
+export interface QueryHistoryEntry {
+  id: string;
+  userId: string;
+  queryType: string; // e.g., 'CPF_CREDIT', 'PREMIUM_CREDIT', etc.
+  document: string; // CPF or CNPJ queried
+  protocol: string; // Protocol from the report
+  status: CreditStatus;
+  cost: number;
+  createdAt: string;
+  reportData?: CreditReportResponse | PremiumCreditReportResponse | CorporateCreditReportResponse;
+}
+
+/**
+ * Create Query Request
+ */
+export interface CreateQueryRequest {
+  queryType: string;
+  document: string;
+}
+
+/**
+ * Create Query Response
+ */
+export interface CreateQueryResponse {
+  id: string;
+  protocol: string;
+  cost: number;
+  newBalance: number;
+  report: CreditReportResponse | PremiumCreditReportResponse | CorporateCreditReportResponse;
+}

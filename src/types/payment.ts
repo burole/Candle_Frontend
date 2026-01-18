@@ -1,0 +1,45 @@
+/**
+ * Payment Types
+ * Tipos relacionados a pagamentos e transações
+ */
+
+export type BillingType = 'PIX' | 'BOLETO' | 'CREDIT_CARD';
+
+export type PaymentStatus = 'PENDING' | 'CONFIRMED' | 'RECEIVED' | 'OVERDUE' | 'REFUNDED';
+
+export type TransactionType = 'RECHARGE' | 'QUERY' | 'REFUND';
+
+export interface Transaction {
+  id: string;
+  userId: string;
+  type: TransactionType;
+  amount: number;
+  description: string;
+  status: PaymentStatus;
+  createdAt: string;
+  updatedAt: string;
+  billingType?: BillingType;
+}
+
+export interface RechargeRequest {
+  amount: number;
+  billingType: BillingType;
+}
+
+export interface RechargeResponse {
+  id: string;
+  invoiceUrl?: string;
+  invoiceId?: string;
+  pixQrCode?: string;
+  pixCopyPaste?: string;
+  dueDate?: string;
+  status: PaymentStatus;
+  amount: number;
+}
+
+export interface PaymentStatusResponse {
+  id: string;
+  status: PaymentStatus;
+  paidAt?: string;
+  amount: number;
+}

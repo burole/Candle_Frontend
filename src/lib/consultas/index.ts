@@ -10,9 +10,9 @@
 export type { TipoDocumento, Consulta, CategoriaConsulta } from "../consultas";
 export {
   consultasCredito,
-  categoriasConsultas,
+  categorias,
   getConsultaBySlug,
-  getCategoria,
+  getCategoriaBySlug,
 } from "../consultas";
 
 // Export services
