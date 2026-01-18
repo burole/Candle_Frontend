@@ -1,16 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CreditCard, Car, Scale, Building } from "lucide-react";
-import { categorias } from "@/lib/consultas";
-import CategoryCard from "@/components/shared/CategoryCard";
-
-const iconMap: Record<string, React.ElementType> = {
-  CreditCard,
-  Car,
-  Scale,
-  Building,
-};
+import { getOrderedCategories } from "@/constants/query-categories";
+import { CategoryCard } from "@/components/query";
+import { useQueryTypes } from "@/hooks/useQueryTypes";
+import { Loader2 } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -36,9 +31,30 @@ const itemVariants = {
 };
 
 export default function CategoriesSection() {
+  const { groupByCategory, isLoading } = useQueryTypes();
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const loadCategoryCounts = async () => {
+      const grouped = await groupByCategory();
+
+      // Count queries per category
+      const counts: Record<string, number> = {};
+      Object.entries(grouped).forEach(([category, queries]) => {
+        counts[category] = queries.length;
+      });
+
+      setCategoryCounts(counts);
+    };
+
+    loadCategoryCounts();
+  }, []);
+
+  const categories = getOrderedCategories();
+
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="container">
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,41 +62,36 @@ export default function CategoriesSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Escolha o tipo de <span className="text-gradient">consulta</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+            Escolha o tipo de <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">consulta</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Selecione uma categoria para ver todas as opções de consulta
-            disponíveis
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Selecione uma categoria para ver todas as opções de consulta disponíveis
           </p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto"
-        >
-          {categorias.map((categoria) => {
-            const Icon = iconMap[categoria.icone] || CreditCard;
-            const isAvailable = categoria.consultas.length > 0;
-
-            return (
-              <motion.div key={categoria.id} variants={itemVariants}>
+        {isLoading && categoryCounts && Object.keys(categoryCounts).length === 0 ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          </div>
+        ) : (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+          >
+            {categories.map((category) => (
+              <motion.div key={category.slug} variants={itemVariants}>
                 <CategoryCard
-                  slug={categoria.slug}
-                  nome={categoria.nome}
-                  descricao={categoria.descricao}
-                  icon={Icon}
-                  cor={categoria.cor}
-                  consultasCount={categoria.consultas.length}
-                  isAvailable={isAvailable}
+                  category={category}
+                  queryCount={categoryCounts[category.category] || 0}
                 />
               </motion.div>
-            );
-          })}
-        </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );
