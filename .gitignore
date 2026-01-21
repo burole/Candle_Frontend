@@ -96,4 +96,4 @@ sketch
 
 .env
 
-*.md
+.DS_Store

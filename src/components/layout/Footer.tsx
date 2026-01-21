@@ -41,7 +41,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/credito"
+                  href="/consulta"
                   className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
                 >
                   Consultas de Crédito
@@ -49,7 +49,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/credito/avalie-credito-cpf"
+                  href="/consulta/avalie-credito-cpf"
                   className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
                 >
                   Consulta CPF
@@ -57,7 +57,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/credito/credito-total-cenprot-cnpj"
+                  href="/consulta/credito-total-cenprot-cnpj"
                   className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
                 >
                   Consulta CNPJ

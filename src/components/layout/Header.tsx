@@ -38,7 +38,7 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/credito">
+          <Link href="/consulta">
             <motion.div
               className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
               whileHover={{ y: -1 }}
@@ -115,7 +115,7 @@ export function Header() {
       >
         <nav className="container mx-auto px-4 flex flex-col gap-4 py-4">
           <Link
-            href="/credito"
+            href="/consulta"
             className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >

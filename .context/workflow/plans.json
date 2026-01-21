@@ -1,0 +1,13 @@
+{
+  "active": [
+    {
+      "slug": "refactor-credit-to-query",
+      "path": "plans/refactor-credit-to-query.md",
+      "title": "Plan: Refactor Credit to Query Architecture",
+      "linkedAt": "2026-01-21T16:01:54.298Z",
+      "status": "active"
+    }
+  ],
+  "completed": [],
+  "primary": "refactor-credit-to-query"
+}

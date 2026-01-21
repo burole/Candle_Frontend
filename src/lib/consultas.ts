@@ -1,3 +1,5 @@
+import { QueryCategory, type QueryType } from "@/types/query";
+
 export type TipoDocumento = "cpf" | "cnpj" | "ambos";
 
 export interface Consulta {
@@ -152,3 +154,27 @@ export function getConsultaBySlug(slug: string): Consulta | undefined {
 export function getCategoriaBySlug(slug: string): CategoriaConsulta | undefined {
   return categorias.find((c) => c.slug === slug);
 }
+
+// Adapter to convert legacy Consulta to QueryType
+export const queriesMock: QueryType[] = consultasCredito.map((c) => {
+  let category = QueryCategory.CREDIT;
+  if (c.tipo === "cpf") category = QueryCategory.PERSON;
+  if (c.tipo === "cnpj") category = QueryCategory.COMPANY;
+  if (c.tipo === "ambos") category = QueryCategory.CREDIT; // Fallback or CREDIT
+
+  return {
+    id: c.id,
+    code: c.slug, // Mapping slug to code
+    name: c.nome,
+    description: c.descricao,
+    category,
+    price: 19.90, // Mock price
+    cachedPrice: 9.90, // Mock cached price
+    cacheTtlMinutes: 30,
+    isActive: true,
+    providerId: "mock-provider",
+    providerEndpoint: null,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+});

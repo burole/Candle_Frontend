@@ -1,0 +1,1748 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-01-21T14:50:56.463Z",
+  "stack": {
+    "primaryLanguage": "typescript",
+    "languages": [
+      "javascript",
+      "typescript"
+    ],
+    "frameworks": [
+      "nextjs"
+    ],
+    "buildTools": [],
+    "testFrameworks": [],
+    "packageManager": "npm",
+    "isMonorepo": false,
+    "hasDocker": false,
+    "hasCI": false
+  },
+  "structure": {
+    "totalFiles": 175,
+    "topDirectories": [
+      {
+        "name": "app",
+        "fileCount": 16
+      },
+      {
+        "name": "components.json",
+        "fileCount": 1
+      },
+      {
+        "name": "design-system",
+        "fileCount": 4
+      },
+      {
+        "name": "eslint.config.mjs",
+        "fileCount": 1
+      },
+      {
+        "name": "next-env.d.ts",
+        "fileCount": 1
+      },
+      {
+        "name": "next.config.ts",
+        "fileCount": 1
+      },
+      {
+        "name": "package-lock.json",
+        "fileCount": 1
+      },
+      {
+        "name": "package.json",
+        "fileCount": 1
+      },
+      {
+        "name": "postcss.config.js",
+        "fileCount": 1
+      },
+      {
+        "name": "proxy.ts",
+        "fileCount": 1
+      },
+      {
+        "name": "public",
+        "fileCount": 3
+      },
+      {
+        "name": "README.md",
+        "fileCount": 1
+      },
+      {
+        "name": "src",
+        "fileCount": 140
+      },
+      {
+        "name": "tailwind.config.ts",
+        "fileCount": 1
+      },
+      {
+        "name": "tsconfig.json",
+        "fileCount": 1
+      },
+      {
+        "name": "tsconfig.tsbuildinfo",
+        "fileCount": 1
+      }
+    ],
+    "languageDistribution": [
+      {
+        "extension": ".tsx",
+        "count": 103
+      },
+      {
+        "extension": ".ts",
+        "count": 57
+      },
+      {
+        "extension": ".json",
+        "count": 5
+      },
+      {
+        "extension": ".js",
+        "count": 2
+      },
+      {
+        "extension": ".css",
+        "count": 2
+      },
+      {
+        "extension": ".tsbuildinfo",
+        "count": 1
+      },
+      {
+        "extension": ".mjs",
+        "count": 1
+      },
+      {
+        "extension": ".md",
+        "count": 1
+      },
+      {
+        "extension": ".txt",
+        "count": 1
+      },
+      {
+        "extension": ".svg",
+        "count": 1
+      }
+    ]
+  },
+  "architecture": {
+    "layers": [
+      {
+        "name": "Config",
+        "description": "Configuration and constants",
+        "directories": [
+          ".",
+          "src/constants",
+          "design-system"
+        ],
+        "symbolCount": 4,
+        "dependsOn": []
+      },
+      {
+        "name": "Models",
+        "description": "Data structures and domain objects",
+        "directories": [
+          "src/validators"
+        ],
+        "symbolCount": 6,
+        "dependsOn": []
+      },
+      {
+        "name": "Services",
+        "description": "Business logic and orchestration",
+        "directories": [
+          "src/services",
+          "src/lib/consultas/services"
+        ],
+        "symbolCount": 9,
+        "dependsOn": []
+      },
+      {
+        "name": "Utils",
+        "description": "Shared utilities and helpers",
+        "directories": [
+          "src/lib",
+          "src/lib/consultas",
+          "src/components/shared",
+          "src/lib/consultas/strategies",
+          "src/lib/consultas/factories"
+        ],
+        "symbolCount": 18,
+        "dependsOn": []
+      },
+      {
+        "name": "Controllers",
+        "description": "Request handling and routing",
+        "directories": [
+          "src/lib/api"
+        ],
+        "symbolCount": 13,
+        "dependsOn": []
+      },
+      {
+        "name": "Components",
+        "description": "UI components and views",
+        "directories": [
+          "src/components/ui",
+          "src/components/query",
+          "src/components/layout",
+          "src/components/home",
+          "src/components/credito",
+          "src/components/credito/report",
+          "design-system",
+          "app/dashboard",
+          "app/credito",
+          "app/consulta",
+          "app/design-test",
+          "app/(home)",
+          "app/dashboard/historico",
+          "app/dashboard/carteira",
+          "app/credito/[slug]",
+          "src/components/payment",
+          "src/components/credit",
+          "src/components/candle",
+          "app/consulta/[code]",
+          "app/(auth)/register",
+          "app/(auth)/login"
+        ],
+        "symbolCount": 71,
+        "dependsOn": []
+      }
+    ],
+    "patterns": [
+      {
+        "name": "Factory",
+        "confidence": 0.9,
+        "description": "Creates instances of related objects without specifying concrete classes",
+        "occurrences": 1
+      },
+      {
+        "name": "Service Layer",
+        "confidence": 0.85,
+        "description": "Encapsulates business logic in service classes",
+        "occurrences": 7
+      }
+    ],
+    "entryPoints": [
+      "src/types/index.ts",
+      "src/actions/index.ts",
+      "src/lib/consultas/index.ts",
+      "src/components/shared/index.ts",
+      "src/components/query/index.ts",
+      "src/components/layout/index.ts",
+      "src/components/home/index.ts",
+      "src/components/credito/index.ts",
+      "src/lib/consultas/strategies/index.ts",
+      "src/lib/consultas/services/index.ts",
+      "src/lib/consultas/factories/index.ts",
+      "src/components/credito/report/index.ts",
+      "src/components/candle/index.tsx"
+    ]
+  },
+  "symbols": {
+    "classes": [
+      {
+        "name": "ApiError",
+        "kind": "class",
+        "file": "src/lib/api/errors.ts",
+        "line": 10,
+        "exported": true
+      },
+      {
+        "name": "AuthService",
+        "kind": "class",
+        "file": "src/services/auth.service.ts",
+        "line": 14,
+        "exported": true
+      },
+      {
+        "name": "ConsultaStrategyFactory",
+        "kind": "class",
+        "file": "src/lib/consultas/factories/ConsultaStrategyFactory.ts",
+        "line": 19,
+        "exported": true
+      },
+      {
+        "name": "CorporateCreditStrategy",
+        "kind": "class",
+        "file": "src/lib/consultas/strategies/CorporateCreditStrategy.ts",
+        "line": 12,
+        "exported": true
+      },
+      {
+        "name": "CpfCreditStrategy",
+        "kind": "class",
+        "file": "src/lib/consultas/strategies/CpfCreditStrategy.ts",
+        "line": 12,
+        "exported": true
+      },
+      {
+        "name": "CreditService",
+        "kind": "class",
+        "file": "src/services/credit.service.ts",
+        "line": 19,
+        "exported": true
+      },
+      {
+        "name": "FetchHttpClient",
+        "kind": "class",
+        "file": "src/lib/api/client.ts",
+        "line": 38,
+        "exported": true
+      },
+      {
+        "name": "NetworkError",
+        "kind": "class",
+        "file": "src/lib/api/errors.ts",
+        "line": 42,
+        "exported": true
+      },
+      {
+        "name": "NotFoundError",
+        "kind": "class",
+        "file": "src/lib/api/errors.ts",
+        "line": 53,
+        "exported": true
+      },
+      {
+        "name": "PaymentService",
+        "kind": "class",
+        "file": "src/services/payment.service.ts",
+        "line": 14,
+        "exported": true
+      },
+      {
+        "name": "PremiumCreditStrategy",
+        "kind": "class",
+        "file": "src/lib/consultas/strategies/PremiumCreditStrategy.ts",
+        "line": 12,
+        "exported": true
+      },
+      {
+        "name": "QueryExecutionService",
+        "kind": "class",
+        "file": "src/services/query-execution.service.ts",
+        "line": 14,
+        "exported": true
+      },
+      {
+        "name": "QueryService",
+        "kind": "class",
+        "file": "src/services/query.service.ts",
+        "line": 16,
+        "exported": true
+      },
+      {
+        "name": "QueryTypesService",
+        "kind": "class",
+        "file": "src/services/query-types.service.ts",
+        "line": 9,
+        "exported": true
+      },
+      {
+        "name": "ServerError",
+        "kind": "class",
+        "file": "src/lib/api/errors.ts",
+        "line": 75,
+        "exported": true
+      },
+      {
+        "name": "UnauthorizedError",
+        "kind": "class",
+        "file": "src/lib/api/errors.ts",
+        "line": 64,
+        "exported": true
+      },
+      {
+        "name": "ValidationError",
+        "kind": "class",
+        "file": "src/lib/api/errors.ts",
+        "line": 31,
+        "exported": true
+      },
+      {
+        "name": "ValidationService",
+        "kind": "class",
+        "file": "src/lib/consultas/services/ValidationService.ts",
+        "line": 12,
+        "exported": true
+      }
+    ],
+    "interfaces": [
+      {
+        "name": "ActionState",
+        "kind": "interface",
+        "file": "src/actions/query.actions.ts",
+        "line": 17,
+        "exported": true
+      },
+      {
+        "name": "ActionState",
+        "kind": "interface",
+        "file": "src/actions/query-types.actions.ts",
+        "line": 6,
+        "exported": true
+      },
+      {
+        "name": "ActionState",
+        "kind": "interface",
+        "file": "src/actions/query-execution.actions.ts",
+        "line": 12,
+        "exported": true
+      },
+      {
+        "name": "ActionState",
+        "kind": "interface",
+        "file": "src/actions/payment.actions.ts",
+        "line": 18,
+        "exported": true
+      },
+      {
+        "name": "ActionState",
+        "kind": "interface",
+        "file": "src/actions/auth.actions.ts",
+        "line": 13,
+        "exported": true
+      },
+      {
+        "name": "AssessmentState",
+        "kind": "interface",
+        "file": "src/actions/credit.actions.ts",
+        "line": 16,
+        "exported": true
+      },
+      {
+        "name": "AuthResponse",
+        "kind": "interface",
+        "file": "src/types/auth.ts",
+        "line": 18,
+        "exported": true
+      },
+      {
+        "name": "AuthState",
+        "kind": "interface",
+        "file": "src/types/auth.ts",
+        "line": 42,
+        "exported": true
+      },
+      {
+        "name": "BadgeProps",
+        "kind": "interface",
+        "file": "src/components/ui/badge.tsx",
+        "line": 23,
+        "exported": true
+      },
+      {
+        "name": "ButtonProps",
+        "kind": "interface",
+        "file": "src/components/ui/button.tsx",
+        "line": 33,
+        "exported": true
+      },
+      {
+        "name": "CadinEntry",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 96,
+        "exported": true
+      },
+      {
+        "name": "CategoriaConsulta",
+        "kind": "interface",
+        "file": "src/lib/consultas.ts",
+        "line": 13,
+        "exported": true
+      },
+      {
+        "name": "CategoryConfig",
+        "kind": "interface",
+        "file": "src/types/query.ts",
+        "line": 93,
+        "exported": true
+      },
+      {
+        "name": "CcfEntry",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 108,
+        "exported": true
+      },
+      {
+        "name": "Consulta",
+        "kind": "interface",
+        "file": "src/lib/consultas.ts",
+        "line": 3,
+        "exported": true
+      },
+      {
+        "name": "ConsultaStrategy",
+        "kind": "interface",
+        "file": "src/lib/consultas/strategies/ConsultaStrategy.ts",
+        "line": 21,
+        "exported": true
+      },
+      {
+        "name": "ContumaciaEntry",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 139,
+        "exported": true
+      },
+      {
+        "name": "CorporateAssessmentState",
+        "kind": "interface",
+        "file": "src/actions/credit.actions.ts",
+        "line": 28,
+        "exported": true
+      },
+      {
+        "name": "CorporateCreditReportResponse",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 153,
+        "exported": true
+      },
+      {
+        "name": "CreateQueryRequest",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 192,
+        "exported": true
+      },
+      {
+        "name": "CreateQueryResponse",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 200,
+        "exported": true
+      },
+      {
+        "name": "CreditReportResponse",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 70,
+        "exported": true
+      },
+      {
+        "name": "Debt",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 42,
+        "exported": true
+      },
+      {
+        "name": "ExecuteQueryRequest",
+        "kind": "interface",
+        "file": "src/types/query.ts",
+        "line": 41,
+        "exported": true
+      },
+      {
+        "name": "ExecuteQueryResponse",
+        "kind": "interface",
+        "file": "src/types/query.ts",
+        "line": 49,
+        "exported": true
+      },
+      {
+        "name": "FinancialSummary",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 30,
+        "exported": true
+      },
+      {
+        "name": "IHttpClient",
+        "kind": "interface",
+        "file": "src/lib/api/client.ts",
+        "line": 18,
+        "exported": true
+      },
+      {
+        "name": "LoginDTO",
+        "kind": "interface",
+        "file": "src/types/auth.ts",
+        "line": 24,
+        "exported": true
+      },
+      {
+        "name": "PaymentStatusResponse",
+        "kind": "interface",
+        "file": "src/types/payment.ts",
+        "line": 40,
+        "exported": true
+      },
+      {
+        "name": "PersonInfo",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 16,
+        "exported": true
+      },
+      {
+        "name": "PremiumAssessmentState",
+        "kind": "interface",
+        "file": "src/actions/credit.actions.ts",
+        "line": 22,
+        "exported": true
+      },
+      {
+        "name": "PremiumCreditReportResponse",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 122,
+        "exported": true
+      },
+      {
+        "name": "Protest",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 52,
+        "exported": true
+      },
+      {
+        "name": "Query",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 61,
+        "exported": true
+      },
+      {
+        "name": "QueryHistoryEntry",
+        "kind": "interface",
+        "file": "src/types/query.ts",
+        "line": 59,
+        "exported": true
+      },
+      {
+        "name": "QueryHistoryEntry",
+        "kind": "interface",
+        "file": "src/types/credit.ts",
+        "line": 177,
+        "exported": true
+      },
+      {
+        "name": "QueryHistoryResponse",
+        "kind": "interface",
+        "file": "src/types/query.ts",
+        "line": 82,
+        "exported": true
+      },
+      {
+        "name": "QueryType",
+        "kind": "interface",
+        "file": "src/types/query.ts",
+        "line": 22,
+        "exported": true
+      },
+      {
+        "name": "RechargeRequest",
+        "kind": "interface",
+        "file": "src/types/payment.ts",
+        "line": 24,
+        "exported": true
+      },
+      {
+        "name": "RechargeResponse",
+        "kind": "interface",
+        "file": "src/types/payment.ts",
+        "line": 29,
+        "exported": true
+      },
+      {
+        "name": "RefreshTokenDTO",
+        "kind": "interface",
+        "file": "src/types/auth.ts",
+        "line": 38,
+        "exported": true
+      },
+      {
+        "name": "RegisterDTO",
+        "kind": "interface",
+        "file": "src/types/auth.ts",
+        "line": 29,
+        "exported": true
+      },
+      {
+        "name": "RequestConfig",
+        "kind": "interface",
+        "file": "src/lib/api/client.ts",
+        "line": 28,
+        "exported": true
+      },
+      {
+        "name": "TextareaProps",
+        "kind": "interface",
+        "file": "src/components/ui/textarea.tsx",
+        "line": 5,
+        "exported": true
+      },
+      {
+        "name": "Transaction",
+        "kind": "interface",
+        "file": "src/types/payment.ts",
+        "line": 12,
+        "exported": true
+      },
+      {
+        "name": "User",
+        "kind": "interface",
+        "file": "src/types/auth.ts",
+        "line": 6,
+        "exported": true
+      },
+      {
+        "name": "ValidationResult",
+        "kind": "interface",
+        "file": "src/lib/consultas/services/ValidationService.ts",
+        "line": 7,
+        "exported": true
+      },
+      {
+        "name": "AnimatedNumberProps",
+        "kind": "interface",
+        "file": "src/components/credito/report/AnimatedNumber.tsx",
+        "line": 6,
+        "exported": false
+      },
+      {
+        "name": "AuthStore",
+        "kind": "interface",
+        "file": "src/store/authStore.ts",
+        "line": 10,
+        "exported": false
+      },
+      {
+        "name": "ButtonProps",
+        "kind": "interface",
+        "file": "design-system/ComponentsTailwind.tsx",
+        "line": 17,
+        "exported": false
+      }
+    ],
+    "functions": [
+      {
+        "name": "assessCorporateAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 113,
+        "exported": true
+      },
+      {
+        "name": "assessCorporateAction",
+        "kind": "function",
+        "file": "src/actions/credit.actions.ts",
+        "line": 116,
+        "exported": true
+      },
+      {
+        "name": "assessCreditAction",
+        "kind": "function",
+        "file": "src/actions/credit.actions.ts",
+        "line": 38,
+        "exported": true
+      },
+      {
+        "name": "assessCreditCpfAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 27,
+        "exported": true
+      },
+      {
+        "name": "assessPremiumAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 71,
+        "exported": true
+      },
+      {
+        "name": "assessPremiumCreditAction",
+        "kind": "function",
+        "file": "src/actions/credit.actions.ts",
+        "line": 77,
+        "exported": true
+      },
+      {
+        "name": "Button",
+        "kind": "function",
+        "file": "design-system/ComponentsTailwind.tsx",
+        "line": 24,
+        "exported": true
+      },
+      {
+        "name": "Button",
+        "kind": "function",
+        "file": "src/components/candle/index.tsx",
+        "line": 24,
+        "exported": true
+      },
+      {
+        "name": "cancelPaymentAction",
+        "kind": "function",
+        "file": "src/actions/payment.actions.ts",
+        "line": 110,
+        "exported": true
+      },
+      {
+        "name": "Card",
+        "kind": "function",
+        "file": "design-system/ComponentsTailwind.tsx",
+        "line": 78,
+        "exported": true
+      },
+      {
+        "name": "Card",
+        "kind": "function",
+        "file": "src/components/candle/index.tsx",
+        "line": 78,
+        "exported": true
+      },
+      {
+        "name": "CategoryCard",
+        "kind": "function",
+        "file": "src/components/shared/CategoryCard.tsx",
+        "line": 17,
+        "exported": true
+      },
+      {
+        "name": "changePasswordAction",
+        "kind": "function",
+        "file": "src/actions/auth.actions.ts",
+        "line": 182,
+        "exported": true
+      },
+      {
+        "name": "checkPaymentStatusAction",
+        "kind": "function",
+        "file": "src/actions/payment.actions.ts",
+        "line": 82,
+        "exported": true
+      },
+      {
+        "name": "cn",
+        "kind": "function",
+        "file": "src/lib/utils.ts",
+        "line": 4,
+        "exported": true
+      },
+      {
+        "name": "ConsultaFilters",
+        "kind": "function",
+        "file": "src/components/credito/ConsultaFilters.tsx",
+        "line": 18,
+        "exported": true
+      },
+      {
+        "name": "ConsultaPage",
+        "kind": "function",
+        "file": "app/credito/[slug]/page.tsx",
+        "line": 10,
+        "exported": true
+      },
+      {
+        "name": "createCreditService",
+        "kind": "function",
+        "file": "src/services/credit.service.ts",
+        "line": 221,
+        "exported": true
+      },
+      {
+        "name": "createErrorFromResponse",
+        "kind": "function",
+        "file": "src/lib/api/errors.ts",
+        "line": 85,
+        "exported": true
+      },
+      {
+        "name": "createHttpClient",
+        "kind": "function",
+        "file": "src/lib/api/client.ts",
+        "line": 183,
+        "exported": true
+      },
+      {
+        "name": "createQueryAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 155,
+        "exported": true
+      },
+      {
+        "name": "createRechargeAction",
+        "kind": "function",
+        "file": "src/actions/payment.actions.ts",
+        "line": 28,
+        "exported": true
+      },
+      {
+        "name": "CreditoPage",
+        "kind": "function",
+        "file": "app/credito/page.tsx",
+        "line": 3,
+        "exported": true
+      },
+      {
+        "name": "DashboardLayout",
+        "kind": "function",
+        "file": "app/dashboard/layout.tsx",
+        "line": 4,
+        "exported": true
+      },
+      {
+        "name": "DesignTestPage",
+        "kind": "function",
+        "file": "app/design-test/page.tsx",
+        "line": 22,
+        "exported": true
+      },
+      {
+        "name": "executeQueryAction",
+        "kind": "function",
+        "file": "src/actions/query-execution.actions.ts",
+        "line": 18,
+        "exported": true
+      },
+      {
+        "name": "Footer",
+        "kind": "function",
+        "file": "src/components/layout/Footer.tsx",
+        "line": 7,
+        "exported": true
+      },
+      {
+        "name": "formatCnpj",
+        "kind": "function",
+        "file": "src/lib/formatters.ts",
+        "line": 10,
+        "exported": true
+      },
+      {
+        "name": "formatCpf",
+        "kind": "function",
+        "file": "src/lib/formatters.ts",
+        "line": 5,
+        "exported": true
+      },
+      {
+        "name": "formatCurrency",
+        "kind": "function",
+        "file": "src/lib/formatters.ts",
+        "line": 57,
+        "exported": true
+      },
+      {
+        "name": "formatDate",
+        "kind": "function",
+        "file": "src/lib/formatters.ts",
+        "line": 16,
+        "exported": true
+      },
+      {
+        "name": "getAllQueryTypesAction",
+        "kind": "function",
+        "file": "src/actions/query-types.actions.ts",
+        "line": 12,
+        "exported": true
+      },
+      {
+        "name": "getCategoriaBySlug",
+        "kind": "function",
+        "file": "src/lib/consultas.ts",
+        "line": 152,
+        "exported": true
+      },
+      {
+        "name": "getCategoryBySlug",
+        "kind": "function",
+        "file": "src/constants/query-categories.ts",
+        "line": 104,
+        "exported": true
+      },
+      {
+        "name": "getCategoryConfig",
+        "kind": "function",
+        "file": "src/constants/query-categories.ts",
+        "line": 111,
+        "exported": true
+      },
+      {
+        "name": "getConsultaBySlug",
+        "kind": "function",
+        "file": "src/lib/consultas.ts",
+        "line": 148,
+        "exported": true
+      },
+      {
+        "name": "getEnabledCategories",
+        "kind": "function",
+        "file": "src/constants/query-categories.ts",
+        "line": 97,
+        "exported": true
+      },
+      {
+        "name": "getErrorMessage",
+        "kind": "function",
+        "file": "src/lib/api/errors.ts",
+        "line": 121,
+        "exported": true
+      },
+      {
+        "name": "getMeAction",
+        "kind": "function",
+        "file": "src/actions/auth.actions.ts",
+        "line": 133,
+        "exported": true
+      },
+      {
+        "name": "getOrderedCategories",
+        "kind": "function",
+        "file": "src/constants/query-categories.ts",
+        "line": 80,
+        "exported": true
+      },
+      {
+        "name": "getQueryByIdAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 219,
+        "exported": true
+      },
+      {
+        "name": "getQueryByIdAction",
+        "kind": "function",
+        "file": "src/actions/query-execution.actions.ts",
+        "line": 57,
+        "exported": true
+      },
+      {
+        "name": "getQueryByProtocolAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 240,
+        "exported": true
+      },
+      {
+        "name": "getQueryHistoryAction",
+        "kind": "function",
+        "file": "src/actions/query.actions.ts",
+        "line": 197,
+        "exported": true
+      },
+      {
+        "name": "getQueryHistoryAction",
+        "kind": "function",
+        "file": "src/actions/query-execution.actions.ts",
+        "line": 44,
+        "exported": true
+      },
+      {
+        "name": "getQueryTypeByCodeAction",
+        "kind": "function",
+        "file": "src/actions/query-types.actions.ts",
+        "line": 34,
+        "exported": true
+      },
+      {
+        "name": "getQueryTypesByCategoryAction",
+        "kind": "function",
+        "file": "src/actions/query-types.actions.ts",
+        "line": 22,
+        "exported": true
+      },
+      {
+        "name": "getTransactionsAction",
+        "kind": "function",
+        "file": "src/actions/payment.actions.ts",
+        "line": 58,
+        "exported": true
+      },
+      {
+        "name": "groupByCategoryAction",
+        "kind": "function",
+        "file": "src/actions/query-types.actions.ts",
+        "line": 46,
+        "exported": true
+      },
+      {
+        "name": "HeroSection",
+        "kind": "function",
+        "file": "src/components/home/HeroSection.tsx",
+        "line": 29,
+        "exported": true
+      }
+    ],
+    "types": [
+      {
+        "name": "BillingType",
+        "kind": "type",
+        "file": "src/types/payment.ts",
+        "line": 6,
+        "exported": true
+      },
+      {
+        "name": "CalendarProps",
+        "kind": "type",
+        "file": "src/components/ui/calendar.tsx",
+        "line": 8,
+        "exported": true
+      },
+      {
+        "name": "ChangePasswordFormData",
+        "kind": "type",
+        "file": "src/validators/auth.schemas.ts",
+        "line": 99,
+        "exported": true
+      },
+      {
+        "name": "ChartConfig",
+        "kind": "type",
+        "file": "src/components/ui/chart.tsx",
+        "line": 9,
+        "exported": true
+      },
+      {
+        "name": "CreditCardFormData",
+        "kind": "type",
+        "file": "src/validators/payment.schemas.ts",
+        "line": 49,
+        "exported": true
+      },
+      {
+        "name": "CreditStatus",
+        "kind": "type",
+        "file": "src/types/credit.ts",
+        "line": 11,
+        "exported": true
+      },
+      {
+        "name": "LoginFormData",
+        "kind": "type",
+        "file": "src/validators/auth.schemas.ts",
+        "line": 22,
+        "exported": true
+      },
+      {
+        "name": "PaymentStatus",
+        "kind": "type",
+        "file": "src/types/payment.ts",
+        "line": 8,
+        "exported": true
+      },
+      {
+        "name": "RechargeFormData",
+        "kind": "type",
+        "file": "src/validators/payment.schemas.ts",
+        "line": 21,
+        "exported": true
+      },
+      {
+        "name": "RechargeWithCardFormData",
+        "kind": "type",
+        "file": "src/validators/payment.schemas.ts",
+        "line": 71,
+        "exported": true
+      },
+      {
+        "name": "RegisterFormData",
+        "kind": "type",
+        "file": "src/validators/auth.schemas.ts",
+        "line": 74,
+        "exported": true
+      },
+      {
+        "name": "TipoDocumento",
+        "kind": "type",
+        "file": "src/lib/consultas.ts",
+        "line": 1,
+        "exported": true
+      },
+      {
+        "name": "TransactionType",
+        "kind": "type",
+        "file": "src/types/payment.ts",
+        "line": 10,
+        "exported": true
+      },
+      {
+        "name": "Action",
+        "kind": "type",
+        "file": "src/hooks/use-toast.ts",
+        "line": 31,
+        "exported": false
+      },
+      {
+        "name": "ActionType",
+        "kind": "type",
+        "file": "src/hooks/use-toast.ts",
+        "line": 29,
+        "exported": false
+      },
+      {
+        "name": "CarouselApi",
+        "kind": "type",
+        "file": "src/components/ui/carousel.tsx",
+        "line": 8,
+        "exported": false
+      },
+      {
+        "name": "CarouselContextProps",
+        "kind": "type",
+        "file": "src/components/ui/carousel.tsx",
+        "line": 20,
+        "exported": false
+      },
+      {
+        "name": "CarouselOptions",
+        "kind": "type",
+        "file": "src/components/ui/carousel.tsx",
+        "line": 10,
+        "exported": false
+      },
+      {
+        "name": "CarouselPlugin",
+        "kind": "type",
+        "file": "src/components/ui/carousel.tsx",
+        "line": 11,
+        "exported": false
+      },
+      {
+        "name": "CarouselProps",
+        "kind": "type",
+        "file": "src/components/ui/carousel.tsx",
+        "line": 13,
+        "exported": false
+      },
+      {
+        "name": "ChartContextProps",
+        "kind": "type",
+        "file": "src/components/ui/chart.tsx",
+        "line": 16,
+        "exported": false
+      },
+      {
+        "name": "FiltroTipo",
+        "kind": "type",
+        "file": "src/components/credito/ConsultaFilters.tsx",
+        "line": 9,
+        "exported": false
+      },
+      {
+        "name": "FormData",
+        "kind": "type",
+        "file": "src/components/query/QueryExecutionForm.tsx",
+        "line": 43,
+        "exported": false
+      },
+      {
+        "name": "FormFieldContextValue",
+        "kind": "type",
+        "file": "src/components/ui/form.tsx",
+        "line": 11,
+        "exported": false
+      },
+      {
+        "name": "FormItemContextValue",
+        "kind": "type",
+        "file": "src/components/ui/form.tsx",
+        "line": 56,
+        "exported": false
+      },
+      {
+        "name": "PaginationLinkProps",
+        "kind": "type",
+        "file": "src/components/ui/pagination.tsx",
+        "line": 29,
+        "exported": false
+      },
+      {
+        "name": "SidebarContext",
+        "kind": "type",
+        "file": "src/components/ui/sidebar.tsx",
+        "line": 22,
+        "exported": false
+      },
+      {
+        "name": "Toast",
+        "kind": "type",
+        "file": "src/hooks/use-toast.ts",
+        "line": 135,
+        "exported": false
+      },
+      {
+        "name": "ToasterProps",
+        "kind": "type",
+        "file": "src/components/ui/sonner.tsx",
+        "line": 4,
+        "exported": false
+      },
+      {
+        "name": "ToasterToast",
+        "kind": "type",
+        "file": "src/hooks/use-toast.ts",
+        "line": 8,
+        "exported": false
+      },
+      {
+        "name": "UseCarouselParameters",
+        "kind": "type",
+        "file": "src/components/ui/carousel.tsx",
+        "line": 9,
+        "exported": false
+      }
+    ],
+    "enums": [
+      {
+        "name": "QueryCategory",
+        "kind": "enum",
+        "file": "src/types/query.ts",
+        "line": 9,
+        "exported": true
+      }
+    ]
+  },
+  "publicAPI": [
+    {
+      "name": "ActionState",
+      "kind": "interface",
+      "file": "src/actions/query.actions.ts",
+      "line": 17,
+      "exported": true
+    },
+    {
+      "name": "ActionState",
+      "kind": "interface",
+      "file": "src/actions/query-types.actions.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "name": "ActionState",
+      "kind": "interface",
+      "file": "src/actions/query-execution.actions.ts",
+      "line": 12,
+      "exported": true
+    },
+    {
+      "name": "ActionState",
+      "kind": "interface",
+      "file": "src/actions/payment.actions.ts",
+      "line": 18,
+      "exported": true
+    },
+    {
+      "name": "ActionState",
+      "kind": "interface",
+      "file": "src/actions/auth.actions.ts",
+      "line": 13,
+      "exported": true
+    },
+    {
+      "name": "ApiError",
+      "kind": "class",
+      "file": "src/lib/api/errors.ts",
+      "line": 10,
+      "exported": true
+    },
+    {
+      "name": "assessCorporateAction",
+      "kind": "function",
+      "file": "src/actions/query.actions.ts",
+      "line": 113,
+      "exported": true
+    },
+    {
+      "name": "assessCorporateAction",
+      "kind": "function",
+      "file": "src/actions/credit.actions.ts",
+      "line": 116,
+      "exported": true
+    },
+    {
+      "name": "assessCreditAction",
+      "kind": "function",
+      "file": "src/actions/credit.actions.ts",
+      "line": 38,
+      "exported": true
+    },
+    {
+      "name": "assessCreditCpfAction",
+      "kind": "function",
+      "file": "src/actions/query.actions.ts",
+      "line": 27,
+      "exported": true
+    },
+    {
+      "name": "AssessmentState",
+      "kind": "interface",
+      "file": "src/actions/credit.actions.ts",
+      "line": 16,
+      "exported": true
+    },
+    {
+      "name": "assessPremiumAction",
+      "kind": "function",
+      "file": "src/actions/query.actions.ts",
+      "line": 71,
+      "exported": true
+    },
+    {
+      "name": "assessPremiumCreditAction",
+      "kind": "function",
+      "file": "src/actions/credit.actions.ts",
+      "line": 77,
+      "exported": true
+    },
+    {
+      "name": "AuthResponse",
+      "kind": "interface",
+      "file": "src/types/auth.ts",
+      "line": 18,
+      "exported": true
+    },
+    {
+      "name": "AuthService",
+      "kind": "class",
+      "file": "src/services/auth.service.ts",
+      "line": 14,
+      "exported": true
+    },
+    {
+      "name": "AuthState",
+      "kind": "interface",
+      "file": "src/types/auth.ts",
+      "line": 42,
+      "exported": true
+    },
+    {
+      "name": "BadgeProps",
+      "kind": "interface",
+      "file": "src/components/ui/badge.tsx",
+      "line": 23,
+      "exported": true
+    },
+    {
+      "name": "BillingType",
+      "kind": "type",
+      "file": "src/types/payment.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "name": "Button",
+      "kind": "function",
+      "file": "design-system/ComponentsTailwind.tsx",
+      "line": 24,
+      "exported": true
+    },
+    {
+      "name": "Button",
+      "kind": "function",
+      "file": "src/components/candle/index.tsx",
+      "line": 24,
+      "exported": true
+    },
+    {
+      "name": "ButtonProps",
+      "kind": "interface",
+      "file": "src/components/ui/button.tsx",
+      "line": 33,
+      "exported": true
+    },
+    {
+      "name": "CadinEntry",
+      "kind": "interface",
+      "file": "src/types/credit.ts",
+      "line": 96,
+      "exported": true
+    },
+    {
+      "name": "CalendarProps",
+      "kind": "type",
+      "file": "src/components/ui/calendar.tsx",
+      "line": 8,
+      "exported": true
+    },
+    {
+      "name": "cancelPaymentAction",
+      "kind": "function",
+      "file": "src/actions/payment.actions.ts",
+      "line": 110,
+      "exported": true
+    },
+    {
+      "name": "Card",
+      "kind": "function",
+      "file": "design-system/ComponentsTailwind.tsx",
+      "line": 78,
+      "exported": true
+    },
+    {
+      "name": "Card",
+      "kind": "function",
+      "file": "src/components/candle/index.tsx",
+      "line": 78,
+      "exported": true
+    },
+    {
+      "name": "CategoriaConsulta",
+      "kind": "interface",
+      "file": "src/lib/consultas.ts",
+      "line": 13,
+      "exported": true
+    },
+    {
+      "name": "CategoryCard",
+      "kind": "function",
+      "file": "src/components/shared/CategoryCard.tsx",
+      "line": 17,
+      "exported": true
+    },
+    {
+      "name": "CategoryConfig",
+      "kind": "interface",
+      "file": "src/types/query.ts",
+      "line": 93,
+      "exported": true
+    },
+    {
+      "name": "CcfEntry",
+      "kind": "interface",
+      "file": "src/types/credit.ts",
+      "line": 108,
+      "exported": true
+    },
+    {
+      "name": "changePasswordAction",
+      "kind": "function",
+      "file": "src/actions/auth.actions.ts",
+      "line": 182,
+      "exported": true
+    },
+    {
+      "name": "ChangePasswordFormData",
+      "kind": "type",
+      "file": "src/validators/auth.schemas.ts",
+      "line": 99,
+      "exported": true
+    },
+    {
+      "name": "ChartConfig",
+      "kind": "type",
+      "file": "src/components/ui/chart.tsx",
+      "line": 9,
+      "exported": true
+    },
+    {
+      "name": "checkPaymentStatusAction",
+      "kind": "function",
+      "file": "src/actions/payment.actions.ts",
+      "line": 82,
+      "exported": true
+    },
+    {
+      "name": "cn",
+      "kind": "function",
+      "file": "src/lib/utils.ts",
+      "line": 4,
+      "exported": true
+    },
+    {
+      "name": "Consulta",
+      "kind": "interface",
+      "file": "src/lib/consultas.ts",
+      "line": 3,
+      "exported": true
+    },
+    {
+      "name": "ConsultaFilters",
+      "kind": "function",
+      "file": "src/components/credito/ConsultaFilters.tsx",
+      "line": 18,
+      "exported": true
+    },
+    {
+      "name": "ConsultaPage",
+      "kind": "function",
+      "file": "app/credito/[slug]/page.tsx",
+      "line": 10,
+      "exported": true
+    },
+    {
+      "name": "ConsultaStrategy",
+      "kind": "interface",
+      "file": "src/lib/consultas/strategies/ConsultaStrategy.ts",
+      "line": 21,
+      "exported": true
+    },
+    {
+      "name": "ConsultaStrategyFactory",
+      "kind": "class",
+      "file": "src/lib/consultas/factories/ConsultaStrategyFactory.ts",
+      "line": 19,
+      "exported": true
+    },
+    {
+      "name": "ContumaciaEntry",
+      "kind": "interface",
+      "file": "src/types/credit.ts",
+      "line": 139,
+      "exported": true
+    },
+    {
+      "name": "CorporateAssessmentState",
+      "kind": "interface",
+      "file": "src/actions/credit.actions.ts",
+      "line": 28,
+      "exported": true
+    },
+    {
+      "name": "CorporateCreditReportResponse",
+      "kind": "interface",
+      "file": "src/types/credit.ts",
+      "line": 153,
+      "exported": true
+    },
+    {
+      "name": "CorporateCreditStrategy",
+      "kind": "class",
+      "file": "src/lib/consultas/strategies/CorporateCreditStrategy.ts",
+      "line": 12,
+      "exported": true
+    },
+    {
+      "name": "CpfCreditStrategy",
+      "kind": "class",
+      "file": "src/lib/consultas/strategies/CpfCreditStrategy.ts",
+      "line": 12,
+      "exported": true
+    },
+    {
+      "name": "createCreditService",
+      "kind": "function",
+      "file": "src/services/credit.service.ts",
+      "line": 221,
+      "exported": true
+    },
+    {
+      "name": "createErrorFromResponse",
+      "kind": "function",
+      "file": "src/lib/api/errors.ts",
+      "line": 85,
+      "exported": true
+    },
+    {
+      "name": "createHttpClient",
+      "kind": "function",
+      "file": "src/lib/api/client.ts",
+      "line": 183,
+      "exported": true
+    },
+    {
+      "name": "createQueryAction",
+      "kind": "function",
+      "file": "src/actions/query.actions.ts",
+      "line": 155,
+      "exported": true
+    },
+    {
+      "name": "CreateQueryRequest",
+      "kind": "interface",
+      "file": "src/types/credit.ts",
+      "line": 192,
+      "exported": true
+    }
+  ],
+  "dependencies": {
+    "mostImported": [
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/lib/consultas/strategies/ConsultaStrategy.ts",
+        "importedBy": 4
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/lib/consultas/services/ValidationService.ts",
+        "importedBy": 4
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/lib/api/errors.ts",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/lib/consultas/strategies/CpfCreditStrategy.ts",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/lib/consultas/strategies/PremiumCreditStrategy.ts",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/lib/consultas/strategies/CorporateCreditStrategy.ts",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/app/globals.css",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/app/providers.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/ConsultaCard.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/AnimatedNumber.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/StatCard.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/DebtsTimeline.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/ProtestsTimeline.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/CadinTimeline.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/CcfTimeline.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/ContumaciaTimeline.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/StatusHero.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/QuickStats.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/PersonalInfoCard.tsx",
+        "importedBy": 1
+      },
+      {
+        "file": "/Users/arthur/dev/Candle_Frontend/src/components/credito/report/QueriesHistory.tsx",
+        "importedBy": 1
+      }
+    ]
+  },
+  "stats": {
+    "totalSymbols": 217,
+    "exportedSymbols": 152,
+    "analysisTimeMs": 439
+  }
+}

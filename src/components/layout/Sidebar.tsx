@@ -21,7 +21,7 @@ const navigation = [
   },
   {
     name: 'Consultas',
-    href: '/credito',
+    href: '/consulta',
     icon: Search,
   },
   {
