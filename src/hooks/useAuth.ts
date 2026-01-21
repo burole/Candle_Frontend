@@ -86,11 +86,11 @@ export function useAuth() {
       await logoutAction();
       clearAuth();
       toast.success('Logout realizado com sucesso');
-      router.push('/auth/login');
+      router.push('/login');
     } catch (error) {
       // Mesmo com erro, limpa o estado local
       clearAuth();
-      router.push('/auth/login');
+      router.push('/login');
     }
   }, [clearAuth, router]);
 

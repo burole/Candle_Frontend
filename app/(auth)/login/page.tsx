@@ -108,7 +108,7 @@ export default function LoginPage() {
               </label>
 
               <Link
-                href="/auth/forgot-password"
+                href="/forgot-password"
                 className="text-blue-500 hover:text-blue-600 transition-colors"
               >
                 Esqueci minha senha
@@ -142,7 +142,7 @@ export default function LoginPage() {
             <p className="text-gray-600">
               Não tem uma conta?{' '}
               <Link
-                href="/auth/register"
+                href="/register"
                 className="text-blue-500 hover:text-blue-600 font-medium transition-colors"
               >
                 Criar conta

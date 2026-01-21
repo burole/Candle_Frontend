@@ -75,13 +75,13 @@ export function Header() {
             </>
           ) : (
             <div className="flex items-center gap-3 ml-2">
-              <Link href="/auth/login">
+              <Link href="/login">
                 <Button variant="ghost" size="sm">
                   <LogIn className="w-4 h-4 mr-2" />
                   Entrar
                 </Button>
               </Link>
-              <Link href="/auth/register">
+              <Link href="/register">
                 <Button variant="primary" size="sm">
                   Criar Conta
                 </Button>
@@ -146,13 +146,13 @@ export function Header() {
             </>
           ) : (
             <div className="flex flex-col gap-2 pt-2 border-t border-gray-200">
-              <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/login" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="outline" className="w-full">
                   <LogIn className="w-4 h-4 mr-2" />
                   Entrar
                 </Button>
               </Link>
-              <Link href="/auth/register" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/register" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="primary" className="w-full">
                   Criar Conta
                 </Button>

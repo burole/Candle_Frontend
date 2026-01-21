@@ -92,7 +92,7 @@ httpClient.interceptors.response.use(
         // Não tem refresh token, faz logout
         useAuthStore.getState().logout();
         if (typeof window !== 'undefined') {
-          window.location.href = '/auth/login';
+          window.location.href = '/login';
         }
         return Promise.reject(error);
       }
@@ -123,7 +123,7 @@ httpClient.interceptors.response.use(
         processQueue(refreshError as Error);
         useAuthStore.getState().logout();
         if (typeof window !== 'undefined') {
-          window.location.href = '/auth/login';
+          window.location.href = '/login';
         }
         return Promise.reject(refreshError);
       } finally {

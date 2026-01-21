@@ -205,7 +205,7 @@ export default function LoginPageTailwind() {
                   Não tem uma conta?
                 </span>
                 <a
-                  href="/auth/register"
+                  href="/register"
                   className="font-semibold text-blue-600 hover:text-blue-700 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
                 >
                   Cadastre-se
