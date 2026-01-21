@@ -13,9 +13,29 @@ import {
 } from '@/actions/payment.actions';
 import type { RechargeRequest } from '@/types/payment';
 import { toast } from 'sonner';
+import { useAuthStore } from '@/store/authStore';
 
 export function usePayment() {
   const [isLoading, setIsLoading] = useState(false);
+  const { updateBalance } = useAuthStore();
+
+  /**
+   * Atualizar saldo
+   */
+  const refreshBalance = useCallback(async () => {
+    try {
+      const result = await refreshBalanceAction();
+
+      if (result.success && result.data !== undefined) {
+        updateBalance(result.data);
+        return { success: true, balance: result.data };
+      }
+
+      return { success: false, error: result.error };
+    } catch (error) {
+      return { success: false, error: 'Erro ao atualizar saldo' };
+    }
+  }, [updateBalance]);
 
   /**
    * Criar recarga
@@ -80,6 +100,8 @@ export function usePayment() {
           result.data.status === 'RECEIVED'
         ) {
           toast.success('Pagamento confirmado! Saldo atualizado.');
+          // Atualiza o saldo
+          refreshBalance();
         }
         return { success: true, data: result.data };
       }
@@ -88,7 +110,7 @@ export function usePayment() {
     } catch (error) {
       return { success: false, error: 'Erro ao verificar status' };
     }
-  }, []);
+  }, [refreshBalance]);
 
   /**
    * Cancelar pagamento
@@ -110,23 +132,6 @@ export function usePayment() {
       return { success: false, error: 'Erro inesperado' };
     } finally {
       setIsLoading(false);
-    }
-  }, []);
-
-  /**
-   * Atualizar saldo
-   */
-  const refreshBalance = useCallback(async () => {
-    try {
-      const result = await refreshBalanceAction();
-
-      if (result.success) {
-        return { success: true, balance: result.data };
-      }
-
-      return { success: false, error: result.error };
-    } catch (error) {
-      return { success: false, error: 'Erro ao atualizar saldo' };
     }
   }, []);
 

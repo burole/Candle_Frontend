@@ -380,7 +380,7 @@ export default function RechargePage() {
                     <div className="absolute inset-0 border-2 border-blue-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none scale-105" />
                     {paymentData.pixQrCode ? (
                       <img 
-                        src={paymentData.pixQrCode} 
+                        src={paymentData.pixQrCode.startsWith('data:image') ? paymentData.pixQrCode : `data:image/png;base64,${paymentData.pixQrCode}`}
                         alt="QR Code PIX" 
                         className="w-64 h-64 object-contain"
                       />
@@ -406,7 +406,7 @@ export default function RechargePage() {
                       <Button 
                         onClick={handleCopyPixCode} 
                         variant={copied ? 'primary' : 'secondary'}
-                        className={`shrink-0 w-12 rounded-xl transition-all ${copied ? 'bg-green-500 text-white border-green-500' : ''}`}
+                        className={`shrink-0 w-12 h-[50px] rounded-xl transition-all p-0 flex items-center justify-center ${copied ? 'bg-green-500 text-white border-green-500' : ''}`}
                       >
                         {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
                       </Button>

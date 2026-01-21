@@ -12,7 +12,7 @@ import type {
   Transaction,
   PaymentStatusResponse,
 } from '@/types/payment';
-import { useAuthStore } from '@/store/authStore';
+
 
 // Estado de retorno genérico
 export interface ActionState<T = unknown> {
@@ -85,11 +85,12 @@ export async function checkPaymentStatusAction(
   try {
     const status = await PaymentService.checkPaymentStatus(paymentId);
 
-    // Se o pagamento foi confirmado, atualizar saldo no store
-    if (status.status === 'CONFIRMED' || status.status === 'RECEIVED') {
-      const balanceData = await PaymentService.getBalance();
-      useAuthStore.getState().updateBalance(balanceData.balance);
-    }
+    // Se o pagamento foi confirmado, o cliente deve atualizar o saldo localmente
+    // via refreshBalance()
+    // if (status.status === 'CONFIRMED' || status.status === 'RECEIVED') {
+    //   const balanceData = await PaymentService.getBalance();
+    //   // useAuthStore not available on server
+    // }
 
     return {
       success: true,
@@ -131,8 +132,8 @@ export async function refreshBalanceAction(): Promise<ActionState<number>> {
   try {
     const data = await PaymentService.getBalance();
 
-    // Atualizar saldo no store
-    useAuthStore.getState().updateBalance(data.balance);
+    // Retornamos o dado para o cliente atualizar o store
+    // useAuthStore.getState().updateBalance(data.balance);
 
     return {
       success: true,

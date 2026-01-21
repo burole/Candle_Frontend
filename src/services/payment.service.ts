@@ -3,7 +3,7 @@
  * Serviço de pagamentos e recargas - comunicação com backend
  */
 
-import httpClient from '@/lib/api/httpClient';
+import { serverHttpClient } from '@/lib/api/serverHttpClient';
 import type {
   RechargeRequest,
   RechargeResponse,
@@ -16,8 +16,11 @@ export class PaymentService {
    * Criar recarga
    */
   static async createRecharge(data: RechargeRequest): Promise<RechargeResponse> {
-    const response = await httpClient.post<RechargeResponse>('/payments/recharge', data);
-    return response.data;
+    const response = await serverHttpClient.post<any>('/payments/recharge', data);
+    return {
+      ...response.data,
+      id: response.data.transactionId,
+    };
   }
 
 
@@ -28,7 +31,7 @@ export class PaymentService {
     page = 1,
     limit = 20
   ): Promise<{ transactions: Transaction[]; total: number; pages: number }> {
-    const response = await httpClient.get<any>('/payments', {
+    const response = await serverHttpClient.get<any>('/payments', {
       params: { page, limit },
     });
     
@@ -50,7 +53,7 @@ export class PaymentService {
    * Buscar detalhes de uma transação
    */
   static async getTransactionById(id: string): Promise<Transaction> {
-    const response = await httpClient.get<Transaction>(`/payments/${id}`);
+    const response = await serverHttpClient.get<Transaction>(`/payments/${id}`);
     return response.data;
   }
 
@@ -58,7 +61,7 @@ export class PaymentService {
    * Verificar status de pagamento
    */
   static async checkPaymentStatus(paymentId: string): Promise<PaymentStatusResponse> {
-    const response = await httpClient.get<any>(`/payments/${paymentId}`);
+    const response = await serverHttpClient.get<any>(`/payments/${paymentId}`);
     return {
       id: response.data.id,
       status: response.data.status,
@@ -72,14 +75,14 @@ export class PaymentService {
    * Cancelar pagamento pendente
    */
   static async cancelPayment(paymentId: string): Promise<void> {
-    await httpClient.post(`/payments/${paymentId}/cancel`);
+    await serverHttpClient.post(`/payments/${paymentId}/cancel`);
   }
 
   /**
    * Buscar saldo do usuário
    */
   static async getBalance(): Promise<{ balance: number }> {
-    const response = await httpClient.get<{ balance: number }>('/users/me/balance');
+    const response = await serverHttpClient.get<{ balance: number }>('/users/me/balance');
     return response.data;
   }
 }
