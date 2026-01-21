@@ -10,10 +10,9 @@ export function sanitizeUser(user: any): User {
   if (!user) return user;
   
   return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    balance: typeof user.balance === 'number' ? user.balance : 0,
-    // Only include necessary public fields
+    name: user.name || '',
+    email: user.email || '',
+    role: user.role || 'USER',
+    phone: user.phone,
   };
 }

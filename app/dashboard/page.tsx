@@ -1,13 +1,21 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Search, FileText, TrendingUp, Wallet } from 'lucide-react';
 import Link from 'next/link';
 import { useUser } from '@/store/authStore';
+import { useBalance } from '@/hooks/useBalance';
 import { StatsCard, Card } from '@/components/candle';
 import { categorias } from '@/lib/consultas';
 
 export default function DashboardPage() {
   const user = useUser();
+  const { formattedBalance, fetchBalance } = useBalance();
+
+  // Fetch balance on mount
+  useEffect(() => {
+    fetchBalance();
+  }, [fetchBalance]);
 
   // Mock stats - Replace with real data later
   const stats = [
@@ -25,7 +33,7 @@ export default function DashboardPage() {
     },
     {
       label: 'Saldo Disponível',
-      value: `R$ ${user?.balance?.toFixed(2) || '0,00'}`,
+      value: `R$ ${formattedBalance}`,
       icon: Wallet,
     },
     {

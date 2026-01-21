@@ -79,13 +79,13 @@ export const CATEGORY_CONFIGS: Record<QueryCategory, CategoryConfig> = {
  */
 export function getOrderedCategories(): CategoryConfig[] {
   const order: QueryCategory[] = [
-    // QueryCategory.CREDIT,
-    // QueryCategory.VEHICLE,
+    QueryCategory.CREDIT,
+    QueryCategory.VEHICLE,
     // QueryCategory.OTHER,
-    QueryCategory.PERSON,
-    QueryCategory.COMPANY,
-    // QueryCategory.PHONE,
-    // QueryCategory.ADDRESS,
+    // QueryCategory.PERSON,
+    // QueryCategory.COMPANY,
+    QueryCategory.PHONE,
+    QueryCategory.ADDRESS,
   ];
 
   return order.map((cat) => CATEGORY_CONFIGS[cat]);

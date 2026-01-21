@@ -90,45 +90,39 @@ export async function loginAction(
 
 /**
  * Action de Registro
+ * Backend retorna apenas tokens, precisamos buscar o user separadamente
  */
 export async function registerAction(
   userData: RegisterDTO
 ): Promise<ActionState<AuthResponse>> {
   try {
-    let data = await AuthService.register(userData);
+    // 1. Register returns only tokens
+    const tokens = await AuthService.register(userData);
 
-    // Se o backend não retornar tokens no registro (apenas o usuário), fazemos login automático
-    if (!data.accessToken) {
-      console.log('Registration successful, performing auto-login...');
-      data = await AuthService.login({
-        email: userData.email,
-        password: userData.password,
-      });
+    // 2. Build AuthResponse with tokens
+    const data: AuthResponse = {
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      tokenType: tokens.tokenType,
+      expiresIn: tokens.expiresIn,
+    };
+
+    // 3. Fetch user data using the new token
+    try {
+      const user = await AuthService.getMe(tokens.accessToken);
+      data.user = sanitizeUser(user);
+    } catch (error) {
+      console.error('Failed to fetch user details after registration:', error);
+      // Continue without user data - will be fetched on next page load
     }
 
-    // Se o login (direto ou via registro) retornou token mas não user, buscamos o user
-    if (data.accessToken && !data.user) {
-        try {
-            const user = await AuthService.getMe(data.accessToken);
-            data.user = user;
-        } catch (error) {
-            console.error('Failed to fetch user details after login:', error);
-            // Optionally fail or continue with partial data
-        }
-    }
-
-    // Sanitize user data
-    if (data.user) {
-      data.user = sanitizeUser(data.user);
-    }
-
-    // Set httpOnly cookies for authentication
+    // 4. Set httpOnly cookies for authentication
     const cookieStore = await cookies();
     cookieStore.set('accessToken', data.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 15, // 15 minutes
+      maxAge: tokens.expiresIn || 60 * 15, // Use backend expiry or default 15 minutes
     });
     cookieStore.set('refreshToken', data.refreshToken, {
       httpOnly: true,

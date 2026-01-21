@@ -43,3 +43,13 @@ export interface PaymentStatusResponse {
   paidAt?: string;
   amount: number;
 }
+
+/**
+ * Balance response from GET /balance
+ */
+export interface BalanceResponse {
+  id: string;
+  userId: string;
+  available: number;
+  updatedAt: string;
+}

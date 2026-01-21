@@ -2,9 +2,11 @@
 
 import { Bell, User } from 'lucide-react';
 import { useUser } from '@/store/authStore';
+import { useBalance } from '@/hooks/useBalance';
 
 export function TopBar() {
   const user = useUser();
+  const { formattedBalance } = useBalance();
 
   return (
     <header className="fixed left-64 right-0 top-0 z-30 h-16 border-b border-gray-200 bg-white/80 backdrop-blur-xl">
@@ -21,7 +23,7 @@ export function TopBar() {
           {/* Balance */}
           {user && (
             <div className="px-4 py-2 bg-gradient-primary rounded-lg text-white font-semibold text-sm shadow-md">
-              R$ {user.balance?.toFixed(2) || '0,00'}
+              R$ {formattedBalance}
             </div>
           )}
 

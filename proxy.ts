@@ -6,7 +6,6 @@ const publicRoutes = [
   '/',
   '/login',
   '/register',
-  '/consulta',
   '/forgot-password',
   '/termos',
   '/privacidade',

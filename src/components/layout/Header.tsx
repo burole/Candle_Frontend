@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, Menu, X, CreditCard, User, LogIn, LogOut, Settings, Wallet } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useBalance } from '@/hooks/useBalance';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -21,6 +22,14 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const { user, isAuthenticated, logout } = useAuth();
+  const { formattedBalance, fetchBalance } = useBalance();
+
+  // Fetch balance on mount if authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchBalance();
+    }
+  }, [isAuthenticated, fetchBalance]);
 
   const handleLogout = async () => {
     await logout();
@@ -73,7 +82,7 @@ export function Header() {
                >
                   <Wallet className="w-3.5 h-3.5 text-blue-600" />
                   <span className="text-xs font-bold text-blue-600">
-                    R$ {user?.balance?.toFixed(2) || "0,00"}
+                    R$ {formattedBalance}
                   </span>
                </motion.div>
 
@@ -193,7 +202,7 @@ export function Header() {
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-gray-600">Saldo</span>
                   <span className="text-sm font-semibold text-blue-600">
-                    R$ {user?.balance?.toFixed(2) || "0,00"}
+                    R$ {formattedBalance}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">

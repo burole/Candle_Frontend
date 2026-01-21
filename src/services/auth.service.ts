@@ -6,6 +6,7 @@
 import httpClient from '@/lib/api/httpClient';
 import type {
   AuthResponse,
+  TokensResponse,
   LoginDTO,
   RegisterDTO,
   User,
@@ -22,9 +23,10 @@ export class AuthService {
 
   /**
    * Registro de novo usuário
+   * Backend retorna apenas tokens, sem user
    */
-  static async register(userData: RegisterDTO): Promise<AuthResponse> {
-    const response = await httpClient.post<AuthResponse>('/auth/register', userData);
+  static async register(userData: RegisterDTO): Promise<TokensResponse> {
+    const response = await httpClient.post<TokensResponse>('/auth/register', userData);
     return response.data;
   }
 

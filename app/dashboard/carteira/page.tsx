@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useUser } from '@/store/authStore';
 import { usePayment } from '@/hooks/usePayment';
+import { useBalance } from '@/hooks/useBalance';
 import { RechargeModal } from '@/components/payment/RechargeModal';
 import { Card, Button, Badge } from '@/components/candle';
 import type { Transaction, PaymentStatus } from '@/types/payment';
@@ -37,6 +38,7 @@ const TRANSACTION_TYPE_LABELS = {
 export default function CarteirPage() {
   const user = useUser();
   const { getTransactions, refreshBalance } = usePayment();
+  const { formattedBalance, fetchBalance } = useBalance();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isRechargeModalOpen, setIsRechargeModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +56,7 @@ export default function CarteirPage() {
 
   useEffect(() => {
     loadTransactions();
+    fetchBalance();
   }, []);
 
   const handleRefresh = async () => {
@@ -90,7 +93,7 @@ export default function CarteirPage() {
           <div>
             <p className="text-sm text-gray-600 mb-2">Saldo Disponível</p>
             <h2 className="text-4xl font-display font-bold gradient-text">
-              R$ {user?.balance.toFixed(2) || '0,00'}
+              R$ {formattedBalance}
             </h2>
           </div>
           <div className="flex gap-3">

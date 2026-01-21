@@ -7,11 +7,13 @@
 export type {
   User,
   AuthResponse,
+  TokensResponse,
   LoginDTO,
   RegisterDTO,
   RefreshTokenDTO,
   AuthState,
 } from './auth';
+export { UserRole } from './auth';
 
 // Payment types
 export type {
@@ -22,6 +24,7 @@ export type {
   RechargeRequest,
   RechargeResponse,
   PaymentStatusResponse,
+  BalanceResponse,
 } from './payment';
 
 // Re-export credit types (já existentes)

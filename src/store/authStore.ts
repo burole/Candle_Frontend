@@ -10,6 +10,7 @@ import type { User, AuthResponse } from '@/types';
 interface AuthStore {
   // State
   user: User | null;
+  balance: number; // Saldo mantido separado do User
   accessToken: string | null;
   refreshToken: string | null;
   isAuthenticated: boolean;
@@ -27,6 +28,7 @@ export const useAuthStore = create<AuthStore>()(
     (set, get) => ({
       // Initial state
       user: null,
+      balance: 0,
       accessToken: null,
       refreshToken: null,
       isAuthenticated: false,
@@ -34,7 +36,7 @@ export const useAuthStore = create<AuthStore>()(
       // Login - salva usuário e tokens
       login: (authResponse: AuthResponse) => {
         set({
-          user: authResponse.user,
+          user: authResponse.user || null,
           accessToken: authResponse.accessToken,
           refreshToken: authResponse.refreshToken,
           isAuthenticated: true,
@@ -45,6 +47,7 @@ export const useAuthStore = create<AuthStore>()(
       logout: () => {
         set({
           user: null,
+          balance: 0,
           accessToken: null,
           refreshToken: null,
           isAuthenticated: false,
@@ -63,12 +66,7 @@ export const useAuthStore = create<AuthStore>()(
 
       // Atualizar saldo (usado após consultas e recargas)
       updateBalance: (balance: number) => {
-        const currentUser = get().user;
-        if (currentUser) {
-          set({
-            user: { ...currentUser, balance },
-          });
-        }
+        set({ balance });
       },
 
       // Atualizar tokens (usado no refresh)
@@ -85,6 +83,7 @@ export const useAuthStore = create<AuthStore>()(
       partialize: (state) => ({
         // Só persiste o necessário
         user: state.user,
+        balance: state.balance,
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         isAuthenticated: state.isAuthenticated,
@@ -95,5 +94,6 @@ export const useAuthStore = create<AuthStore>()(
 
 // Helper hooks
 export const useUser = () => useAuthStore((state) => state.user);
+export const useBalance = () => useAuthStore((state) => state.balance);
 export const useIsAuthenticated = () => useAuthStore((state) => state.isAuthenticated);
 export const useAccessToken = () => useAuthStore((state) => state.accessToken);

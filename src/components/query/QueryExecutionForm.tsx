@@ -8,7 +8,7 @@ import { Loader2, Search, AlertCircle } from 'lucide-react';
 import type { QueryType, ExecuteQueryResponse } from '@/types/query';
 import { ValidationService } from '@/lib/consultas/services/ValidationService';
 import { useQueryExecution } from '@/hooks/useQueryExecution';
-import { useUser } from '@/store/authStore';
+import { useBalance } from '@/hooks/useBalance';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,7 +34,7 @@ export function QueryExecutionForm({
   onSuccess,
   className,
 }: QueryExecutionFormProps) {
-  const user = useUser();
+  const { balance, formattedBalance } = useBalance();
   const { executeQuery, isLoading } = useQueryExecution();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -106,7 +106,7 @@ export function QueryExecutionForm({
   };
 
   const currentPrice = queryType.cachedPrice < queryType.price ? queryType.cachedPrice : queryType.price;
-  const hasSufficientBalance = user && user.balance >= currentPrice;
+  const hasSufficientBalance = balance >= currentPrice;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn('space-y-6', className)}>
@@ -163,7 +163,7 @@ export function QueryExecutionForm({
         <div className="p-4 rounded-lg bg-red-50 border border-red-200">
           <p className="text-sm text-red-700 flex items-center gap-2">
             <AlertCircle className="w-4 h-4" />
-            Saldo insuficiente. Seu saldo atual: R$ {user?.balance.toFixed(2) || '0.00'}
+            Saldo insuficiente. Seu saldo atual: R$ {formattedBalance}
           </p>
         </div>
       )}

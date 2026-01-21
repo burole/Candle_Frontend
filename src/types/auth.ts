@@ -3,22 +3,44 @@
  * Tipos relacionados à autenticação e usuário
  */
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  cpf?: string;
-  cnpj?: string;
-  phone?: string;
-  balance: number;
-  createdAt?: string;
-  updatedAt?: string;
+/**
+ * User roles from backend
+ */
+export enum UserRole {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  MASTER = 'MASTER',
 }
 
-export interface AuthResponse {
-  user: User;
+/**
+ * User data returned from /auth/me
+ */
+export interface User {
+  name: string;
+  email: string;
+  role: UserRole;
+  phone?: string;
+}
+
+/**
+ * Response de tokens (usado em register e refresh)
+ */
+export interface TokensResponse {
   accessToken: string;
   refreshToken: string;
+  tokenType: string;
+  expiresIn: number;
+}
+
+/**
+ * Response de autenticação (login pode incluir user)
+ */
+export interface AuthResponse {
+  user?: User;
+  accessToken: string;
+  refreshToken: string;
+  tokenType?: string;
+  expiresIn?: number;
 }
 
 export interface LoginDTO {
