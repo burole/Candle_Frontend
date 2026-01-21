@@ -6,10 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2, Search, AlertCircle } from 'lucide-react';
 import type { QueryType, ExecuteQueryResponse } from '@/types/query';
+import { QueryCategory } from '@/types/query';
 import { ValidationService } from '@/lib/consultas/services/ValidationService';
 import { useQueryExecution } from '@/hooks/useQueryExecution';
 import { useBalance } from '@/hooks/useBalance';
-import { QueryCategory } from '@/types/query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,10 +21,7 @@ interface QueryExecutionFormProps {
   className?: string;
 }
 
-// Dynamic schema based on query type
 const createSchema = (queryType: QueryType) => {
-  // For now, assume input is document (CPF/CNPJ) or generic string
-  // In the future, this could be more sophisticated based on queryType.inputType
   return z.object({
     input: z.string().min(1, 'Campo obrigatório'),
   });
@@ -48,28 +45,113 @@ export function QueryExecutionForm({
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
   const inputValue = watch('input');
 
-  // Validate input based on category
+  // Determine input configuration based on categories
+  const isPerson = queryType.category.includes(QueryCategory.PERSON);
+  const isCompany = queryType.category.includes(QueryCategory.COMPANY);
+  
+  // Logic: 
+  // If Person AND Company -> Both
+  // If Person only -> CPF
+  // If Company only -> CNPJ
+  // Else (e.g. Credit only or other) -> Default to Both if Credit, or generic text
+  const isBoth = isPerson && isCompany;
+  const isCredit = queryType.category.includes(QueryCategory.CREDIT); // Usually implies document
+
+  let label = 'Informação para consulta';
+  let placeholder = 'Digite a informação';
+  let inputMode: 'text' | 'cpf' | 'cnpj' | 'both' = 'text';
+
+  if (isBoth) {
+    label = 'CPF ou CNPJ';
+    placeholder = 'Digite o CPF ou CNPJ';
+    inputMode = 'both';
+  } else if (isPerson) {
+    label = 'CPF';
+    placeholder = '000.000.000-00';
+    inputMode = 'cpf';
+  } else if (isCompany) {
+    label = 'CNPJ';
+    placeholder = '00.000.000/0000-00';
+    inputMode = 'cnpj';
+  } else if (isCredit) {
+    // Fallback for generic credit query without specific person/company tag
+    label = 'CPF ou CNPJ';
+    placeholder = 'Digite o CPF ou CNPJ';
+    inputMode = 'both';
+  }
+
+  // Masking logic
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    
+    if (inputMode === 'cpf' || inputMode === 'cnpj' || inputMode === 'both') {
+      // Remove non-digits
+      const rawValue = value.replace(/\D/g, '');
+      
+      if (inputMode === 'cpf') {
+        value = rawValue
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+          .replace(/(-\d{2})\d+?$/, '$1');
+      } else if (inputMode === 'cnpj') {
+        value = rawValue
+          .replace(/^(\d{2})(\d)/, '$1.$2')
+          .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+          .replace(/\.(\d{3})(\d)/, '.$1/$2')
+          .replace(/(\d{4})(\d)/, '$1-$2')
+          .replace(/(-\d{2})\d+?$/, '$1');
+      } else {
+        // Both: Switch based on length
+        if (rawValue.length <= 11) {
+           value = rawValue
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+            .replace(/(-\d{2})\d+?$/, '$1');
+        } else {
+           value = rawValue
+            .replace(/^(\d{2})(\d)/, '$1.$2')
+            .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+            .replace(/\.(\d{3})(\d)/, '.$1/$2')
+            .replace(/(\d{4})(\d)/, '$1-$2')
+            .replace(/(-\d{2})\d+?$/, '$1');
+        }
+      }
+    }
+    
+    setValue('input', value);
+    if (validationError) setValidationError(null);
+  };
+
   const validateInput = (input: string): { isValid: boolean; error?: string } => {
-    // For CREDIT category, validate CPF/CNPJ
-    if (queryType.category.includes(QueryCategory.CREDIT)) {
+    if (inputMode !== 'text') {
       const cleaned = ValidationService.cleanDocument(input);
       const docType = ValidationService.getDocumentType(cleaned);
 
       if (docType === 'invalid') {
-        return { isValid: false, error: 'CPF ou CNPJ inválido' };
+        return { isValid: false, error: 'Documento inválido' };
+      }
+      
+      // Enforce type match if specific
+      if (inputMode === 'cpf' && docType !== 'cpf') {
+         return { isValid: false, error: 'Por favor, insira um CPF válido' };
+      }
+      if (inputMode === 'cnpj' && docType !== 'cnpj') {
+         return { isValid: false, error: 'Por favor, insira um CNPJ válido' };
       }
 
       const result = ValidationService.validateDocument(cleaned, docType);
       return result;
     }
 
-    // For other categories, just check if not empty
     if (!input || input.trim() === '') {
       return { isValid: false, error: 'Campo obrigatório' };
     }
@@ -78,7 +160,6 @@ export function QueryExecutionForm({
   };
 
   const onSubmit = async (data: FormData) => {
-    // Validate input
     const validation = validateInput(data.input);
     if (!validation.isValid) {
       setValidationError(validation.error || 'Entrada inválida');
@@ -87,14 +168,16 @@ export function QueryExecutionForm({
 
     setValidationError(null);
 
-    // Show confirmation if not shown yet
     if (!showConfirmation) {
       setShowConfirmation(true);
       return;
     }
 
-    // Execute query
-    const result = await executeQuery(queryType.code, data.input);
+    const cleanedInput = inputMode !== 'text' 
+      ? ValidationService.cleanDocument(data.input) 
+      : data.input;
+
+    const result = await executeQuery(queryType.code, cleanedInput);
 
     if (result) {
       onSuccess?.(result);
@@ -109,23 +192,29 @@ export function QueryExecutionForm({
   const currentPrice = queryType.cachedPrice < queryType.price ? queryType.cachedPrice : queryType.price;
   const hasSufficientBalance = balance >= currentPrice;
 
+  // React Hook Form requires manual registration for controlled input with custom onChange
+  const { ref, ...restRegister } = register('input');
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn('space-y-6', className)}>
       {/* Input field */}
       <div className="space-y-2">
         <Label htmlFor="input" className="text-sm font-medium text-gray-700">
-          {queryType.category.includes(QueryCategory.CREDIT) ? 'CPF ou CNPJ' : 'Documento/Informação'}
+          {label}
         </Label>
         <Input
           id="input"
-          {...register('input')}
-          placeholder={
-            queryType.category.includes(QueryCategory.CREDIT)
-              ? 'Digite o CPF ou CNPJ'
-              : 'Digite a informação para consulta'
-          }
-          className="h-12"
+          {...restRegister}
+          ref={ref}
+          onChange={(e) => {
+            handleInputChange(e);
+            restRegister.onChange(e); // Propagate to hook form
+          }}
+          placeholder={placeholder}
+          maxLength={inputMode === 'cpf' ? 14 : inputMode === 'cnpj' ? 18 : 18}
+          className="h-12 text-lg font-medium tracking-wide"
           disabled={isLoading || showConfirmation}
+          autoComplete="off"
         />
         {errors.input && (
           <p className="text-sm text-red-600 flex items-center gap-1">
