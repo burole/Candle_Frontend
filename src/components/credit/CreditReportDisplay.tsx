@@ -71,102 +71,108 @@ export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
       </Card>
 
       {/* Personal Information */}
-      <Card className="glass p-6 border border-white/40">
-        <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <User className="h-5 w-5 text-blue-500" />
-          Informações Pessoais
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm text-gray-600">Nome</p>
-            <p className="font-semibold text-gray-900">{report.person.name}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600">Documento</p>
-            <p className="font-mono font-semibold text-gray-900">
-              {report.person.document}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600">Data de Nascimento</p>
-            <p className="font-semibold text-gray-900">
-              {new Date(report.person.birthDate).toLocaleDateString('pt-BR')}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600">Email</p>
-            <p className="font-semibold text-gray-900">{report.person.email || 'N/A'}</p>
-          </div>
-          {report.person.motherName && (
+      {report.person && (
+        <Card className="glass p-6 border border-white/40">
+          <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <User className="h-5 w-5 text-blue-500" />
+            Informações Pessoais
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-gray-600">Nome da Mãe</p>
-              <p className="font-semibold text-gray-900">{report.person.motherName}</p>
+              <p className="text-sm text-gray-600">Nome</p>
+              <p className="font-semibold text-gray-900">{report.person.name || 'N/A'}</p>
             </div>
-          )}
-          {report.person.mainEconomicActivity && (
             <div>
-              <p className="text-sm text-gray-600">Atividade Econômica</p>
-              <p className="font-semibold text-gray-900">
-                {report.person.mainEconomicActivity}
+              <p className="text-sm text-gray-600">Documento</p>
+              <p className="font-mono font-semibold text-gray-900">
+                {report.person.document || 'N/A'}
               </p>
             </div>
-          )}
-        </div>
-      </Card>
+            {report.person.birthDate && (
+              <div>
+                <p className="text-sm text-gray-600">Data de Nascimento</p>
+                <p className="font-semibold text-gray-900">
+                  {new Date(report.person.birthDate).toLocaleDateString('pt-BR')}
+                </p>
+              </div>
+            )}
+            <div>
+              <p className="text-sm text-gray-600">Email</p>
+              <p className="font-semibold text-gray-900">{report.person.email || 'N/A'}</p>
+            </div>
+            {report.person.motherName && (
+              <div>
+                <p className="text-sm text-gray-600">Nome da Mãe</p>
+                <p className="font-semibold text-gray-900">{report.person.motherName}</p>
+              </div>
+            )}
+            {report.person.mainEconomicActivity && (
+              <div>
+                <p className="text-sm text-gray-600">Atividade Econômica</p>
+                <p className="font-semibold text-gray-900">
+                  {report.person.mainEconomicActivity}
+                </p>
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
 
       {/* Financial Summary */}
-      <Card className="glass p-6 border border-white/40">
-        <h3 className="text-lg font-display font-semibold text-gray-900 mb-4">
-          Resumo Financeiro
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
-            <p className="text-2xl font-bold text-red-600">
-              {report.financialSummary.totalDebts}
-            </p>
-            <p className="text-sm text-gray-600 mt-1">Débitos</p>
-          </div>
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
-            <p className="text-2xl font-bold text-orange-600">
-              {report.financialSummary.totalProtests}
-            </p>
-            <p className="text-sm text-gray-600 mt-1">Protestos</p>
-          </div>
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
-            <p className="text-2xl font-bold text-blue-600">
-              {report.financialSummary.totalQueries}
-            </p>
-            <p className="text-sm text-gray-600 mt-1">Consultas</p>
-          </div>
-          {isPremiumReport(report) || isCorporateReport(report) ? (
-            <>
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <p className="text-2xl font-bold text-purple-600">
-                  {report.financialSummary.totalCadin || 0}
-                </p>
-                <p className="text-sm text-gray-600 mt-1">CADIN</p>
-              </div>
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <p className="text-2xl font-bold text-yellow-600">
-                  {report.financialSummary.totalCcf || 0}
-                </p>
-                <p className="text-sm text-gray-600 mt-1">CCF</p>
-              </div>
-            </>
-          ) : null}
-          {isCorporateReport(report) && (
+      {report.financialSummary && (
+        <Card className="glass p-6 border border-white/40">
+          <h3 className="text-lg font-display font-semibold text-gray-900 mb-4">
+            Resumo Financeiro
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <p className="text-2xl font-bold text-pink-600">
-                {report.financialSummary.totalContumacia || 0}
+              <p className="text-2xl font-bold text-red-600">
+                {report.financialSummary.totalDebts ?? 0}
               </p>
-              <p className="text-sm text-gray-600 mt-1">Contumácia</p>
+              <p className="text-sm text-gray-600 mt-1">Débitos</p>
             </div>
-          )}
-        </div>
-      </Card>
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <p className="text-2xl font-bold text-orange-600">
+                {report.financialSummary.totalProtests ?? 0}
+              </p>
+              <p className="text-sm text-gray-600 mt-1">Protestos</p>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <p className="text-2xl font-bold text-blue-600">
+                {report.financialSummary.totalQueries ?? 0}
+              </p>
+              <p className="text-sm text-gray-600 mt-1">Consultas</p>
+            </div>
+            {isPremiumReport(report) || isCorporateReport(report) ? (
+              <>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <p className="text-2xl font-bold text-purple-600">
+                    {report.financialSummary.totalCadin ?? 0}
+                  </p>
+                  <p className="text-sm text-gray-600 mt-1">CADIN</p>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <p className="text-2xl font-bold text-yellow-600">
+                    {report.financialSummary.totalCcf ?? 0}
+                  </p>
+                  <p className="text-sm text-gray-600 mt-1">CCF</p>
+                </div>
+              </>
+            ) : null}
+            {isCorporateReport(report) && (
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <p className="text-2xl font-bold text-pink-600">
+                  {report.financialSummary.totalContumacia ?? 0}
+                </p>
+                <p className="text-sm text-gray-600 mt-1">Contumácia</p>
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
 
       {/* Debts */}
-      {report.debts.length > 0 && (
+      {report.debts && report.debts.length > 0 && (
         <Card className="glass p-6 border border-white/40">
           <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <TrendingDown className="h-5 w-5 text-red-500" />
@@ -210,7 +216,7 @@ export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
       )}
 
       {/* Protests */}
-      {report.protests.length > 0 && (
+      {report.protests && report.protests.length > 0 && (
         <Card className="glass p-6 border border-white/40">
           <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-orange-500" />
@@ -249,7 +255,7 @@ export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
 
       {/* CADIN - Premium/Corporate */}
       {(isPremiumReport(report) || isCorporateReport(report)) &&
-        report.cadin.length > 0 && (
+        report.cadin && report.cadin.length > 0 && (
           <Card className="glass p-6 border border-white/40">
             <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <FileText className="h-5 w-5 text-purple-500" />
@@ -288,7 +294,7 @@ export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
 
       {/* CCF - Premium/Corporate */}
       {(isPremiumReport(report) || isCorporateReport(report)) &&
-        report.ccf.length > 0 && (
+        report.ccf && report.ccf.length > 0 && (
           <Card className="glass p-6 border border-white/40">
             <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <FileText className="h-5 w-5 text-yellow-500" />
@@ -328,7 +334,7 @@ export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
         )}
 
       {/* Contumacia - Corporate only */}
-      {isCorporateReport(report) && report.contumacia.length > 0 && (
+      {isCorporateReport(report) && report.contumacia && report.contumacia.length > 0 && (
         <Card className="glass p-6 border border-white/40">
           <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-pink-500" />
@@ -364,7 +370,7 @@ export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
       )}
 
       {/* Queries */}
-      {report.queries.length > 0 && (
+      {report.queries && report.queries.length > 0 && (
         <Card className="glass p-6 border border-white/40">
           <h3 className="text-lg font-display font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Eye className="h-5 w-5 text-blue-500" />

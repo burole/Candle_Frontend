@@ -3,7 +3,7 @@
  * Serviço para executar consultas e buscar histórico
  */
 
-import httpClient from '@/lib/api/httpClient';
+import { serverHttpClient } from '@/lib/api/serverHttpClient';
 import type {
   ExecuteQueryRequest,
   ExecuteQueryResponse,
@@ -16,7 +16,7 @@ export class QueryExecutionService {
    * Executar uma consulta
    */
   static async executeQuery(data: ExecuteQueryRequest): Promise<ExecuteQueryResponse> {
-    const response = await httpClient.post<ExecuteQueryResponse>('/queries/execute', data);
+    const response = await serverHttpClient.post<ExecuteQueryResponse>('/queries/execute', data);
     return response.data;
   }
 
@@ -24,7 +24,7 @@ export class QueryExecutionService {
    * Buscar histórico de consultas
    */
   static async getQueryHistory(page = 1, limit = 20): Promise<QueryHistoryResponse> {
-    const response = await httpClient.get<QueryHistoryResponse>('/queries', {
+    const response = await serverHttpClient.get<QueryHistoryResponse>('/queries', {
       params: { page, limit },
     });
     return response.data;
@@ -34,7 +34,7 @@ export class QueryExecutionService {
    * Buscar consulta por ID
    */
   static async getQueryById(id: string): Promise<QueryHistoryEntry> {
-    const response = await httpClient.get<QueryHistoryEntry>(`/queries/${id}`);
+    const response = await serverHttpClient.get<QueryHistoryEntry>(`/queries/${id}`);
     return response.data;
   }
 }

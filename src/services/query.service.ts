@@ -3,7 +3,7 @@
  * Serviço de consultas de crédito - comunicação com backend
  */
 
-import httpClient from '@/lib/api/httpClient';
+import { serverHttpClient } from '@/lib/api/serverHttpClient';
 import type {
   CreateQueryRequest,
   CreateQueryResponse,
@@ -18,7 +18,7 @@ export class QueryService {
    * Executar consulta de crédito CPF (Standard)
    */
   static async assessCreditCpf(cpf: string): Promise<CreateQueryResponse> {
-    const response = await httpClient.post<CreateQueryResponse>('/queries/assess-cpf', {
+    const response = await serverHttpClient.post<CreateQueryResponse>('/queries/assess-cpf', {
       queryType: 'CPF_CREDIT',
       document: cpf,
     });
@@ -29,7 +29,7 @@ export class QueryService {
    * Executar consulta Premium (CPF ou CNPJ)
    */
   static async assessPremium(document: string): Promise<CreateQueryResponse> {
-    const response = await httpClient.post<CreateQueryResponse>('/queries/assess-premium', {
+    const response = await serverHttpClient.post<CreateQueryResponse>('/queries/assess-premium', {
       queryType: 'PREMIUM_CREDIT',
       document,
     });
@@ -40,7 +40,7 @@ export class QueryService {
    * Executar consulta Corporate (CNPJ)
    */
   static async assessCorporate(cnpj: string): Promise<CreateQueryResponse> {
-    const response = await httpClient.post<CreateQueryResponse>('/queries/assess-corporate', {
+    const response = await serverHttpClient.post<CreateQueryResponse>('/queries/assess-corporate', {
       queryType: 'CORPORATE_CREDIT',
       document: cnpj,
     });
@@ -51,7 +51,7 @@ export class QueryService {
    * Executar consulta genérica
    */
   static async createQuery(data: CreateQueryRequest): Promise<CreateQueryResponse> {
-    const response = await httpClient.post<CreateQueryResponse>('/queries', data);
+    const response = await serverHttpClient.post<CreateQueryResponse>('/queries', data);
     return response.data;
   }
 
@@ -62,7 +62,7 @@ export class QueryService {
     page = 1,
     limit = 20
   ): Promise<{ queries: QueryHistoryEntry[]; total: number; pages: number }> {
-    const response = await httpClient.get<{
+    const response = await serverHttpClient.get<{
       queries: QueryHistoryEntry[];
       total: number;
       pages: number;
@@ -76,7 +76,7 @@ export class QueryService {
    * Buscar consulta por ID
    */
   static async getQueryById(id: string): Promise<QueryHistoryEntry> {
-    const response = await httpClient.get<QueryHistoryEntry>(`/queries/${id}`);
+    const response = await serverHttpClient.get<QueryHistoryEntry>(`/queries/${id}`);
     return response.data;
   }
 
@@ -84,7 +84,7 @@ export class QueryService {
    * Buscar consulta por protocolo
    */
   static async getQueryByProtocol(protocol: string): Promise<QueryHistoryEntry> {
-    const response = await httpClient.get<QueryHistoryEntry>(`/queries/protocol/${protocol}`);
+    const response = await serverHttpClient.get<QueryHistoryEntry>(`/queries/protocol/${protocol}`);
     return response.data;
   }
 
@@ -92,7 +92,7 @@ export class QueryService {
    * Download de relatório em PDF
    */
   static async downloadReportPdf(queryId: string): Promise<Blob> {
-    const response = await httpClient.get(`/queries/${queryId}/pdf`, {
+    const response = await serverHttpClient.get(`/queries/${queryId}/pdf`, {
       responseType: 'blob',
     });
     return response.data;

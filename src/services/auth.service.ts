@@ -3,7 +3,7 @@
  * Serviço de autenticação - comunicação com backend
  */
 
-import httpClient from '@/lib/api/httpClient';
+import { serverHttpClient } from '@/lib/api/serverHttpClient';
 import type {
   AuthResponse,
   TokensResponse,
@@ -17,7 +17,7 @@ export class AuthService {
    * Login de usuário
    */
   static async login(credentials: LoginDTO): Promise<AuthResponse> {
-    const response = await httpClient.post<AuthResponse>('/auth/login', credentials);
+    const response = await serverHttpClient.post<AuthResponse>('/auth/login', credentials);
     return response.data;
   }
 
@@ -26,7 +26,7 @@ export class AuthService {
    * Backend retorna apenas tokens, sem user
    */
   static async register(userData: RegisterDTO): Promise<TokensResponse> {
-    const response = await httpClient.post<TokensResponse>('/auth/register', userData);
+    const response = await serverHttpClient.post<TokensResponse>('/auth/register', userData);
     return response.data;
   }
 
@@ -35,7 +35,7 @@ export class AuthService {
    */
   static async getMe(token?: string): Promise<User> {
     const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
-    const response = await httpClient.get<User>('/auth/me', config);
+    const response = await serverHttpClient.get<User>('/auth/me', config);
     return response.data;
   }
 
@@ -43,7 +43,7 @@ export class AuthService {
    * Refresh token
    */
   static async refreshToken(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
-    const response = await httpClient.post<{ accessToken: string; refreshToken: string }>(
+    const response = await serverHttpClient.post<{ accessToken: string; refreshToken: string }>(
       '/auth/refresh',
       { refreshToken }
     );
@@ -54,14 +54,14 @@ export class AuthService {
    * Logout
    */
   static async logout(): Promise<void> {
-    await httpClient.post('/auth/logout');
+    await serverHttpClient.post('/auth/logout');
   }
 
   /**
    * Alterar senha
    */
   static async changePassword(currentPassword: string, newPassword: string): Promise<void> {
-    await httpClient.patch('/users/me/password', {
+    await serverHttpClient.patch('/users/me/password', {
       currentPassword,
       newPassword,
     });
@@ -71,7 +71,7 @@ export class AuthService {
    * Atualizar perfil do usuário
    */
   static async updateProfile(data: Partial<User>): Promise<User> {
-    const response = await httpClient.patch<User>('/users/me', data);
+    const response = await serverHttpClient.patch<User>('/users/me', data);
     return response.data;
   }
 }

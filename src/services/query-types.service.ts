@@ -3,7 +3,7 @@
  * Serviço para buscar tipos de consulta disponíveis
  */
 
-import httpClient from '@/lib/api/httpClient';
+import { serverHttpClient } from '@/lib/api/serverHttpClient';
 import type { QueryType, QueryCategory } from '@/types/query';
 
 export class QueryTypesService {
@@ -11,7 +11,7 @@ export class QueryTypesService {
    * Buscar todos os tipos de consulta disponíveis (endpoint público)
    */
   static async getAllQueryTypes(): Promise<QueryType[]> {
-    const response = await httpClient.get<QueryType[]>('/query-types');
+    const response = await serverHttpClient.get<QueryType[]>('/query-types');
     return response.data;
   }
 
@@ -65,7 +65,7 @@ export class QueryTypesService {
    * Contar query types por categoria (endpoint otimizado)
    */
   static async getCountsByCategory(): Promise<Record<QueryCategory, number>> {
-    const response = await httpClient.get<Record<QueryCategory, number>>('/query-types/counts-by-category');
+    const response = await serverHttpClient.get<Record<QueryCategory, number>>('/query-types/counts-by-category');
     return response.data;
   }
 }
