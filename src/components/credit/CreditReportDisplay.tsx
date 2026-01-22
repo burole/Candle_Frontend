@@ -34,6 +34,15 @@ function isCorporateReport(
 }
 
 export function CreditReportDisplay({ report }: CreditReportDisplayProps) {
+  // Guard against undefined report
+  if (!report) {
+    return (
+      <Card className="glass p-6 border border-white/40">
+        <p className="text-gray-500 text-center">Dados do relatório não disponíveis</p>
+      </Card>
+    );
+  }
+
   const isRestricted = report.status === 'RESTRICTED';
 
   return (
