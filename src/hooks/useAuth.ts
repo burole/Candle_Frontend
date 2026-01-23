@@ -31,7 +31,7 @@ export function useAuth() {
         if (result.success && result.data) {
           setAuth(result.data);
           toast.success('Login realizado com sucesso!');
-          router.push('/dashboard');
+          router.push('/');
           return { success: true };
         }
 
@@ -60,7 +60,7 @@ export function useAuth() {
         if (result.success && result.data) {
           setAuth(result.data);
           toast.success('Conta criada com sucesso!');
-          router.push('/dashboard');
+          router.push('/');
           return { success: true };
         }
 

@@ -21,7 +21,7 @@ const authRoutes = ['/login', '/register'];
 /**
  * Proxy middleware para proteção de rotas
  * Redireciona usuários não autenticados para /login
- * Redireciona usuários autenticados das páginas de auth para /dashboard
+ * Redireciona usuários autenticados das páginas de auth para /
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

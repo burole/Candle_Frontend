@@ -115,10 +115,10 @@ export default function RechargePage() {
         // Credit Card: check instant result
         if (result.data.status === 'CONFIRMED' || result.data.status === 'RECEIVED') {
           toast.success('Recarga realizada com sucesso!');
-          router.push('/dashboard/carteira');
+          router.push('/carteira');
         } else if (result.data.status === 'PENDING') {
           toast.info('Pagamento em processamento.');
-          router.push('/dashboard/carteira');
+          router.push('/carteira');
         } else {
           toast.error('Pagamento não aprovado. Tente novamente.');
         }

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Lock, Loader2 } from 'lucide-react';
+import { ShieldCheck, Lock, Loader2, Search } from 'lucide-react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { loginSchema } from '@/validators/auth.schemas';
@@ -71,16 +71,27 @@ export default function LoginPage() {
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-3 mb-4"
           >
-            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white" opacity="0.9"/>
-                <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
+
+        <Link href="/" className="flex-shrink-0">
+          <motion.div
+            className="flex items-center gap-4 group"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+              <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Search className="h-6 w-6 text-white stroke-[2.5px]" />
             </div>
-            <span className="font-display text-4xl font-extrabold gradient-text">
-              Candle
-            </span>
+            <div className="flex flex-col">
+              <span className="text-2xl font-display font-black tracking-tight text-slate-900 leading-none group-hover:text-blue-900 transition-colors">
+                Consulta<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Ai</span>
+              </span>
+              <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 leading-none mt-1 group-hover:text-blue-400 transition-colors">
+                Platform
+              </span>
+            </div>
+          </motion.div>
+        </Link>
           </motion.div>
           <p className="text-gray-600 font-medium">
             Consultas de Crédito Inteligentes

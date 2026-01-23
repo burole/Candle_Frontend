@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Lock, Loader2 } from 'lucide-react';
+import { ShieldCheck, Lock, Loader2, Search } from 'lucide-react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { registerSchema, type RegisterFormData } from '@/validators/auth.schemas';
@@ -128,27 +128,27 @@ export default function RegisterPage() {
         transition={{ duration: 0.6 }}
       >
         {/* Logo Section */}
-        <div className="text-center mb-8">
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-3 mb-2"
-          >
-            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white" opacity="0.9"/>
-                <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span className="font-display text-3xl font-extrabold gradient-text">
-              Candle
-            </span>
-          </motion.div>
-          <p className="text-gray-600 font-medium text-sm">
-            Crie sua conta em segundos
-          </p>
+        <div className="flex justify-center mb-10">
+          <Link href="/" className="flex-shrink-0 relative group">
+            <motion.div
+              className="flex items-center gap-4"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 shadow-xl shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-500">
+                <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Search className="h-7 w-7 text-white stroke-[2.5px]" />
+              </div>
+              <div className="flex flex-col justify-center">
+                <span className="text-3xl font-display font-black tracking-tight text-slate-900 leading-none group-hover:text-blue-900 transition-colors duration-300">
+                  Consulta<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Ai</span>
+                </span>
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-400 leading-none mt-1.5 group-hover:text-blue-500 transition-colors duration-300 pl-0.5">
+                  Platform
+                </span>
+              </div>
+            </motion.div>
+          </Link>
         </div>
 
         {/* Register Card */}

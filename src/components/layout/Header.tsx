@@ -173,7 +173,7 @@ export function Header() {
                 </Button>
               </Link>
               <Link href="/register">
-                <Button className="rounded-full bg-slate-900 hover:bg-black text-white px-6 font-bold shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5">
+                <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-6 font-bold shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5">
                   Criar Conta
                 </Button>
               </Link>
