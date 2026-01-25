@@ -19,26 +19,6 @@ const navigation = [
     href: '/dashboard',
     icon: LayoutDashboard,
   },
-  {
-    name: 'Consultas',
-    href: '/consulta',
-    icon: Search,
-  },
-  {
-    name: 'Carteira',
-    href: '/dashboard/carteira',
-    icon: Wallet,
-  },
-  {
-    name: 'Histórico',
-    href: '/dashboard/historico',
-    icon: FileText,
-  },
-  {
-    name: 'Configurações',
-    href: '/dashboard/configuracoes',
-    icon: Settings,
-  },
 ];
 
 export function Sidebar() {

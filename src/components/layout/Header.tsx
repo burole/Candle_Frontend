@@ -128,13 +128,6 @@ export function Header() {
                   </DropdownMenuLabel>
                   
                   <div className="space-y-1">
-                    {(user?.role === 'ADMIN' || user?.role === 'MASTER') && (
-                      <DropdownMenuItem onClick={() => router.push('/dashboard')} className="rounded-xl cursor-pointer py-2.5 focus:bg-blue-50 focus:text-blue-700 font-medium">
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>Dashboard</span>
-                      </DropdownMenuItem>
-                    )}
-                    
                     <DropdownMenuItem onClick={() => router.push('/carteira')} className="rounded-xl cursor-pointer py-2.5 focus:bg-blue-50 focus:text-blue-700 font-medium">
                       <Wallet className="mr-2 h-4 w-4" />
                       <span>Carteira</span>
@@ -151,12 +144,18 @@ export function Header() {
                     </DropdownMenuItem>
                   </div>
                   
-                  <DropdownMenuSeparator className="my-2 bg-slate-100" />
+                  {(user?.role === 'ADMIN' || user?.role === 'MASTER') && (
+                    <DropdownMenuSeparator className="my-2 bg-slate-100" />
+                  )}
 
-                  <DropdownMenuItem className="rounded-xl cursor-pointer py-2.5 focus:bg-slate-50 font-medium text-slate-600">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Configurações</span>
-                  </DropdownMenuItem>
+                  {(user?.role === 'ADMIN' || user?.role === 'MASTER') && (
+                    <DropdownMenuItem onClick={() => router.push('/backoffice')} className="rounded-xl cursor-pointer py-2.5 focus:bg-slate-50 font-medium text-slate-600">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      <span>Backoffice</span>
+                    </DropdownMenuItem>
+                  )}
+
+                  <DropdownMenuSeparator className="my-2 bg-slate-100" />
 
                   <DropdownMenuItem onClick={handleLogout} className="rounded-xl text-red-600 focus:text-red-700 focus:bg-red-50 cursor-pointer py-2.5 font-medium mt-1">
                     <LogOut className="mr-2 h-4 w-4" />

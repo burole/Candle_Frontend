@@ -69,7 +69,7 @@ export default function TransactionPage() {
         if (result.data.status === 'CONFIRMED' || result.data.status === 'RECEIVED') {
           clearInterval(interval);
           toast.success('Pagamento recebido!');
-          router.push('/dashboard/carteira');
+          router.push('/carteira');
         }
       }
     }, 5000);
@@ -145,7 +145,7 @@ export default function TransactionPage() {
             <p className="text-gray-400 mb-8">
               O saldo já está disponível na sua carteira.
             </p>
-            <Button onClick={() => router.push('/dashboard/carteira')} variant="primary" className="h-14 px-8">
+            <Button onClick={() => router.push('/carteira')} variant="primary" className="h-14 px-8">
               Ver minha Carteira
             </Button>
           </div>
