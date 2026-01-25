@@ -26,6 +26,32 @@ export interface DashboardOverview {
     healthy: number;
     unhealthy: number;
   };
+  totalProfit: number;
+  profitToday: number;
+  profitThisMonth: number;
+}
+
+export interface DashboardQueries {
+  totalQueries: number;
+  queriesByStatus: {
+    SUCCESS: number;
+    FAILED: number;
+    PENDING: number;
+    PROCESSING: number;
+  };
+  cacheHitRate: number;
+  totalRevenue: number;
+  totalCost: number;
+  totalProfit: number;
+  topQueryTypes: Array<{
+    id: string;
+    code: string;
+    name: string;
+    totalQueries: number;
+    revenue: number;
+    cost: number;
+    profit: number;
+  }>;
 }
 
 export interface RevenueStats {
@@ -59,9 +85,9 @@ export interface ProviderStats {
     name: string;
     isActive: boolean;
     priority: number;
-    avgResponseTime: number;
-    successRate: number;
-    lastHealthCheck: string;
+    avgResponseTime: number | null;
+    successRate: number | null;
+    lastHealthCheck: string | null;
     lastErrorAt: string | null;
     healthStatus: 'healthy' | 'degraded' | 'unhealthy' | 'unknown';
     queryTypesCount: number;

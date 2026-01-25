@@ -10,7 +10,8 @@ import type {
   QueryType,
   QueryTypeFilters,
   AdminTransaction,
-  TransactionFilters
+  TransactionFilters,
+  DashboardQueries
 } from '@/types/admin';
 import type { UserRole } from '@/types/auth';
 
@@ -30,6 +31,11 @@ export const AdminService = {
 
   getProviderStats: async (): Promise<ProviderStats> => {
     const response = await serverHttpClient.get<ProviderStats>(`${BASE_URL}/dashboard/providers`);
+    return response.data;
+  },
+
+  getDashboardQueries: async (): Promise<DashboardQueries> => {
+    const response = await serverHttpClient.get<DashboardQueries>(`${BASE_URL}/dashboard/queries`);
     return response.data;
   },
 

@@ -11,7 +11,8 @@ import type {
   AdminTransaction,
   TransactionFilters,
   QueryType,
-  QueryTypeFilters
+  QueryTypeFilters,
+  DashboardQueries
 } from '@/types/admin';
 import type { ActionState } from './auth.actions';
 
@@ -52,6 +53,16 @@ export async function getProviderStatsAction(): Promise<ActionState<ProviderStat
   } catch (error: any) {
       console.error('getProviderStatsAction error:', error);
       return { success: false, error: 'Erro ao carregar status de providers' };
+  }
+}
+
+export async function getDashboardQueriesAction(): Promise<ActionState<DashboardQueries>> {
+  try {
+    const data = await AdminService.getDashboardQueries();
+    return { success: true, data };
+  } catch (error: any) {
+    console.error('getDashboardQueriesAction error:', error);
+    return { success: false, error: 'Erro ao carregar estatísticas de consultas' };
   }
 }
 
