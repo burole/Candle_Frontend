@@ -93,7 +93,7 @@ export class PaymentService {
    * Buscar saldo do usuário
    */
   static async getBalance(): Promise<{ balance: number }> {
-    const response = await serverHttpClient.get<{ balance: number }>('/users/me/balance');
-    return response.data;
+    const response = await serverHttpClient.get<{ available: number }>('/balance');
+    return { balance: response.data.available };
   }
 }
