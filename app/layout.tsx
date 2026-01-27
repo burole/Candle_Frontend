@@ -22,8 +22,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Candle",
-  description: "Consulta de CPF",
+  title: "ConsultaAi",
+  description: "Consultas de Crédito Inteligentes",
+  keywords: ["ConsultaAi", "Consultas de Crédito", "Consultas de Crédito Inteligentes"],
 };
 
 export default function RootLayout({
