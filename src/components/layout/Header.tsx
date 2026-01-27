@@ -207,7 +207,7 @@ export function Header() {
            {/* Mobile menu content same as before but styled - abbreviated for brevity */}
            <nav className="flex flex-col gap-1 p-2">
              {/* ... Mobile links ... */}
-             {isAuthenticated && (
+             {isAuthenticated ? (
                 <>
                  <Link href="/carteira" onClick={() => setIsMenuOpen(false)} className="flex items-center p-3 rounded-xl hover:bg-blue-50 text-slate-700 font-medium">
                     <Wallet className="w-5 h-5 mr-3 text-blue-500" /> Carteira
@@ -222,6 +222,19 @@ export function Header() {
                     <LogOut className="w-5 h-5 mr-3" /> Sair
                  </button>
                 </>
+             ) : (
+                <div className="flex flex-col gap-3 p-2">
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)} className="w-full">
+                    <Button variant="ghost" className="w-full rounded-xl h-12 text-slate-600 hover:text-blue-600 hover:bg-blue-50 font-bold border border-slate-200">
+                      Entrar
+                    </Button>
+                  </Link>
+                  <Link href="/register" onClick={() => setIsMenuOpen(false)} className="w-full">
+                    <Button className="w-full rounded-xl h-12 bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-600/20">
+                      Criar Conta
+                    </Button>
+                  </Link>
+                </div>
              )}
            </nav>
         </div>
