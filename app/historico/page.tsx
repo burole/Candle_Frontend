@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, FileText, Eye, Download, X, Zap, Filter } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Search, FileText, Eye, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useQueryExecution } from '@/hooks/useQueryExecution';
-import { QueryResultDisplay } from '@/components/query';
 import { Card, Button, Badge } from '@/components/candle';
 import { Header, Footer } from '@/components/layout';
 import {
@@ -24,13 +24,13 @@ import {
 } from "@/components/ui/select";
 import { QueryCategory, type QueryHistoryEntry } from '@/types/query';
 import { getCategoryConfig } from '@/constants/query-categories';
+import { getPriorityCategory } from '@/lib/utils';
 
 export default function HistoricoPage() {
+  const router = useRouter();
   const { getHistory, isLoading } = useQueryExecution();
   const [queries, setQueries] = useState<QueryHistoryEntry[]>([]);
   const [filteredQueries, setFilteredQueries] = useState<QueryHistoryEntry[]>([]);
-  const [selectedQuery, setSelectedQuery] = useState<QueryHistoryEntry | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<QueryCategory | 'all'>('all');
 
   // Load query history
@@ -58,8 +58,7 @@ export default function HistoricoPage() {
   }, [categoryFilter, queries]);
 
   const handleViewQuery = (query: QueryHistoryEntry) => {
-    setSelectedQuery(query);
-    setIsModalOpen(true);
+    router.push(`/consulta/${query.id}`);
   };
 
   const totalSpent = filteredQueries.reduce((sum, q) => sum + q.price, 0);
@@ -209,7 +208,7 @@ export default function HistoricoPage() {
                 </TableHeader>
                 <TableBody>
                   {filteredQueries.map((query) => {
-                    const mainCategory = query.queryType.category.length > 0 ? query.queryType.category[0] : QueryCategory.OTHER;
+                    const mainCategory = getPriorityCategory(query.queryType.category);
                     const categoryConfig = getCategoryConfig(mainCategory);
 
                     return (
@@ -284,59 +283,6 @@ export default function HistoricoPage() {
             </div>
           </div>
 
-          {/* View Report Modal - Premium Glass Style */}
-          {isModalOpen && selectedQuery && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md overflow-hidden animate-fade-in">
-              <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col glass-strong rounded-3xl shadow-2xl animate-scale-in border border-white/50">
-                
-                {/* Modal Header */}
-                <div className="flex-none p-6 border-b border-gray-200/50 bg-white/50 backdrop-blur-md flex items-center justify-between rounded-t-3xl">
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/10 rounded-xl">
-                      <FileText className="h-6 w-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl font-display font-bold text-gray-900">
-                        Detalhes da Consulta
-                      </h2>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-sm font-medium text-gray-500">Protocolo:</span>
-                        <span className="font-mono text-sm bg-gray-100 px-2 py-0.5 rounded text-gray-700">{selectedQuery.id}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition-colors"
-                  >
-                    <X className="h-6 w-6" />
-                  </button>
-                </div>
-
-                {/* Modal Content - Scrollable */}
-                <div className="flex-1 overflow-y-auto p-8 bg-white/40">
-                  <QueryResultDisplay query={selectedQuery} />
-                </div>
-
-                {/* Modal Footer */}
-                <div className="flex-none p-6 border-t border-gray-200/50 bg-white/50 backdrop-blur-md flex justify-end gap-3 rounded-b-3xl">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => setIsModalOpen(false)}
-                    className="border-gray-300 text-gray-700 hover:bg-gray-50"
-                  >
-                    Fechar
-                  </Button>
-                  <Button 
-                    className="bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/20"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Baixar PDF
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </main>
       <Footer />

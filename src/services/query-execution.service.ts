@@ -9,6 +9,7 @@ import type {
   ExecuteQueryResponse,
   QueryHistoryResponse,
   QueryHistoryEntry,
+  QueryByIdResponse,
 } from '@/types/query';
 
 export class QueryExecutionService {
@@ -33,8 +34,8 @@ export class QueryExecutionService {
   /**
    * Buscar consulta por ID
    */
-  static async getQueryById(id: string): Promise<QueryHistoryEntry> {
-    const response = await serverHttpClient.get<QueryHistoryEntry>(`/queries/${id}`);
+  static async getQueryById(id: string): Promise<QueryByIdResponse> {
+    const response = await serverHttpClient.get<QueryByIdResponse>(`/queries/${id}`);
     return response.data;
   }
 }

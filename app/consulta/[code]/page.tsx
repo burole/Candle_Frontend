@@ -1,58 +1,63 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2, ShieldCheck, Zap, Info, CheckCircle2 } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { Header, Footer } from '@/components/layout';
 import { QueryExecutionForm } from '@/components/query/QueryExecutionForm';
 import { QueryResultDisplay } from '@/components/query/QueryResultDisplay';
 import { useQueryByTypeSWR } from '@/hooks/useQueryByTypeSWR';
+import { useQueryExecution } from '@/hooks/useQueryExecution';
 import { getCategoryConfig } from '@/constants/query-categories';
-import { QueryCategory, type ExecuteQueryResponse, type QueryHistoryEntry, type QueryType } from '@/types/query';
+import { QueryCategory, type ExecuteQueryResponse, type QueryHistoryEntry } from '@/types/query';
 import { Button, Card, StatsCard, Badge } from '@/design-system/ComponentsTailwind';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { getPriorityCategory } from '@/lib/utils';
 
 function QueryExecutionContent() {
   const params = useParams();
+  const router = useRouter();
   const code = params.code as string;
+  
+  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(code);
 
-  const { queryType, isLoading, isError, notFound } = useQueryByTypeSWR(code);
-  const [result, setResult] = useState<QueryHistoryEntry | null>(null);
+  const { getById } = useQueryExecution();
+  const [historyResult, setHistoryResult] = useState<QueryHistoryEntry | null>(null);
+  const [loadingHistory, setLoadingHistory] = useState(isUUID);
+  const [historyError, setHistoryError] = useState(false);
+
+  // Additional state for Query Type view
+  const { queryType, isLoading: isTypeLoading, notFound } = useQueryByTypeSWR(isUUID ? '' : code);
+
+  // Effect for UUID fetching
+  useEffect(() => {
+    if (isUUID) {
+      setLoadingHistory(true);
+      getById(code).then((res) => {
+        if (res && res.id) {
+          setHistoryResult(res);
+        } else {
+          setHistoryError(true);
+        }
+        setLoadingHistory(false);
+      }).catch(() => {
+        setHistoryError(true);
+        setLoadingHistory(false);
+      });
+    }
+  }, [code, isUUID]);
 
   const handleSuccess = (executeResult: ExecuteQueryResponse) => {
-    if (!queryType) return;
-    
-    // Convert ExecuteQueryResponse to QueryHistoryEntry format for display
-    const historyEntry: QueryHistoryEntry = {
-      id: executeResult.queryId,
-      userId: '', // Not needed for display
-      queryTypeId: queryType.id,
-      input: '', // Not returned from backend
-      result: executeResult.result,
-      price: executeResult.price,
-      isCached: executeResult.cached,
-      status: 'SUCCESS',
-      errorMessage: null,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      queryType: {
-        code: queryType.code,
-        name: queryType.name,
-        category: queryType.category,
-        description: queryType.description,
-      },
-    };
-
-    setResult(historyEntry);
+    // Redirect to the query result page
+    router.push(`/consulta/${executeResult.queryId}`);
   };
 
-  const handleNewQuery = () => {
-    setResult(null);
-  };
-
-  if (isLoading) {
+  // --------------------------------------------------------------------------
+  // RENDER: Loading State
+  // --------------------------------------------------------------------------
+  if (loadingHistory || (isTypeLoading && !isUUID)) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
@@ -60,13 +65,70 @@ function QueryExecutionContent() {
     );
   }
 
+  // --------------------------------------------------------------------------
+  // RENDER: Direct Query Result View (UUID)
+  // --------------------------------------------------------------------------
+  if (isUUID) {
+    if (historyError || !historyResult) {
+       return (
+        <div className="min-h-[60vh] flex flex-col items-center justify-center px-4">
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
+            <Info className="w-10 h-10 text-red-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Consulta não encontrada</h1>
+          <p className="text-gray-600 mb-8 max-w-md text-center">
+            Não foi possível localizar o resultado desta consulta. Verifique o ID e tente novamente.
+          </p>
+          <Link href="/consulta">
+            <Button variant="primary">Ir para o catálogo</Button>
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <div className="container max-w-6xl mx-auto px-4 py-12">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="mb-8"
+        >
+          <Link
+            href="/consulta"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Voltar para Consultas
+          </Link>
+        </motion.div>
+        
+        <div className="space-y-6">
+          <div className="flex items-center flex-wrap gap-4 mb-8">
+             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6 text-blue-600" />
+             </div>
+             <div>
+                <div className="mb-1"><Badge variant="info">{historyResult.queryType?.code || 'CONSULTA'}</Badge></div>
+                <h1 className="text-2xl font-bold text-gray-900">{historyResult.queryType?.name || 'Detalhes da Consulta'}</h1>
+             </div>
+          </div>
+          <QueryResultDisplay query={historyResult} />
+        </div>
+      </div>
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // RENDER: Query Execution View (Type Code)
+  // --------------------------------------------------------------------------
+
   if (notFound || !queryType) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-4">
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
           <Info className="w-10 h-10 text-red-600" />
         </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Consulta não encontrada</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Tipo de consulta não encontrado</h1>
         <p className="text-gray-600 mb-8 max-w-md text-center">
           O tipo de consulta que você está procurando não existe ou foi desativado.
         </p>
@@ -76,16 +138,6 @@ function QueryExecutionContent() {
       </div>
     );
   }
-
-  // Get category config (safe access) with priority
-  const getPriorityCategory = (categories: QueryCategory[]) => {
-    if (!categories || categories.length === 0) return null;
-    if (categories.includes(QueryCategory.CREDIT)) return QueryCategory.CREDIT;
-    if (categories.includes(QueryCategory.VEHICLE)) return QueryCategory.VEHICLE;
-    if (categories.includes(QueryCategory.COMPANY)) return QueryCategory.COMPANY;
-    if (categories.includes(QueryCategory.PERSON)) return QueryCategory.PERSON;
-    return categories[0];
-  };
 
   const mainCategory = getPriorityCategory(queryType.category);
   const categoryConfig = mainCategory ? getCategoryConfig(mainCategory) : null;
@@ -145,30 +197,18 @@ function QueryExecutionContent() {
             transition={{ delay: 0.1 }}
             className="relative"
           >
-            {result ? (
-              <div className="space-y-6">
-                <QueryResultDisplay query={result} />
-                <div className="flex justify-center pt-6">
-                  <Button onClick={handleNewQuery} variant="outline" size="lg">
-                    <ArrowLeft className="mr-2 w-4 h-4" />
-                    Fazer Nova Consulta
-                  </Button>
-                </div>
+            <Card className="border-blue-100 shadow-xl shadow-blue-900/5">
+              <div className="mb-6 pb-6 border-b border-gray-100">
+                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                   <Zap className="w-5 h-5 text-blue-600" />
+                   Executar Consulta
+                 </h3>
+                 <p className="text-sm text-gray-500 mt-1">
+                   Insira os dados abaixo para buscar as informações nos bureaus.
+                 </p>
               </div>
-            ) : (
-              <Card className="border-blue-100 shadow-xl shadow-blue-900/5">
-                <div className="mb-6 pb-6 border-b border-gray-100">
-                   <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                     <Zap className="w-5 h-5 text-blue-600" />
-                     Executar Consulta
-                   </h3>
-                   <p className="text-sm text-gray-500 mt-1">
-                     Insira os dados abaixo para buscar as informações nos bureaus.
-                   </p>
-                </div>
-                <QueryExecutionForm queryType={queryType} onSuccess={handleSuccess} />
-              </Card>
-            )}
+              <QueryExecutionForm queryType={queryType} onSuccess={handleSuccess} />
+            </Card>
           </motion.div>
         </div>
 

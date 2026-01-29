@@ -7,6 +7,7 @@ import type {
   ExecuteQueryResponse,
   QueryHistoryResponse,
   QueryHistoryEntry,
+  QueryByIdResponse,
 } from '@/types/query';
 
 export interface ActionState<T = unknown> {
@@ -56,7 +57,7 @@ export async function getQueryHistoryAction(
 
 export async function getQueryByIdAction(
   id: string
-): Promise<ActionState<QueryHistoryEntry>> {
+): Promise<ActionState<QueryByIdResponse>> {
   try {
     const data = await QueryExecutionService.getQueryById(id);
     return { success: true, data };

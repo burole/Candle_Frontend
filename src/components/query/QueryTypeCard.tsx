@@ -18,12 +18,8 @@ export function QueryTypeCard({ queryType, className }: QueryTypeCardProps) {
   const categoryConfig = mainCategory ? getCategoryConfig(mainCategory) : null;
   const IconComponent = (categoryConfig?.icon && Icons[categoryConfig.icon as keyof typeof Icons] ? Icons[categoryConfig.icon as keyof typeof Icons] : Icons.Search) as React.ElementType;
   
-  const hasCacheDiscount = queryType.cachedPrice < queryType.price;
   const features = [];
 
-  if (hasCacheDiscount) {
-    features.push(`Cache disponível (-${Math.round(((queryType.price - queryType.cachedPrice) / queryType.price) * 100)}%)`);
-  }
   features.push('Resultado imediato');
   features.push('Dados atualizados');
 
@@ -31,11 +27,11 @@ export function QueryTypeCard({ queryType, className }: QueryTypeCardProps) {
     <ConsultationCard
       name={queryType.name}
       description={queryType.description || 'Consulta detalhada para análise de crédito e risco.'}
-      price={hasCacheDiscount ? queryType.cachedPrice : queryType.price}
+      price={queryType.price}
       features={features}
       icon={<IconComponent className="w-8 h-8" />}
-      isPopular={queryType.code === 'CREDIT_FULL_PF' || queryType.code === 'CREDIT_MIX_PJ'}
-      isPremium={queryType.price > 20}
+      isPopular={queryType.code === 'CREDIT_PREMIUM' || queryType.code === 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'}
+      isPremium={queryType.price >= 4}
       onClick={() => router.push(`/consulta/${queryType.code}`)}
     />
   );

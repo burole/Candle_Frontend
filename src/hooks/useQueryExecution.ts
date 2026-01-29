@@ -89,7 +89,29 @@ export function useQueryExecution() {
         return null;
       }
 
-      return result.data;
+      // Transform QueryByIdResponse to QueryHistoryEntry
+      const { query, result: queryResult } = result.data;
+      const historyEntry: QueryHistoryEntry = {
+        id: query.id,
+        userId: '',
+        queryTypeId: '',
+        input: query.input,
+        status: query.status,
+        price: query.price,
+        isCached: false,
+        result: queryResult,
+        errorMessage: null,
+        createdAt: query.createdAt,
+        updatedAt: query.completedAt,
+        queryType: {
+          code: query.queryType.code,
+          name: query.queryType.name,
+          category: query.queryType.category,
+          description: null,
+        },
+      };
+
+      return historyEntry;
     } catch (error) {
       console.error('Error fetching query by ID:', error);
       toast.error('Erro ao buscar consulta');

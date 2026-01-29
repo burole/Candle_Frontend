@@ -77,6 +77,26 @@ export interface QueryHistoryEntry {
 }
 
 /**
+ * Response from GET /queries/:id endpoint
+ */
+export interface QueryByIdResponse {
+  query: {
+    id: string;
+    input: string;
+    status: 'SUCCESS' | 'FAILED';
+    price: number;
+    createdAt: string;
+    completedAt: string;
+    queryType: {
+      code: string;
+      name: string;
+      category: QueryCategory[];
+    };
+  };
+  result: any;
+}
+
+/**
  * Response paginado do histórico
  */
 export interface QueryHistoryResponse {
