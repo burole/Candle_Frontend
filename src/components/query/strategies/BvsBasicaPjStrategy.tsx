@@ -2,17 +2,16 @@
 
 import { motion } from 'framer-motion';
 import { 
-  User, 
-  CreditCard,
+  Building2, 
+  MapPin, 
   AlertTriangle,
-  Phone,
   CheckCircle2,
   FileWarning,
-  TrendingUp,
-  Lightbulb
+  Lightbulb,
+  Briefcase
 } from 'lucide-react';
-import { Card, Badge, StatsCard, Button } from '@/design-system/ComponentsTailwind';
-import type { QueryStrategyProps, BoaVistaAcertaCpfResult } from '@/types/query-strategies';
+import { Card, Badge, StatsCard } from '@/design-system/ComponentsTailwind';
+import type { QueryStrategyProps, BvsBasicaPjResult } from '@/types/query-strategies';
 import {
   Table,
   TableBody,
@@ -22,7 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/glass-table";
 
-export function BoaVistaAcertaCpfStrategy({ data }: QueryStrategyProps<BoaVistaAcertaCpfResult>) {
+export function BvsBasicaPjStrategy({ data }: QueryStrategyProps<BvsBasicaPjResult>) {
   if (!data) return null;
 
   const container = {
@@ -45,65 +44,58 @@ export function BoaVistaAcertaCpfStrategy({ data }: QueryStrategyProps<BoaVistaA
       animate="show"
       className="space-y-6"
     >
-      {/* Header with Person Info & Score */}
+      {/* Header with Company Info & Address */}
       <motion.div variants={item}>
-        <Card className="p-6 border-l-4 border-l-orange-500 bg-white shadow-lg">
+        <Card className="p-6 border-l-4 border-l-purple-500 bg-white shadow-lg">
            <div className="flex flex-col md:flex-row gap-6">
-             {/* Person Details */}
+             {/* Company Details */}
              <div className="flex-1">
                <div className="flex items-center gap-2 mb-3">
-                 <Badge variant={data.person.status === 'REGULAR' ? 'success' : 'warning'}>
-                   {data.person.status}
+                 <Badge variant={data.company.status === 'ATIVO' ? 'success' : 'warning'}>
+                   {data.company.status}
                  </Badge>
                  <span className="text-sm text-gray-400 font-mono">Protocolo: {data.protocol}</span>
                </div>
                
-               <h1 className="text-2xl font-bold text-gray-900 mb-1">{data.person.name}</h1>
+               <h1 className="text-2xl font-bold text-gray-900 mb-1">{data.company.name}</h1>
                
                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm text-gray-600">
                  <div className="flex items-center gap-2">
-                   <User className="w-4 h-4 text-orange-500" />
+                   <Building2 className="w-4 h-4 text-purple-500" />
                    <div>
-                     <p className="text-xs text-gray-400">Documento</p>
-                     <p className="font-semibold">{data.person.document}</p>
+                     <p className="text-xs text-gray-400">CNPJ</p>
+                     <p className="font-semibold">{data.company.cnpj}</p>
                    </div>
                  </div>
                  <div className="flex items-center gap-2">
-                   <User className="w-4 h-4 text-orange-500" />
+                   <Briefcase className="w-4 h-4 text-purple-500" />
                    <div>
-                     <p className="text-xs text-gray-400">Nascimento</p>
-                     <p className="font-semibold">{data.person.birthDate}</p>
+                     <p className="text-xs text-gray-400">Fundação</p>
+                     <p className="font-semibold">{data.company.foundationDate}</p>
                    </div>
                  </div>
                </div>
-
-               {data.person.motherName && (
-                 <div className="mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-xs text-gray-400 mb-1">Nome da Mãe</p>
-                    <p className="text-sm font-medium text-gray-700">{data.person.motherName}</p>
-                 </div>
-               )}
              </div>
 
-             {/* Score Display (Right Side) */}
-             <div className="flex-none w-full md:w-auto min-w-[240px]">
-               <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm flex flex-col items-center justify-center h-full relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 w-16 h-16 bg-orange-500/10 rounded-bl-full -mr-2 -mt-2 transition-transform group-hover:scale-110" />
-                 
-                 <span className="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Score Boa Vista</span>
-                 <div className="text-5xl font-black text-gray-900 tracking-tighter mb-2">
-                   {data.score.value}
-                 </div>
-                 
-                 <span className="inline-flex items-center gap-1.5 rounded-full font-bold border bg-orange-100 text-orange-700 border-orange-200 text-lg px-6 py-1">
-                    Classe {data.score.class}
-                 </span>
-
-                 <p className="text-xs text-center text-gray-400 mt-4 max-w-[200px] leading-relaxed">
-                   {data.score.risk}
-                 </p>
-               </div>
-             </div>
+             {/* Address (Right Side) */}
+             {data.address && (data.address.street || data.address.city) && (
+                <div className="flex-none w-full md:w-1/3 min-w-[280px]">
+                  <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 h-full">
+                    <h3 className="text-sm font-bold text-gray-500 mb-3 uppercase tracking-wide flex items-center gap-2">
+                      <MapPin className="w-4 h-4" /> Endereço
+                    </h3>
+                    <p className="text-gray-800 font-medium leading-relaxed">
+                      {data.address.street}
+                      <br />
+                      {data.address.district}
+                      <br />
+                      {data.address.city} - {data.address.state}
+                      <br />
+                      <span className="text-gray-500 text-sm">CEP: {data.address.zip}</span>
+                    </p>
+                  </div>
+                </div>
+             )}
            </div>
         </Card>
       </motion.div>
@@ -133,7 +125,7 @@ export function BoaVistaAcertaCpfStrategy({ data }: QueryStrategyProps<BoaVistaA
       {/* Summary Stats */}
       <motion.div variants={item} className="grid grid-cols-3 gap-4">
         <Card className="p-5">
-          <div className="flex items-center gap-3 mb-2">
+           <div className="flex items-center gap-3 mb-2">
              <div className="p-2 bg-red-100 rounded-lg text-red-600">
                <AlertTriangle className="w-5 h-5" />
              </div>
@@ -177,31 +169,6 @@ export function BoaVistaAcertaCpfStrategy({ data }: QueryStrategyProps<BoaVistaA
           </div>
         </Card>
       </motion.div>
-
-       {/* Phones */}
-       {data.phones && data.phones.length > 0 && (
-        <motion.div variants={item}>
-          <Card className="p-6">
-             <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Phone className="w-5 h-5 text-blue-500" />
-              Telefones de Contato
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {data.phones.map((phone, idx) => (
-                <div key={idx} className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-100">
-                  <div className="bg-white p-1.5 rounded-full shadow-sm">
-                    <Phone className="w-3 h-3 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-gray-900">({phone.areaCode}) {phone.number}</p>
-                    <p className="text-[10px] text-gray-400 uppercase font-semibold">{phone.type}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </motion.div>
-      )}
 
       {/* Debts Table */}
       <motion.div variants={item}>

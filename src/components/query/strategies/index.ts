@@ -7,6 +7,7 @@ import { CompletaPlusCpfStrategy } from './CompletaPlusCpfStrategy';
 import { CompletaPlusCnpjStrategy } from './CompletaPlusCnpjStrategy';
 import { BoaVistaAcertaCpfStrategy } from './BoaVistaAcertaCpfStrategy';
 import { BvsBasicaPfStrategy } from './BvsBasicaPfStrategy';
+import { BvsBasicaPjStrategy } from './BvsBasicaPjStrategy';
 import type { QueryStrategyProps } from '@/types/query-strategies';
 import React from 'react';
 
@@ -18,6 +19,7 @@ export const STRATEGIES: Record<string, React.ComponentType<QueryStrategyProps>>
   'COMPLETA_PLUS_BVS_ACOES_CNPJ': CompletaPlusCnpjStrategy,
   'BOA_VISTA_ACERTA_CPF': BoaVistaAcertaCpfStrategy,
   'BVS_BASICA_PF': BvsBasicaPfStrategy,
+  'BVS_BASICA_PJ': BvsBasicaPjStrategy,
 };
 
 export const getStrategyComponent = (code: string): React.ComponentType<QueryStrategyProps> => {
@@ -33,3 +35,4 @@ export * from './CompletaPlusCpfStrategy';
 export * from './CompletaPlusCnpjStrategy';
 export * from './BoaVistaAcertaCpfStrategy';
 export * from './BvsBasicaPfStrategy';
+export * from './BvsBasicaPjStrategy';

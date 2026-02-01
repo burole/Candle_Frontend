@@ -243,3 +243,40 @@ export interface BvsBasicaPfResult {
     type: string;
   }>;
 }
+
+export interface BvsBasicaPjResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  company: {
+    cnpj: string;
+    name: string;
+    status: string;
+    foundationDate: string;
+  };
+  address: {
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+  badChecks: Array<any>;
+}

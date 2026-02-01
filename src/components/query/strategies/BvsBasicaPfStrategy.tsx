@@ -119,7 +119,7 @@ export function BvsBasicaPfStrategy({ data }: QueryStrategyProps<BvsBasicaPfResu
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
                   {alert.title}
                 </p>
-                <p className="font-medium text-gray-900 line-clamp-2">
+                <p className="font-medium text-gray-900">
                   {alert.description}
                 </p>
               </Card>
