@@ -200,5 +200,46 @@ export interface BoaVistaAcertaCpfResult {
     origin: string;
     date: string;
   }>;
-  protests: Array<any>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+}
+
+export interface BvsBasicaPfResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  person: {
+    name: string;
+    document: string;
+    birthDate: string;
+    status: string;
+    motherName: string;
+  };
+  address: {
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
 }
