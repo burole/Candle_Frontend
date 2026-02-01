@@ -167,3 +167,38 @@ export interface CompletaPlusCnpjResult {
     cityState: string;
   }>;
 }
+
+export interface BoaVistaAcertaCpfResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  person: {
+    name: string;
+    document: string;
+    birthDate: string;
+    status: string;
+    motherName: string;
+  };
+  score: {
+    value: string;
+    class: string;
+    risk: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<any>;
+}
