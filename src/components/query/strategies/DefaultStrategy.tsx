@@ -4,7 +4,6 @@
 import { useState } from 'react';
 import { Download, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import type { QueryStrategyProps } from '@/types/query-strategies';
 
 export function DefaultStrategy({ data, queryId }: QueryStrategyProps) {
