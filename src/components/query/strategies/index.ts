@@ -8,6 +8,8 @@ import { CompletaPlusCnpjStrategy } from './CompletaPlusCnpjStrategy';
 import { BoaVistaAcertaCpfStrategy } from './BoaVistaAcertaCpfStrategy';
 import { BvsBasicaPfStrategy } from './BvsBasicaPfStrategy';
 import { BvsBasicaPjStrategy } from './BvsBasicaPjStrategy';
+import { MaxBrasilAvancadoPfStrategy } from './MaxBrasilAvancadoPfStrategy';
+import { MaxBrasilAvancadoPjStrategy } from './MaxBrasilAvancadoPjStrategy';
 import type { QueryStrategyProps } from '@/types/query-strategies';
 import React from 'react';
 
@@ -20,6 +22,8 @@ export const STRATEGIES: Record<string, React.ComponentType<QueryStrategyProps>>
   'BOA_VISTA_ACERTA_CPF': BoaVistaAcertaCpfStrategy,
   'BVS_BASICA_PF': BvsBasicaPfStrategy,
   'BVS_BASICA_PJ': BvsBasicaPjStrategy,
+  'MAX_BRASIL_AVANCADO_PF': MaxBrasilAvancadoPfStrategy,
+  'MAX_BRASIL_AVANCADO_PJ': MaxBrasilAvancadoPjStrategy,
 };
 
 export const getStrategyComponent = (code: string): React.ComponentType<QueryStrategyProps> => {
@@ -36,3 +40,5 @@ export * from './CompletaPlusCnpjStrategy';
 export * from './BoaVistaAcertaCpfStrategy';
 export * from './BvsBasicaPfStrategy';
 export * from './BvsBasicaPjStrategy';
+export * from './MaxBrasilAvancadoPfStrategy';
+export * from './MaxBrasilAvancadoPjStrategy';

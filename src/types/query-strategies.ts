@@ -278,5 +278,118 @@ export interface BvsBasicaPjResult {
     origin: string;
     type: string;
   }>;
-  badChecks: Array<any>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}
+
+export interface MaxBrasilAvancadoPfResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  person: {
+    name: string;
+    document: string;
+    birthDate: string;
+    status: string;
+    motherName: string;
+  };
+  score: {
+    value: string;
+    class: string;
+    riskText: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  addresses: Array<{
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}
+
+export interface MaxBrasilAvancadoPjResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  company: {
+    cnpj: string;
+    socialReason: string;
+    fantasyName: string;
+    foundationDate: string;
+    status: string;
+  };
+  score: {
+    value: string;
+    class: string;
+    riskText: string;
+  };
+  partners: Array<{
+    name: string;
+    role: string;
+    document: string;
+  }>;
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  addresses: Array<{
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
 }
