@@ -2,18 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { 
-  User, 
+  Building2, 
   MapPin, 
   AlertTriangle,
   CheckCircle2,
   FileWarning,
-  Lightbulb,
-  Phone
+  Phone,
+  Gavel,
+  Users,
+  Briefcase
 } from 'lucide-react';
-import { Card, Badge, StatsCard } from '@/design-system/ComponentsTailwind';
-import type { QueryStrategyProps, MaxBrasilAvancadoPfResult } from '@/types/query-strategies';
-import { AlertsGrid } from './components/AlertsGrid';
-
+import { Card, Badge } from '@/design-system/ComponentsTailwind';
+import type { QueryStrategyProps, QuodRestritivoAcoesPjResult } from '@/types/query-strategies';
 import {
   Table,
   TableBody,
@@ -22,8 +22,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/glass-table";
+import { AlertsGrid } from './components/AlertsGrid';
 
-export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBrasilAvancadoPfResult>) {
+export function QuodRestritivoAcoesPjStrategy({ data }: QueryStrategyProps<QuodRestritivoAcoesPjResult>) {
   if (!data) return null;
 
   const container = {
@@ -46,63 +47,41 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
       animate="show"
       className="space-y-6"
     >
-      {/* Header with Person Info & Score */}
+      {/* Header with Company Info */}
       <motion.div variants={item}>
-        <Card className="p-6 border-l-4 border-l-indigo-500 bg-white shadow-lg">
+        <Card className="p-6 border-l-4 border-l-gray-900 bg-white shadow-lg">
            <div className="flex flex-col md:flex-row gap-6">
-             {/* Person Details */}
+             {/* Company Details */}
              <div className="flex-1">
                <div className="flex items-center gap-2 mb-3">
-                 <Badge variant={data.person.status === 'REGULAR' ? 'success' : 'warning'}>
-                   {data.person.status}
+                 <Badge variant={data.company.status === 'ATIVA' ? 'success' : 'warning'}>
+                   {data.company.status}
                  </Badge>
-                 <span className="text-sm text-gray-400 font-mono">Protocolo: {data.protocol}</span>
+                 <span className="text-sm text-gray-400 font-mono hidden md:inline">Protocolo: {data.protocol}</span>
                </div>
                
-               <h1 className="text-2xl font-bold text-gray-900 mb-1">{data.person.name}</h1>
+               <h1 className="text-2xl font-bold text-gray-900 mb-1">{data.company.fantasyName || data.company.socialReason}</h1>
+               {data.company.fantasyName && (
+                 <p className="text-sm text-gray-500 mb-2">{data.company.socialReason}</p>
+               )}
                
                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm text-gray-600">
                  <div className="flex items-center gap-2">
-                   <User className="w-4 h-4 text-indigo-500" />
+                   <Building2 className="w-4 h-4 text-gray-500" />
                    <div>
-                     <p className="text-xs text-gray-400">Documento</p>
-                     <p className="font-semibold">{data.person.document}</p>
+                     <p className="text-xs text-gray-400">CNPJ</p>
+                     <p className="font-semibold">{data.company.cnpj}</p>
                    </div>
                  </div>
                  <div className="flex items-center gap-2">
-                   <User className="w-4 h-4 text-indigo-500" />
+                   <Briefcase className="w-4 h-4 text-gray-500" />
                    <div>
-                     <p className="text-xs text-gray-400">Nascimento</p>
-                     <p className="font-semibold">{data.person.birthDate}</p>
+                     <p className="text-xs text-gray-400">Fundação</p>
+                     <p className="font-semibold">{data.company.foundationDate}</p>
                    </div>
                  </div>
                </div>
-
-               {data.person.motherName && (
-                 <div className="mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-xs text-gray-400 mb-1">Nome da Mãe</p>
-                    <p className="text-sm font-medium text-gray-700">{data.person.motherName}</p>
-                 </div>
-               )}
              </div>
-
-             {/* Score Display (Right Side) */}
-             {data.score && (
-                <div className="flex-none w-full md:w-auto min-w-[240px]">
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm flex flex-col items-center justify-center h-full relative overflow-hidden group">
-                    <span className="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Score</span>
-                    <div className="text-5xl font-black text-gray-900 tracking-tighter mb-2">
-                      {data.score.value}
-                    </div>
-                    <span className="inline-flex items-center gap-1.5 rounded-full font-bold border bg-indigo-100 text-indigo-700 border-indigo-200 text-lg px-6 py-1">
-                       Classe {data.score.class}
-                    </span>
-                    <p className="text-xs text-center text-gray-400 mt-4 max-w-[200px] leading-relaxed">
-                      {data.score.riskText}
-                    </p>
-                  </div>
-                </div>
-             )}
            </div>
         </Card>
       </motion.div>
@@ -111,7 +90,7 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
       <AlertsGrid alerts={data.alerts} />
 
       {/* Summary Stats */}
-      <motion.div variants={item} className="grid grid-cols-3 gap-4">
+      <motion.div variants={item} className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="p-5">
            <div className="flex items-center gap-3 mb-2">
              <div className="p-2 bg-red-100 rounded-lg text-red-600">
@@ -156,14 +135,52 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
             </p>
           </div>
         </Card>
+
+        <Card className="p-5">
+           <div className="flex items-center gap-3 mb-2">
+             <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
+               <Gavel className="w-5 h-5" />
+             </div>
+             <p className="text-sm font-medium text-gray-500">Ações Judiciais</p>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-gray-900">{data.totalLegalActions}</p>
+            <p className={`text-xs font-semibold mt-1 ${data.totalLegalActions > 0 ? 'text-purple-500' : 'text-green-500'}`}>
+              {data.totalLegalActions > 0 ? "Constam registros" : "Nada consta"}
+            </p>
+          </div>
+        </Card>
       </motion.div>
+
+      {/* Partners Cards */}
+      {data.partners && data.partners.length > 0 && (
+        <motion.div variants={item}>
+          <div className="flex items-center gap-2 mb-3">
+             <Users className="w-5 h-5 text-gray-500" />
+             <h3 className="text-lg font-semibold text-gray-800">Sócios e Administradores</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {data.partners.map((partner, idx) => (
+              <Card key={idx} className="p-4 border-l-4 border-l-indigo-500">
+                 <div className="flex flex-col">
+                   <p className="text-sm font-bold text-gray-900 uppercase">{partner.name}</p>
+                   <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
+                     <span className="px-2 py-0.5 bg-gray-100 rounded-md font-mono">{partner.document}</span>
+                     <span className="font-semibold text-indigo-600">{partner.role}</span>
+                   </div>
+                 </div>
+              </Card>
+            ))}
+          </div>
+        </motion.div>
+      )}
 
        {/* Phones */}
        {data.phones && data.phones.length > 0 && (
         <motion.div variants={item}>
           <Card className="p-6">
              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Phone className="w-5 h-5 text-indigo-500" />
+              <Phone className="w-5 h-5 text-blue-500" />
               Telefones de Contato
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -188,7 +205,7 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
         <motion.div variants={item}>
           <Card className="p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-indigo-500" />
+              <MapPin className="w-5 h-5 text-blue-500" />
               Endereços Encontrados
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -209,6 +226,49 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
           </Card>
         </motion.div>
       )}
+
+      {/* Legal Actions Table (Ações Judiciais) */}
+      <motion.div variants={item}>
+        <Card className="overflow-hidden border border-gray-100 shadow-lg">
+          <div className="p-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+            <h3 className="font-bold text-gray-800 flex items-center gap-2">
+              <Gavel className="w-5 h-5 text-purple-500" />
+              Detalhamento de Ações Judiciais ({data.legalActions?.length || 0})
+            </h3>
+          </div>
+          {data.legalActions && data.legalActions.length > 0 ? (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                     <TableHead>Data</TableHead>
+                     <TableHead>Tipo</TableHead>
+                     <TableHead>Detalhes</TableHead>
+                     <TableHead>Origem</TableHead>
+                     <TableHead className="text-right">Valor</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.legalActions.map((action, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell>{action.date}</TableCell>
+                      <TableCell className="font-medium">{action.type}</TableCell>
+                      <TableCell>{action.details}</TableCell>
+                      <TableCell>{action.origin}</TableCell>
+                      <TableCell className="text-right font-bold text-purple-600">R$ {action.value}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <div className="p-8 text-center text-gray-500 flex flex-col items-center">
+              <CheckCircle2 className="w-12 h-12 text-green-500 mb-2" />
+              <p>Nenhuma ação judicial encontrada.</p>
+            </div>
+          )}
+        </Card>
+      </motion.div>
 
       {/* Debts Table */}
       <motion.div variants={item}>
@@ -291,6 +351,7 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
           )}
         </Card>
       </motion.div>
+
       {/* Bad Checks Table */}
       <motion.div variants={item}>
         <Card className="overflow-hidden border border-gray-100 shadow-lg">
@@ -314,7 +375,7 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
                   {data.badChecks.map((check, idx) => (
                     <TableRow key={idx}>
                       <TableCell>{check.lastOccurrence}</TableCell>
-                      <TableCell className="font-medium">{check.bankNumber}</TableCell>
+                      <TableCell className="font-medium">Banco {check.bankNumber}</TableCell>
                       <TableCell className="text-right font-bold text-yellow-600">{check.quantity}</TableCell>
                     </TableRow>
                   ))}

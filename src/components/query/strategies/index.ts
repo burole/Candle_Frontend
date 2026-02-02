@@ -10,6 +10,9 @@ import { BvsBasicaPfStrategy } from './BvsBasicaPfStrategy';
 import { BvsBasicaPjStrategy } from './BvsBasicaPjStrategy';
 import { MaxBrasilAvancadoPfStrategy } from './MaxBrasilAvancadoPfStrategy';
 import { MaxBrasilAvancadoPjStrategy } from './MaxBrasilAvancadoPjStrategy';
+import { ProtestoNacionalStrategy } from './ProtestoNacionalStrategy';
+import { QuodRestritivoAcoesPfStrategy } from './QuodRestritivoAcoesPfStrategy';
+import { QuodRestritivoAcoesPjStrategy } from './QuodRestritivoAcoesPjStrategy';
 import type { QueryStrategyProps } from '@/types/query-strategies';
 import React from 'react';
 
@@ -24,6 +27,9 @@ export const STRATEGIES: Record<string, React.ComponentType<QueryStrategyProps>>
   'BVS_BASICA_PJ': BvsBasicaPjStrategy,
   'MAX_BRASIL_AVANCADO_PF': MaxBrasilAvancadoPfStrategy,
   'MAX_BRASIL_AVANCADO_PJ': MaxBrasilAvancadoPjStrategy,
+  'PROTESTO_NACIONAL': ProtestoNacionalStrategy,
+  'QUOD_RESTRITIVO_ACOES_PF': QuodRestritivoAcoesPfStrategy,
+  'QUOD_RESTRITIVO_ACOES_PJ': QuodRestritivoAcoesPjStrategy,
 };
 
 export const getStrategyComponent = (code: string): React.ComponentType<QueryStrategyProps> => {
@@ -42,3 +48,6 @@ export * from './BvsBasicaPfStrategy';
 export * from './BvsBasicaPjStrategy';
 export * from './MaxBrasilAvancadoPfStrategy';
 export * from './MaxBrasilAvancadoPjStrategy';
+export * from './ProtestoNacionalStrategy';
+export * from './QuodRestritivoAcoesPfStrategy';
+export * from './QuodRestritivoAcoesPjStrategy';

@@ -14,6 +14,9 @@ import {
 } from 'lucide-react';
 import { Card, Badge, StatsCard } from '@/design-system/ComponentsTailwind';
 import type { QueryStrategyProps, MaxBrasilAvancadoPjResult } from '@/types/query-strategies';
+
+import { AlertsGrid } from './components/AlertsGrid';
+
 import {
   Table,
   TableBody,
@@ -130,26 +133,7 @@ export function MaxBrasilAvancadoPjStrategy({ data }: QueryStrategyProps<MaxBras
       )}
 
       {/* Behavioral Alerts Grid */}
-      {data.alerts && data.alerts.length > 0 && (
-        <motion.div variants={item}>
-          <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-yellow-500" />
-            Insights e Comportamento
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {data.alerts.map((alert, idx) => (
-              <Card key={idx} className="p-4 border-l-4 border-l-yellow-400">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
-                  {alert.title}
-                </p>
-                <p className="font-medium text-gray-900">
-                  {alert.description}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </motion.div>
-      )}
+      <AlertsGrid alerts={data.alerts} />
 
       {/* Summary Stats */}
       <motion.div variants={item} className="grid grid-cols-3 gap-4">

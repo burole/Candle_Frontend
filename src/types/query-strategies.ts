@@ -393,3 +393,139 @@ export interface MaxBrasilAvancadoPjResult {
     lastOccurrence: string;
   }>;
 }
+
+export interface ProtestoNacionalResult {
+  protocol: string;
+  product: string;
+  totalProtests: number;
+  totalValue: string;
+  protests: Array<{
+    state: string;
+    city: string;
+    notary: string;
+    date: string;
+    value: string;
+    creditor: string;
+    assignor: string;
+    address: string;
+    phone: string;
+
+  }>;
+}
+export interface QuodRestritivoAcoesPfResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  totalLegalActions: number;
+  person: {
+    name: string;
+    document: string;
+    birthDate: string;
+    status: string;
+    motherName: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  legalActions: Array<{
+    type: string;
+    quantity: string;
+    value: string;
+    date: string;
+    origin: string;
+    details: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  addresses: Array<{
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}
+
+export interface QuodRestritivoAcoesPjResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  totalLegalActions: number;
+  company: {
+    cnpj: string;
+    socialReason: string;
+    fantasyName: string;
+    foundationDate: string;
+    status: string;
+  };
+  partners: Array<{
+    name: string;
+    role: string;
+    document: string;
+  }>;
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  legalActions: Array<{
+    type: string;
+    quantity: string;
+    value: string;
+    date: string;
+    origin: string;
+    details: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  addresses: Array<{
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+    created_at?: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}
