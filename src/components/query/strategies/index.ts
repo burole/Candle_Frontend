@@ -15,6 +15,7 @@ import { QuodRestritivoAcoesPfStrategy } from './QuodRestritivoAcoesPfStrategy';
 import { QuodRestritivoAcoesPjStrategy } from './QuodRestritivoAcoesPjStrategy';
 import { RealtimePremiumScorePfStrategy } from './RealtimePremiumScorePfStrategy';
 import { RealtimePremiumScorePjStrategy } from './RealtimePremiumScorePjStrategy';
+import { SerasaCrednetPefinProtestoSpcPfStrategy } from './SerasaCrednetPefinProtestoSpcPfStrategy';
 import type { QueryStrategyProps } from '@/types/query-strategies';
 import React from 'react';
 
@@ -34,6 +35,7 @@ export const STRATEGIES: Record<string, React.ComponentType<QueryStrategyProps>>
   'QUOD_RESTRITIVO_ACOES_PJ': QuodRestritivoAcoesPjStrategy,
   'REALTIME_PREMIUM_SCORE_PF': RealtimePremiumScorePfStrategy,
   'REALTIME_PREMIUM_SCORE_PJ': RealtimePremiumScorePjStrategy,
+  'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF': SerasaCrednetPefinProtestoSpcPfStrategy,
 };
 
 export const getStrategyComponent = (code: string): React.ComponentType<QueryStrategyProps> => {
@@ -57,3 +59,4 @@ export * from './QuodRestritivoAcoesPfStrategy';
 export * from './QuodRestritivoAcoesPjStrategy';
 export * from './RealtimePremiumScorePfStrategy';
 export * from './RealtimePremiumScorePjStrategy';
+export * from './SerasaCrednetPefinProtestoSpcPfStrategy';

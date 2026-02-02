@@ -26,7 +26,7 @@ const createSchema = (queryType: QueryType) => {
     input: z.string().min(1, 'Campo obrigatório'),
   };
 
-  if (['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ'].includes(queryType.code)) {
+  if (['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ', 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'].includes(queryType.code)) {
     schemaObj.uf = z
       .string()
       .length(2, 'UF deve ter 2 letras')
@@ -188,8 +188,8 @@ export function QueryExecutionForm({
 
     let finalInput = cleanedInput;
     
-    // Handle UF for REALTIME_PREMIUM_SCORE_PF and PJ
-    if (['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ'].includes(queryType.code) && 'uf' in data) {
+    // Handle UF for REALTIME_PREMIUM_SCORE_PF/PJ and SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF
+    if (['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ', 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'].includes(queryType.code) && 'uf' in data) {
       finalInput = `${cleanedInput};${(data as any).uf}`;
     }
 
@@ -232,10 +232,10 @@ export function QueryExecutionForm({
           disabled={isLoading || showConfirmation}
           autoComplete="off"
         />
-        {errors.input && (
+        {errors.input?.message && (
           <p className="text-sm text-red-600 flex items-center gap-1">
             <AlertCircle className="w-4 h-4" />
-            {errors.input.message}
+            {errors.input.message as string}
           </p>
         )}
         {validationError && (
@@ -246,8 +246,8 @@ export function QueryExecutionForm({
         )}
       </div>
 
-      {/* UF Input for REALTIME_PREMIUM_SCORE_PF and PJ */}
-      {['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ'].includes(queryType.code) && (
+      {/* UF Input for Supported Proviers */}
+      {['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ', 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'].includes(queryType.code) && (
         <div className="space-y-2">
           <Label htmlFor="uf" className="text-sm font-medium text-gray-700">
             UF (Estado)

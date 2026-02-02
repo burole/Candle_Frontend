@@ -640,3 +640,43 @@ export interface RealtimePremiumScorePjResult {
     lastOccurrence: string;
   }>;
 }
+
+export interface SerasaCrednetPefinProtestoSpcPfResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  person: {
+    name: string;
+    document: string;
+    birthDate: string;
+    status: string;
+    motherName: string;
+  };
+  companyParticipations: Array<{
+    cnpj: string;
+    socialReason: string;
+    participation: string;
+  }>;
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    date: string;
+    origin: string;
+    type: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}
