@@ -196,17 +196,19 @@ export function StatsCard({ icon, label, value, trend, delay = 0 }: StatsCardPro
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'success' | 'warning' | 'error' | 'info';
+  variant?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'outline';
   size?: 'sm' | 'md';
+  className?: string; // Added className
 }
 
-export function Badge({ children, variant = 'primary', size = 'md' }: BadgeProps) {
+export function Badge({ children, variant = 'primary', size = 'md', className = '' }: BadgeProps) {
   const variants = {
     primary: 'bg-blue-100 text-blue-700 border-blue-200',
     success: 'bg-green-100 text-green-700 border-green-200',
     warning: 'bg-yellow-100 text-yellow-700 border-yellow-200',
     error: 'bg-red-100 text-red-700 border-red-200',
     info: 'bg-cyan-100 text-cyan-700 border-cyan-200',
+    outline: 'bg-transparent text-gray-600 border-gray-200', // Added outline
   };
 
   const sizes = {
@@ -215,7 +217,7 @@ export function Badge({ children, variant = 'primary', size = 'md' }: BadgeProps
   };
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full font-semibold border ${variants[variant]} ${sizes[size]}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full font-semibold border ${variants[variant]} ${sizes[size]} ${className}`}>
       {children}
     </span>
   );

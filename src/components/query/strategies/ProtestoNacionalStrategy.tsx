@@ -6,81 +6,57 @@ import {
   MapPin, 
   Building2,
   Calendar,
-  DollarSign,
   Phone,
   User,
   CheckCircle2
 } from 'lucide-react';
-import { Card, Badge, StatsCard } from '@/design-system/ComponentsTailwind';
+import { Card, Badge } from '@/design-system/ComponentsTailwind';
 import type { QueryStrategyProps, ProtestoNacionalResult } from '@/types/query-strategies';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/glass-table";
+import { SummaryCard } from './components/SummaryCard';
 
 export function ProtestoNacionalStrategy({ data }: QueryStrategyProps<ProtestoNacionalResult>) {
   if (!data) return null;
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
   return (
-    <motion.div 
-      variants={container}
-      initial="hidden"
-      animate="show"
-      className="space-y-6"
-    >
-      {/* Header */}
-      <motion.div variants={item}>
-        <Card className="p-6 border-l-4 border-l-red-500 bg-white shadow-lg">
-           <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
-             <div className="flex-1">
-               <div className="flex items-center gap-2 mb-3">
-                 <Badge variant="warning">
-                   CONSULTA
-                 </Badge>
-                 <span className="text-sm text-gray-400 font-mono">Protocolo: {data.protocol}</span>
-               </div>
-               
-               <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-                 <FileWarning className="w-6 h-6 text-red-500" />
-                 Protesto Nacional
-               </h1>
-               <p className="text-sm text-gray-500 font-medium">{data.product}</p>
-             </div>
+    <div className="space-y-8 animate-in fade-in duration-500">
+      
+      {/* Header Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <Card className="p-6 border-l-4 border-l-red-500 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-lg">
+            <div className="flex items-start justify-between">
+              <div>
+                <Badge variant="warning" className="mb-2">CONSULTA</Badge>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                   <FileWarning className="w-6 h-6 text-red-500" />
+                   Protesto Nacional
+                </h1>
+                <p className="text-sm text-gray-500 font-medium mt-1">{data.product}</p>
+                <p className="text-xs text-gray-400 font-mono mt-2">Protocolo: {data.protocol}</p>
+              </div>
+            </div>
+         </Card>
 
-             <div className="flex gap-4">
-               <div className="text-right">
-                 <p className="text-sm text-gray-500">Valor Total</p>
-                 <p className="text-2xl font-bold text-red-600">R$ {data.totalValue}</p>
-               </div>
-               <div className="text-right pl-4 border-l border-gray-100">
-                 <p className="text-sm text-gray-500">Total de Registros</p>
-                 <p className="text-2xl font-bold text-gray-900">{data.totalProtests}</p>
-               </div>
-             </div>
-           </div>
-        </Card>
-      </motion.div>
+         <div className="grid grid-cols-2 gap-4">
+            <SummaryCard 
+               title="Valor Total" 
+               value={data.totalValue} 
+               color="red" 
+               icon={<FileWarning className="w-5 h-5" />}
+               subtitle="Em protestos"
+            />
+            <SummaryCard 
+               title="Registros" 
+               value={data.totalProtests} 
+               color="gray" 
+               icon={<Building2 className="w-5 h-5" />}
+               subtitle="Total encontrados"
+            />
+         </div>
+      </div>
 
       {/* Protests Detail */}
-      <motion.div variants={item}>
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+      <div>
+        <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
           <FileWarning className="w-5 h-5 text-red-500" />
           Detalhamento dos Protestos
         </h3>
@@ -88,7 +64,7 @@ export function ProtestoNacionalStrategy({ data }: QueryStrategyProps<ProtestoNa
         {data.protests && data.protests.length > 0 ? (
           <div className="space-y-4">
             {data.protests.map((protest, idx) => (
-              <Card key={idx} className="p-6 border border-gray-100 hover:shadow-md transition-shadow">
+              <Card key={idx} className="p-6 border border-gray-100 dark:border-gray-800 hover:shadow-lg transition-shadow duration-300">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Column 1: Value & Date */}
                   <div className="space-y-3">
@@ -142,7 +118,7 @@ export function ProtestoNacionalStrategy({ data }: QueryStrategyProps<ProtestoNa
                   </div>
 
                   {/* Column 4: Contact Info */}
-                  <div className="space-y-3 md:border-l md:border-gray-100 md:pl-6">
+                  <div className="space-y-3 md:border-l md:border-gray-100 dark:border-gray-800 md:pl-6">
                     <div className="flex items-start gap-2">
                       <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
                       <div>
@@ -166,15 +142,15 @@ export function ProtestoNacionalStrategy({ data }: QueryStrategyProps<ProtestoNa
             ))}
           </div>
         ) : (
-          <Card className="p-12 border-dashed border-2 border-gray-100 flex flex-col items-center justify-center text-center">
-             <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-4">
+          <Card className="p-12 border-dashed border-2 border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center text-center bg-gray-50/50">
+             <div className="w-16 h-16 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-4">
                <CheckCircle2 className="w-8 h-8 text-green-500" />
              </div>
-             <h3 className="text-lg font-bold text-gray-900 mb-1">Nada Consta</h3>
+             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Nada Consta</h3>
              <p className="text-gray-500">Nenhum protesto encontrado para este documento.</p>
           </Card>
         )}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
