@@ -529,3 +529,114 @@ export interface QuodRestritivoAcoesPjResult {
     lastOccurrence: string;
   }>;
 }
+
+export interface RealtimePremiumScorePfResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  person: {
+    name: string;
+    document: string;
+    birthDate: string;
+    status: string;
+    motherName: string;
+  };
+  score: {
+    value: string;
+    class: string;
+    riskText: string;
+    probability: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  addresses: Array<{
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    notary?: string;
+    date: string;
+    origin?: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}
+
+export interface RealtimePremiumScorePjResult {
+  protocol: string;
+  totalDebts: number;
+  totalProtests: number;
+  totalBadChecks: number;
+  company: {
+    cnpj: string;
+    socialReason: string;
+    fantasyName: string;
+    foundationDate: string;
+    status: string;
+  };
+  partners: Array<{
+    name: string;
+    role: string;
+    document: string;
+  }>;
+  score: {
+    value: string;
+    class: string;
+    riskText: string;
+    probability: string;
+  };
+  alerts: Array<{
+    title: string;
+    description: string;
+  }>;
+  phones: Array<{
+    areaCode: string;
+    number: string;
+    type: string;
+  }>;
+  addresses: Array<{
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    zip: string;
+  }>;
+  debts: Array<{
+    value: string;
+    contract: string;
+    origin: string;
+    date: string;
+  }>;
+  protests: Array<{
+    value: string;
+    notary?: string;
+    date: string;
+    origin?: string;
+  }>;
+  badChecks: Array<{
+    bankNumber: string;
+    quantity: string;
+    lastOccurrence: string;
+  }>;
+}

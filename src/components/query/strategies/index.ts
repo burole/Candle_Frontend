@@ -13,6 +13,8 @@ import { MaxBrasilAvancadoPjStrategy } from './MaxBrasilAvancadoPjStrategy';
 import { ProtestoNacionalStrategy } from './ProtestoNacionalStrategy';
 import { QuodRestritivoAcoesPfStrategy } from './QuodRestritivoAcoesPfStrategy';
 import { QuodRestritivoAcoesPjStrategy } from './QuodRestritivoAcoesPjStrategy';
+import { RealtimePremiumScorePfStrategy } from './RealtimePremiumScorePfStrategy';
+import { RealtimePremiumScorePjStrategy } from './RealtimePremiumScorePjStrategy';
 import type { QueryStrategyProps } from '@/types/query-strategies';
 import React from 'react';
 
@@ -30,6 +32,8 @@ export const STRATEGIES: Record<string, React.ComponentType<QueryStrategyProps>>
   'PROTESTO_NACIONAL': ProtestoNacionalStrategy,
   'QUOD_RESTRITIVO_ACOES_PF': QuodRestritivoAcoesPfStrategy,
   'QUOD_RESTRITIVO_ACOES_PJ': QuodRestritivoAcoesPjStrategy,
+  'REALTIME_PREMIUM_SCORE_PF': RealtimePremiumScorePfStrategy,
+  'REALTIME_PREMIUM_SCORE_PJ': RealtimePremiumScorePjStrategy,
 };
 
 export const getStrategyComponent = (code: string): React.ComponentType<QueryStrategyProps> => {
@@ -51,3 +55,5 @@ export * from './MaxBrasilAvancadoPjStrategy';
 export * from './ProtestoNacionalStrategy';
 export * from './QuodRestritivoAcoesPfStrategy';
 export * from './QuodRestritivoAcoesPjStrategy';
+export * from './RealtimePremiumScorePfStrategy';
+export * from './RealtimePremiumScorePjStrategy';
