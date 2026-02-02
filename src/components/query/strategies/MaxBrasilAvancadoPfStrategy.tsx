@@ -108,7 +108,7 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
       </motion.div>
 
       {/* Behavioral Alerts Grid */}
-      <AlertsGrid alerts={data.alerts} />
+      <AlertsGrid alerts={data.alerts || []} />
 
       {/* Summary Stats */}
       <motion.div variants={item} className="grid grid-cols-3 gap-4">
@@ -150,9 +150,9 @@ export function MaxBrasilAvancadoPfStrategy({ data }: QueryStrategyProps<MaxBras
              <p className="text-sm font-medium text-gray-500">Cheques</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-gray-900">{data.totalBadChecks}</p>
-            <p className={`text-xs font-semibold mt-1 ${data.totalBadChecks > 0 ? 'text-yellow-500' : 'text-green-500'}`}>
-              {data.totalBadChecks > 0 ? "Constam registros" : "Nada consta"}
+            <p className="text-2xl font-bold text-gray-900">{data.totalBadChecks || 0}</p>
+            <p className={`text-xs font-semibold mt-1 ${(data.totalBadChecks || 0) > 0 ? 'text-yellow-500' : 'text-green-500'}`}>
+              {(data.totalBadChecks || 0) > 0 ? "Constam registros" : "Nada consta"}
             </p>
           </div>
         </Card>
