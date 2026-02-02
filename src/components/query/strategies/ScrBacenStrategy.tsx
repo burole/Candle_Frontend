@@ -22,10 +22,6 @@ import { cn } from '@/lib/utils';
 export function ScrBacenStrategy({ data }: QueryStrategyProps<ScrBacenResult>) {
   if (!data) return null;
 
-  const formatDate = (dateString: string) => {
-    return dateString; // Already formatted in JSON
-  };
-
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
   };
