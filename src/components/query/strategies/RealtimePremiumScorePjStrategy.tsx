@@ -57,7 +57,16 @@ export function RealtimePremiumScorePjStrategy({ data }: QueryStrategyProps<Real
                statusVariant={data.company.status === 'ATIVA' ? 'success' : 'warning'}
                pdfUrl={data.pdf}
                className="mb-6"
-             />
+             >
+                {/* Extra Badge for Probability */}
+                {data.score.probability && (
+                  <div className="mb-4 flex">
+                     <Badge variant="info">
+                         Probabilidade: {data.score.probability}%
+                     </Badge>
+                  </div>
+                )}
+             </StrategyHeader>
 
              <div className="grid grid-cols-2 gap-4 mt-6">
                 <InfoBox 
@@ -133,7 +142,7 @@ export function RealtimePremiumScorePjStrategy({ data }: QueryStrategyProps<Real
 
       {/* Debts Table */}
       <StrategySectionWrapper
-        title={`Detalhamento de Dívidas (${data.debts.length})`}
+        title="Detalhamento de Dívidas"
         icon={<AlertTriangle className="w-5 h-5 text-red-500" />}
         count={data.debts.length}
         isEmpty={data.debts.length === 0}
@@ -163,7 +172,7 @@ export function RealtimePremiumScorePjStrategy({ data }: QueryStrategyProps<Real
 
       {/* Protests Table */}
       <StrategySectionWrapper
-        title={`Detalhamento de Protestos (${data.protests?.length || 0})`}
+        title="Detalhamento de Protestos"
         icon={<FileWarning className="w-5 h-5 text-orange-500" />}
         count={data.protests?.length || 0}
         isEmpty={!data.protests || data.protests.length === 0}
@@ -191,7 +200,7 @@ export function RealtimePremiumScorePjStrategy({ data }: QueryStrategyProps<Real
 
       {/* Bad Checks Table */}
       <StrategySectionWrapper
-        title={`Detalhamento de Cheques Sem Fundo (${data.badChecks?.length || 0})`}
+        title="Detalhamento de Cheques Sem Fundo"
         icon={<CheckCircle2 className="w-5 h-5 text-yellow-500" />}
         count={data.badChecks?.length || 0}
         isEmpty={!data.badChecks || data.badChecks.length === 0}

@@ -129,7 +129,7 @@ export function SerasaCrednetPefinProtestoSpcPfStrategy({ data }: QueryStrategyP
 
       {/* Debts Table */}
       <StrategySectionWrapper
-        title={`Detalhamento de Dívidas (${data.debts.length})`}
+        title="Detalhamento de Dívidas"
         icon={<AlertTriangle className="w-5 h-5 text-red-500" />}
         count={data.debts.length}
         isEmpty={data.debts.length === 0}
@@ -159,7 +159,7 @@ export function SerasaCrednetPefinProtestoSpcPfStrategy({ data }: QueryStrategyP
 
       {/* Protests Table */}
       <StrategySectionWrapper
-        title={`Detalhamento de Protestos (${data.protests?.length || 0})`}
+        title="Detalhamento de Protestos"
         icon={<FileWarning className="w-5 h-5 text-orange-500" />}
         count={data.protests?.length || 0}
         isEmpty={!data.protests || data.protests.length === 0}
@@ -189,7 +189,7 @@ export function SerasaCrednetPefinProtestoSpcPfStrategy({ data }: QueryStrategyP
 
       {/* Bad Checks Table */}
       <StrategySectionWrapper
-        title={`Detalhamento de Cheques Sem Fundo (${data.badChecks?.length || 0})`}
+        title="Detalhamento de Cheques Sem Fundo"
         icon={<CheckCircle2 className="w-5 h-5 text-yellow-500" />}
         count={data.badChecks?.length || 0}
         isEmpty={!data.badChecks || data.badChecks.length === 0}
