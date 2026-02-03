@@ -234,7 +234,7 @@ export interface AdminQuery {
   providerId: string;
   providerName: string;
   status: 'SUCCESS' | 'FAILED' | 'PENDING' | 'PROCESSING';
-  cost: number;
+  price: number;
   durationMs: number;
   createdAt: string;
   responseStatus?: number;

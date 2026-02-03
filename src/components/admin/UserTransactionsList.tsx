@@ -122,6 +122,7 @@ function StatusBadge({ status }: { status: string }) {
     PENDING: 'bg-amber-100 text-amber-700 border-none',
     FAILED: 'bg-red-100 text-red-700 border-none',
     CANCELED: 'bg-slate-100 text-slate-700 border-none',
+    RECEIVED: 'bg-emerald-100 text-emerald-700 border-none',
   };
 
   const labels: Record<string, string> = {
@@ -129,10 +130,11 @@ function StatusBadge({ status }: { status: string }) {
     PENDING: 'Pendente',
     FAILED: 'Falhou',
     CANCELED: 'Cancelado',
+    RECEIVED: 'Recebido',
   };
 
   return (
-    <Badge className={styles[status] || 'bg-slate-100'} variant="outline">
+    <Badge className={styles[status] || styles[status === 'RECEIVED' ? 'CONFIRMED' : ''] || 'bg-slate-100'} variant="outline">
       {labels[status] || status}
     </Badge>
   );

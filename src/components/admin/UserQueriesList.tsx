@@ -3,7 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Loader2, AlertCircle, Database, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, AlertCircle, Database, CheckCircle, XCircle, Eye } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 import {
   Table,
@@ -82,9 +84,10 @@ export function UserQueriesList({ userId }: UserQueriesListProps) {
           <TableRow>
             <TableHead>Data</TableHead>
             <TableHead>Consulta</TableHead>
-            <TableHead>Protocolo</TableHead>
+
             <TableHead>Status</TableHead>
             <TableHead className="text-right">Custo</TableHead>
+            <TableHead className="text-right">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -99,21 +102,25 @@ export function UserQueriesList({ userId }: UserQueriesListProps) {
                   <span className="text-xs text-slate-400 font-mono">{query.queryType.code}</span>
                 </div>
               </TableCell>
-               <TableCell>
-                  <span className="font-mono text-xs text-slate-500 bg-slate-50 px-1 py-0.5 rounded border border-slate-100">
-                    {query.protocol}
-                  </span>
-               </TableCell>
+
               <TableCell>
                 <StatusBadge status={query.status} />
               </TableCell>
               <TableCell className="text-right font-medium text-slate-700">
-                 {query.cost > 0 ? (
-                   query.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                 {query.price > 0 ? (
+                   query.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
                  ) : (
                    <span className="text-slate-400">Gratuito</span>
                  )}
               </TableCell>
+
+               <TableCell className="text-right">
+                  <Link href={`/consulta/${query.id}`} target="_blank">
+                    <Button variant="ghost" size="sm">
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                  </Link>
+               </TableCell>
             </TableRow>
           ))}
         </TableBody>

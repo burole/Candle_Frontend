@@ -199,6 +199,9 @@ export function QueryExecutionForm({
     if (result) {
       onSuccess?.(result);
       setShowConfirmation(false);
+    } else {
+      // If error, exit confirmation text so user can edit
+      setShowConfirmation(false);
     }
   };
 
@@ -302,17 +305,39 @@ export function QueryExecutionForm({
 
       {/* Execution Error Alert */}
       {executionError && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Erro na consulta</AlertTitle>
-          <AlertDescription>
-            {executionError}
-          </AlertDescription>
-        </Alert>
+        <div className="p-4 rounded-lg bg-orange-50 border border-orange-100 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="flex gap-3">
+             <div className="p-2 bg-orange-100 rounded-full h-fit">
+               <AlertCircle className="h-5 w-5 text-orange-600" />
+             </div>
+             <div>
+               <h4 className="font-semibold text-orange-900 mb-1">
+                 {(() => {
+                   const err = executionError.toUpperCase();
+                   if (err.includes('NAO ENCONTRADA') || err.includes('NOT FOUND')) return 'Dados não localizados';
+                   if (err.includes('TIMEOUT') || err.includes('TIME OUT')) return 'Instabilidade momentânea';
+                   return 'Não foi possível concluir';
+                 })()}
+               </h4>
+               <p className="text-sm text-orange-800/90 leading-relaxed">
+                 {(() => {
+                   const err = executionError.toUpperCase();
+                   if (err.includes('NAO ENCONTRADA') || err.includes('NOT FOUND')) {
+                     return 'Não encontramos registros para os dados informados. O valor da consulta não foi debitado.';
+                   }
+                   if (err.includes('TIMEOUT') || err.includes('TIME OUT')) {
+                     return 'O provedor está respondendo mais lentamente que o normal. Por favor, tente novamente em alguns instantes.';
+                   }
+                   return 'Houve um problema técnico ao processar sua consulta. O valor não foi debitado do seu saldo. Tente novamente.';
+                 })()}
+               </p>
+             </div>
+          </div>
+        </div>
       )}
 
       {/* Confirmation message */}
-      {showConfirmation && (
+      {showConfirmation && !executionError && (
         <div className="p-4 rounded-lg bg-yellow-50 border border-yellow-200">
           <p className="text-sm text-yellow-800 font-medium">
             Confirma a execução desta consulta? O valor de R$ {currentPrice.toFixed(2)} será
