@@ -94,6 +94,7 @@ export const downloadPdf = async (url: string, fileName: string = 'documento.pdf
     // 1. Try direct fetch first
     try {
         // Skip direct fetch for known CORS-restricted domains to avoid console errors
+        // TODO: change to correct api url
         if (url.includes('api.consultasbigtech.com.br') ||
             url.includes('api.serasaconsultas.com.br') ||
             url.includes('api.serasaconsultas.com.br')) {
