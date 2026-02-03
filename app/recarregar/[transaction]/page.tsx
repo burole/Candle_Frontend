@@ -272,7 +272,7 @@ export default function TransactionPage() {
                          Visualizar Boleto
                        </Button>
                        <Button 
-                         onClick={() => router.push('/dashboard/carteira')}
+                         onClick={() => router.push('/carteira')}
                          variant="outline"
                          className="w-full h-14 font-medium text-gray-600 border-2"
                        >

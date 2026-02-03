@@ -198,8 +198,6 @@
           "app/consulta",
           "app/design-test",
           "app/(home)",
-          "app/dashboard/historico",
-          "app/dashboard/carteira",
           "app/credito/[slug]",
           "src/components/payment",
           "src/components/credit",

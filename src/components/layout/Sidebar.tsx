@@ -33,7 +33,7 @@ export function Sidebar() {
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-gradient-primary" />
             <span className="text-xl font-display font-bold gradient-text">
-              Consulte Ai
+              ConsultaAi
             </span>
           </Link>
         </div>

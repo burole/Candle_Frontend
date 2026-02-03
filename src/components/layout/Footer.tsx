@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Search, Mail, Phone } from 'lucide-react';
+import { Search, Mail } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,13 +19,25 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary">
-                <Search className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-display font-bold">
-                Consulte Ai
-              </span>
+            <Link href="/" className="flex-shrink-0 mb-6 block">
+              <motion.div
+                className="flex items-center gap-4 group"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Search className="h-5 w-5 text-white stroke-[2.5px]" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-display font-black tracking-tight text-white leading-none group-hover:text-blue-400 transition-colors">
+                    Consulta<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Ai</span>
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 leading-none mt-1 group-hover:text-blue-300 transition-colors">
+                    Platform
+                  </span>
+                </div>
+              </motion.div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Plataforma completa de consultas de crédito para CPF e CNPJ.
@@ -47,25 +59,10 @@ export function Footer() {
                   Consultas de Crédito
                 </Link>
               </li>
+
               <li>
                 <Link
-                  href="/consulta/avalie-credito-cpf"
-                  className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
-                >
-                  Consulta CPF
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/consulta/credito-total-cenprot-cnpj"
-                  className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
-                >
-                  Consulta CNPJ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/carteira"
+                  href="/carteira"
                   className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
                 >
                   Recargas
@@ -98,20 +95,13 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/privacidade"
+                  href="/politica-de-privacidade"
                   className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
                 >
                   Política de Privacidade
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/lgpd"
-                  className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
-                >
-                  LGPD
-                </Link>
-              </li>
+
             </ul>
           </div>
 
@@ -130,21 +120,6 @@ export function Footer() {
                   contato@candle.com.br
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-gray-400 text-sm">
-                <Phone className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                <a
-                  href="tel:+551199999999"
-                  className="hover:text-blue-400 transition-colors"
-                >
-                  (11) 99999-9999
-                </a>
-              </li>
-              <li className="text-gray-400 text-sm mt-4">
-                <p className="font-medium text-white mb-1">
-                  Horário de Atendimento
-                </p>
-                <p>Segunda a Sexta: 9h às 18h</p>
-              </li>
             </ul>
           </div>
         </div>
@@ -153,7 +128,7 @@ export function Footer() {
         <div className="pt-8 border-t border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm text-center md:text-left">
-              © {currentYear} Consulte Ai. Todos os direitos reservados.
+              © {currentYear} ConsultaAi. Todos os direitos reservados.
             </p>
             <div className="flex items-center gap-6 text-sm">
               <Link
@@ -163,16 +138,10 @@ export function Footer() {
                 Termos
               </Link>
               <Link
-                href="/privacidade"
+                href="/politica-de-privacidade"
                 className="text-gray-400 hover:text-blue-400 transition-colors"
               >
                 Privacidade
-              </Link>
-              <Link
-                href="/cookies"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
-              >
-                Cookies
               </Link>
             </div>
           </div>
