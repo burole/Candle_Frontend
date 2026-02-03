@@ -1,7 +1,8 @@
-import React from 'react';
-import { Download } from 'lucide-react';
+import { useState } from 'react';
+import { Download, Loader2 } from 'lucide-react';
 import { Button, Badge } from '@/design-system/ComponentsTailwind';
 import { cn } from '@/lib/utils';
+import { downloadPdf } from '@/lib/download';
 
 interface StrategyHeaderProps {
   title: string;
@@ -24,6 +25,8 @@ export function StrategyHeader({
   children,
   className
 }: StrategyHeaderProps) {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   return (
     <div className={cn("flex justify-between items-start mb-6", className)}>
       <div className="w-full">
@@ -51,12 +54,28 @@ export function StrategyHeader({
             
             {pdfUrl && (
                 <Button 
-                   onClick={() => window.open(pdfUrl, '_blank')}
+                   onClick={async () => {
+                     try {
+                       setIsDownloading(true);
+                       await downloadPdf(pdfUrl, `relatorio-${protocol || 'documento'}.pdf`);
+                     } catch (e) {
+                       console.error(e);
+                       // Fallback to old behavior if fetch fails completely (e.g. due to CORS or other network issues that window.open might handle differently)
+                       window.open(pdfUrl, '_blank');
+                     } finally {
+                       setIsDownloading(false);
+                     }
+                   }}
+                   disabled={isDownloading}
                    className="flex items-center gap-2 h-8"
                    variant="outline"
                 >
-                  <Download className="w-4 h-4" />
-                  PDF
+                  {isDownloading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Download className="w-4 h-4" />
+                  )}
+                  {isDownloading ? 'Baixando...' : 'PDF'}
                 </Button>
             )}
         </div>
