@@ -57,6 +57,30 @@ export const downloadPdf = async (url: string, fileName: string = 'documento.pdf
       
       console.error('Could not extract PDF from JSON response', data);
       throw new Error('Formato de resposta desconhecido');
+    } else if (contentType?.includes('text/xml') || contentType?.includes('application/xml')) {
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, "text/xml");
+        
+        const pdfBase64 = xmlDoc.getElementsByTagName("PDFBASE64")[0]?.textContent;
+        if (pdfBase64) {
+            const binaryString = window.atob(pdfBase64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            downloadBlob(blob, fileName);
+            return;
+        }
+
+        const pdfUrl = xmlDoc.getElementsByTagName("URL")[0]?.textContent;
+        if (pdfUrl) {
+             await downloadPdf(pdfUrl, fileName);
+             return;
+        }
+        
+        throw new Error('Não foi possível extrair PDF do XML');
     } else if (contentType?.includes('text/html')) {
         // If we get HTML (like an error page or a login page), throw so we can try proxy or fail
         throw new Error('Retornou HTML em vez de PDF/JSON');
@@ -70,7 +94,9 @@ export const downloadPdf = async (url: string, fileName: string = 'documento.pdf
     // 1. Try direct fetch first
     try {
         // Skip direct fetch for known CORS-restricted domains to avoid console errors
-        if (url.includes('api.consultasbigtech.com.br')) {
+        if (url.includes('api.consultasbigtech.com.br') ||
+            url.includes('api.serasaconsultas.com.br') ||
+            url.includes('api.serasaconsultas.com.br')) {
            console.log('Skipping direct fetch for known CORS domain, using proxy immediately.');
            throw new Error('Force proxy');
         }
