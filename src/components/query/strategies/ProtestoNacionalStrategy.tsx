@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { 
   FileWarning, 
   MapPin, 
@@ -8,9 +7,10 @@ import {
   Calendar,
   Phone,
   User,
-  CheckCircle2
+  CheckCircle2,
+  Download
 } from 'lucide-react';
-import { Card, Badge } from '@/design-system/ComponentsTailwind';
+import { Card, Badge, Button } from '@/design-system/ComponentsTailwind';
 import type { QueryStrategyProps, ProtestoNacionalResult } from '@/types/query-strategies';
 import { SummaryCard } from './components/SummaryCard';
 
@@ -33,6 +33,16 @@ export function ProtestoNacionalStrategy({ data }: QueryStrategyProps<ProtestoNa
                 <p className="text-sm text-gray-500 font-medium mt-1">{data.product}</p>
                 <p className="text-xs text-gray-400 font-mono mt-2">Protocolo: {data.protocol}</p>
               </div>
+              {data.pdf && (
+                  <Button 
+                     onClick={() => window.open(data.pdf, '_blank')}
+                     className="flex items-center gap-2 h-8"
+                     variant="outline"
+                  >
+                    <Download className="w-4 h-4" />
+                    PDF
+                  </Button>
+               )}
             </div>
          </Card>
 

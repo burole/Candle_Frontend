@@ -11,7 +11,6 @@ interface QueryResultDisplayProps {
 }
 
 export function QueryResultDisplay({ query, className }: QueryResultDisplayProps) {
-  // Select the appropriate strategy component
   const code = query.queryType?.code || 'DEFAULT';
   const StrategyComponent = getStrategyComponent(code);
 
@@ -34,16 +33,6 @@ export function QueryResultDisplay({ query, className }: QueryResultDisplayProps
         <div>
           <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Valor</p>
           <p className="text-sm font-medium text-gray-900 mt-1">R$ {query.price?.toFixed(2) || '0.00'}</p>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Cache</p>
-          <p className="text-sm font-medium text-gray-900 mt-1">
-            {query.isCached ? (
-              <span className="text-green-600 font-bold">SIM</span>
-            ) : (
-              <span className="text-gray-600">NÃO</span>
-            )}
-          </p>
         </div>
       </Card>
     </div>

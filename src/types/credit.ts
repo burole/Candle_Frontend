@@ -71,6 +71,9 @@ export interface CreditReportResponse {
   /** Unique protocol ID for this query */
   protocol: string;
 
+  /** Optional PDF URL */
+  pdf?: string;
+
   /** Computed Credit Status */
   status: CreditStatus;
 
