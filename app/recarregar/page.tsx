@@ -83,8 +83,6 @@ export default function RechargePage() {
     if (result.success && result.data) {
       // Redirect to transaction page which handles the QR Code display
       router.push(`/recarregar/${result.data.id}`);
-    } else {
-      toast.error('Erro ao gerar PIX. Tente novamente.');
     }
   };
 
@@ -247,6 +245,10 @@ export default function RechargePage() {
                         <span>Recarga</span>
                         <span className="font-medium text-slate-900">R$ {amount.toFixed(2)}</span>
                       </div>
+                      <div className="flex justify-between items-center text-slate-600 text-sm md:text-base">
+                        <span>Taxa de Serviço</span>
+                        <span className="font-medium text-slate-900">R$ 1.99</span>
+                      </div>
                       <div className="flex justify-between items-center text-emerald-600 bg-emerald-50 p-2.5 rounded-xl">
                         <span className="flex items-center gap-2 text-sm font-bold">
                            <Zap className="w-4 h-4 fill-emerald-600" /> PIX
@@ -260,7 +262,7 @@ export default function RechargePage() {
                         <span className="text-slate-500 font-bold text-xs uppercase tracking-wider">Total a pagar</span>
                         <div className="flex items-baseline gap-1 flex-wrap">
                           <span className="text-lg font-bold text-slate-400">R$</span>
-                          <span className="text-3xl md:text-4xl font-display font-black text-slate-900 tracking-tight break-all">{amount.toFixed(2)}</span>
+                          <span className="text-3xl md:text-4xl font-display font-black text-slate-900 tracking-tight break-all">{(amount + 1.99).toFixed(2)}</span>
                         </div>
                       </div>
                     </div>

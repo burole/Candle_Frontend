@@ -21,7 +21,6 @@ export function QueryTypeCard({ queryType, className }: QueryTypeCardProps) {
   const features = [];
 
   features.push('Resultado imediato');
-  features.push('Dados atualizados');
 
   return (
     <ConsultationCard
