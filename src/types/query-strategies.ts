@@ -85,6 +85,7 @@ export interface BaseLegalAction {
 
 interface BaseStandardResult {
   protocol: string;
+  pdf?: string;
   totalDebts: number;
   totalProtests: number;
   totalBadChecks?: number;
@@ -100,10 +101,11 @@ interface BaseStandardResult {
 
 // SCR Bacen (Unique structure)
 export interface ScrBacenResult {
+  protocol: string;
   document: string;
   documentType: string;
   consultationDateTime: string;
-  pdfUrl?: string;
+  pdf?: string;
   score: {
     value: number;
     band: string;
@@ -129,6 +131,7 @@ interface MaturityItem { code: string; description: string; value: number; perce
 // Localiza (Unique structure)
 export interface LocalizaResult {
   protocol: string;
+  pdf?: string;
   basicInfo: Omit<BasePerson, 'revenueStatus' | 'email'> & { gender: string };
   contact: {
     mainPhone: string;
@@ -223,6 +226,7 @@ export interface MaxBrasilAvancadoPjResult extends BaseStandardResult {
 // Protesto Nacional (Unique Structure)
 export interface ProtestoNacionalResult {
   protocol: string;
+  pdf?: string;
   product: string;
   totalProtests: number;
   totalValue: string;

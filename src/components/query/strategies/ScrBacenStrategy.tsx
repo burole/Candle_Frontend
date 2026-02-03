@@ -12,12 +12,15 @@ import {
   DollarSign, 
   Clock,
   Briefcase,
-  AlertTriangle,
-  Download
+  AlertTriangle
 } from 'lucide-react';
-import { Card, Badge, Button } from '@/design-system/ComponentsTailwind';
+import { Card, Badge } from '@/design-system/ComponentsTailwind';
 import type { QueryStrategyProps, ScrBacenResult } from '@/types/query-strategies';
 import { cn } from '@/lib/utils';
+import { StrategyHeader } from './components/StrategyHeader';
+import { StrategySectionWrapper } from './components/StrategySectionWrapper';
+import { InfoBox } from './components/InfoBox';
+import { SummaryCard } from './components/SummaryCard';
 
 export function ScrBacenStrategy({ data }: QueryStrategyProps<ScrBacenResult>) {
   if (!data) return null;
@@ -83,24 +86,12 @@ export function ScrBacenStrategy({ data }: QueryStrategyProps<ScrBacenResult>) {
         {/* Info Card */}
         <div className="md:col-span-8">
           <Card className="h-full p-6 bg-white dark:bg-gray-900">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-blue-600" />
-                  Dados da Consulta
-                </h3>
-                <p className="text-gray-500 text-sm mt-1">Documento: {data.document}</p>
-              </div>
-              {data.pdfUrl && (
-                <Button 
-                   onClick={() => window.open(data.pdfUrl, '_blank')}
-                   className="flex items-center gap-2"
-                >
-                  <Download className="w-4 h-4" />
-                  PDF Original
-                </Button>
-              )}
-            </div>
+            <StrategyHeader 
+              title="Dados da Consulta"
+              subtitle={`Documento: ${data.document}`}
+              pdfUrl={data.pdf}
+              className="mb-6"
+            />
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <InfoBox 
@@ -147,41 +138,39 @@ export function ScrBacenStrategy({ data }: QueryStrategyProps<ScrBacenResult>) {
         <SummaryCard 
           title="A Vencer"
           value={data.creditSummary.creditToExpire.value}
-          percentage={data.creditSummary.creditToExpire.percentage}
+          subtitle={`${data.creditSummary.creditToExpire.percentage}% do total`}
           color="blue"
           icon={<Clock className="w-5 h-5" />}
         />
         <SummaryCard 
           title="Vencido"
           value={data.creditSummary.expiredCredit.value}
-          percentage={data.creditSummary.expiredCredit.percentage}
+          subtitle={`${data.creditSummary.expiredCredit.percentage}% do total`}
           color="red"
           icon={<AlertTriangle className="w-5 h-5" />}
         />
         <SummaryCard 
           title="Limite"
           value={data.creditSummary.creditLimit.value}
-          percentage={data.creditSummary.creditLimit.percentage}
+          subtitle={`${data.creditSummary.creditLimit.percentage}% do total`}
           color="green"
           icon={<CheckCircle2 className="w-5 h-5" />}
         />
         <SummaryCard 
           title="Prejuízo"
           value={data.creditSummary.loss.value}
-          percentage={data.creditSummary.loss.percentage}
+          subtitle={`${data.creditSummary.loss.percentage}% do total`}
           color="gray"
           icon={<TrendingDown className="w-5 h-5" />}
         />
       </div>
 
       {/* Operations Details */}
-      <Card className="p-0 overflow-hidden">
-        <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-          <h3 className="font-bold text-gray-900 text-lg flex items-center gap-2">
-            <DollarSign className="w-5 h-5 text-blue-600" />
-            Detalhamento de Operações
-          </h3>
-        </div>
+      <StrategySectionWrapper
+        title="Detalhamento de Operações"
+        icon={<DollarSign className="w-5 h-5 text-blue-600" />}
+        isEmpty={data.operations.length === 0}
+      >
         <div className="divide-y divide-gray-100">
           {data.operations.map((op, idx) => (
             <motion.div 
@@ -227,56 +216,7 @@ export function ScrBacenStrategy({ data }: QueryStrategyProps<ScrBacenResult>) {
             </motion.div>
           ))}
         </div>
-      </Card>
+      </StrategySectionWrapper>
     </div>
-  );
-}
-
-function InfoBox({ label, value, icon }: { label: string, value: string, icon: React.ReactNode }) {
-  return (
-    <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-      <div className="flex items-center gap-2 mb-1">
-        {icon}
-        <span className="text-xs font-medium text-gray-500 uppercase">{label}</span>
-      </div>
-      <p className="font-semibold text-gray-900 dark:text-white break-words">{value}</p>
-    </div>
-  );
-}
-
-function SummaryCard({ title, value, percentage, color, icon }: { 
-  title: string, value: number, percentage: number, color: 'blue'|'red'|'green'|'gray', icon: React.ReactNode 
-}) {
-  const colors = {
-    blue: "bg-blue-50 text-blue-700 border-blue-100",
-    red: "bg-red-50 text-red-700 border-red-100",
-    green: "bg-green-50 text-green-700 border-green-100",
-    gray: "bg-gray-50 text-gray-700 border-gray-100",
-  };
-
-  const textColors = {
-    blue: "text-blue-600",
-    red: "text-red-600",
-    green: "text-green-600",
-    gray: "text-gray-600",
-  };
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
-  };
-
-  return (
-    <Card className={cn("p-4 border", colors[color])}>
-      <div className="flex items-center justify-between mb-2">
-        <span className="font-medium text-sm opacity-80">{title}</span>
-        {icon}
-      </div>
-      <div className="text-2xl font-bold">
-        {formatCurrency(value)}
-      </div>
-      <div className="text-xs mt-1 font-medium opacity-70">
-        {percentage}% do total
-      </div>
-    </Card>
   );
 }

@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { 
   User, 
   Phone, 
@@ -13,6 +12,7 @@ import {
 import { Card, Badge } from '@/design-system/ComponentsTailwind';
 import type { QueryStrategyProps, LocalizaResult } from '@/types/query-strategies';
 import { InfoBox } from './components/InfoBox';
+import { StrategyHeader } from './components/StrategyHeader';
 
 export function LocalizaStrategy({ data }: QueryStrategyProps<LocalizaResult>) {
   if (!data) return null;
@@ -24,15 +24,14 @@ export function LocalizaStrategy({ data }: QueryStrategyProps<LocalizaResult>) {
       <Card className="h-full p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-lg border-l-4 border-l-blue-500">
           <div className="flex flex-col gap-6">
              <div className="flex-1">
-               <div className="flex items-center gap-2 mb-2">
-                 <Badge variant="info">
-                   {data.basicInfo.status}
-                 </Badge>
-                 <span className="text-xs text-gray-400 font-mono">Protocolo: {data.protocol}</span>
-               </div>
-               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-2 mb-6">
-                 {data.basicInfo.name || "NOME NÃO INFORMADO"}
-               </h3>
+               <StrategyHeader 
+                  title={data.basicInfo.name || "NOME NÃO INFORMADO"}
+                  protocol={data.protocol}
+                  status={data.basicInfo.status}
+                  statusVariant="info"
+                  pdfUrl={data.pdf}
+                  className="mb-6"
+               />
 
                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                  <InfoBox 
@@ -168,7 +167,7 @@ export function LocalizaStrategy({ data }: QueryStrategyProps<LocalizaResult>) {
             ))}
           </div>
       </Card>
-
+      
     </div>
   );
 }

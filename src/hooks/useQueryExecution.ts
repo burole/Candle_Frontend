@@ -17,6 +17,7 @@ import { useAuthStore } from '@/store/authStore';
 
 export function useQueryExecution() {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const updateBalance = useAuthStore((state) => state.updateBalance);
 
   const executeQuery = async (
@@ -24,6 +25,7 @@ export function useQueryExecution() {
     input: string
   ): Promise<ExecuteQueryResponse | null> => {
     setIsLoading(true);
+    setError(null);
     try {
       const request: ExecuteQueryRequest = {
         queryTypeCode,
@@ -33,23 +35,16 @@ export function useQueryExecution() {
       const result = await executeQueryAction(request);
 
       if (!result.success || !result.data) {
-        toast.error(result.error || 'Erro ao executar consulta');
+        const errorMsg = result.error || 'Erro ao executar consulta';
+        setError(errorMsg);
         return null;
-      }
-
-      // Show success message with cache info
-      if (result.data.cached) {
-        toast.success(
-          `Consulta executada com sucesso! (Cache - R$ ${result.data.price.toFixed(2)})`
-        );
-      } else {
-        toast.success(`Consulta executada com sucesso! (R$ ${result.data.price.toFixed(2)})`);
       }
 
       return result.data;
     } catch (error) {
       console.error('Error executing query:', error);
-      toast.error('Erro ao executar consulta');
+      const errorMsg = 'Erro inesperado ao executar consulta. Tente novamente.';
+      setError(errorMsg);
       return null;
     } finally {
       setIsLoading(false);
@@ -72,7 +67,6 @@ export function useQueryExecution() {
       return result.data;
     } catch (error) {
       console.error('Error fetching query history:', error);
-      toast.error('Erro ao buscar histórico');
       return null;
     } finally {
       setIsLoading(false);
@@ -126,5 +120,6 @@ export function useQueryExecution() {
     getHistory,
     getById,
     isLoading,
+    error,
   };
 }

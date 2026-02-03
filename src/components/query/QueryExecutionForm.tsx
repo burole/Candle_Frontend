@@ -13,6 +13,7 @@ import { useBalance } from '@/hooks/useBalance';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
 
 interface QueryExecutionFormProps {
@@ -42,7 +43,7 @@ export function QueryExecutionForm({
   className,
 }: QueryExecutionFormProps) {
   const { balance, formattedBalance } = useBalance();
-  const { executeQuery, isLoading } = useQueryExecution();
+  const { executeQuery, isLoading, error: executionError } = useQueryExecution();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -297,6 +298,17 @@ export function QueryExecutionForm({
             Saldo insuficiente. Seu saldo atual: R$ {formattedBalance}
           </p>
         </div>
+      )}
+
+      {/* Execution Error Alert */}
+      {executionError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Erro na consulta</AlertTitle>
+          <AlertDescription>
+            {executionError}
+          </AlertDescription>
+        </Alert>
       )}
 
       {/* Confirmation message */}
