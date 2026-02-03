@@ -30,8 +30,8 @@ export function QueryTypeCard({ queryType, className }: QueryTypeCardProps) {
       price={queryType.price}
       features={features}
       icon={<IconComponent className="w-8 h-8" />}
-      isPopular={queryType.code === 'CREDIT_PREMIUM' || queryType.code === 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'}
-      isPremium={queryType.price >= 4}
+      isPopular={queryType.code === 'CREDIT_PREMIUM' || queryType.code === 'LOCALIZA_CPF_CNPJ'}
+      isPremium={queryType.price >= 6}
       onClick={() => router.push(`/consulta/${queryType.code}`)}
     />
   );
