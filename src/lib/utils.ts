@@ -26,3 +26,19 @@ export const getPriorityCategory = (categories: QueryCategory[]) => {
     if (categories.includes(QueryCategory.PERSON)) return QueryCategory.PERSON;
     return categories[0];
   };
+
+export function formatDisplayDate(dateString?: string): string {
+  if (!dateString) return 'N/A';
+  // Check if already in DD/MM/YYYY format
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) {
+    return dateString;
+  }
+  // Try parsing ISO or other formats
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString; // Fallback to original if invalid
+    return date.toLocaleDateString('pt-BR');
+  } catch (e) {
+    return dateString;
+  }
+}

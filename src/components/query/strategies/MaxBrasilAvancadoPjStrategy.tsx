@@ -10,6 +10,7 @@ import {
   Users
 } from 'lucide-react';
 import { Card, Badge, StatsCard } from '@/design-system/ComponentsTailwind';
+import { formatDisplayDate } from '@/lib/utils';
 import type { QueryStrategyProps, MaxBrasilAvancadoPjResult } from '@/types/query-strategies';
 import { AlertsGrid } from './components/AlertsGrid';
 import { ScoreGauge } from './components/ScoreGauge';
@@ -69,7 +70,7 @@ export function MaxBrasilAvancadoPjStrategy({ data }: QueryStrategyProps<MaxBras
                 />
                 <InfoBox 
                    label="Fundação" 
-                   value={data.company.foundationDate} 
+                   value={formatDisplayDate(data.company.foundationDate)} 
                    icon={<Briefcase className="w-4 h-4 text-purple-500" />} 
                 />
               </div>

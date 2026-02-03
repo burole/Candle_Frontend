@@ -9,6 +9,7 @@ import {
   Users
 } from 'lucide-react';
 import { Card, Badge } from '@/design-system/ComponentsTailwind';
+import { formatDisplayDate } from '@/lib/utils';
 import type { QueryStrategyProps, RealtimePremiumScorePjResult } from '@/types/query-strategies';
 import { AlertsGrid } from './components/AlertsGrid';
 import { ScoreGauge } from './components/ScoreGauge';
@@ -76,7 +77,7 @@ export function RealtimePremiumScorePjStrategy({ data }: QueryStrategyProps<Real
                 />
                 <InfoBox 
                   label="Fundação" 
-                  value={data.company.foundationDate}
+                  value={formatDisplayDate(data.company.foundationDate)}
                   icon={<Calendar className="w-4 h-4 text-purple-500" />}
                 />
              </div>

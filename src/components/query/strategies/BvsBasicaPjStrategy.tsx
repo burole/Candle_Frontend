@@ -9,6 +9,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { Card } from '@/design-system/ComponentsTailwind';
+import { formatDisplayDate } from '@/lib/utils';
 import type { BvsBasicaPjResult, QueryStrategyProps } from '@/types/query-strategies';
 import { AlertsGrid } from './components/AlertsGrid';
 import { InfoBox } from './components/InfoBox';
@@ -48,7 +49,7 @@ export function BvsBasicaPjStrategy({ data }: QueryStrategyProps<BvsBasicaPjResu
           />
           <InfoBox 
             label="Fundação" 
-            value={data.company.foundationDate} 
+            value={formatDisplayDate(data.company.foundationDate)} 
             icon={<Briefcase className="w-4 h-4 text-purple-500" />} 
           />
         </div>

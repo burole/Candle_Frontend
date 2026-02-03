@@ -25,6 +25,7 @@ import { SummaryCard } from './components/SummaryCard';
 import { StrategyHeader } from './components/StrategyHeader';
 import { StrategyContacts } from './components/StrategyContacts';
 import { StrategySectionWrapper } from './components/StrategySectionWrapper';
+import { formatDisplayDate } from '@/lib/utils';
 
 export function QuodRestritivoAcoesPfStrategy({ data }: QueryStrategyProps<QuodRestritivoAcoesPfResult>) {
   if (!data) return null;
@@ -51,7 +52,7 @@ export function QuodRestritivoAcoesPfStrategy({ data }: QueryStrategyProps<QuodR
             />
             <InfoBox 
               label="Nascimento" 
-              value={data.person.birthDate}
+              value={formatDisplayDate(data.person.birthDate)}
               icon={<Calendar className="w-4 h-4 text-blue-500" />}
             />
             {data.person.motherName && (

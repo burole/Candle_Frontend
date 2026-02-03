@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Card, Badge } from '@/design-system/ComponentsTailwind';
 import type { QueryStrategyProps, ScrBacenResult } from '@/types/query-strategies';
-import { cn } from '@/lib/utils';
+import { cn, formatDisplayDate } from '@/lib/utils';
 import { StrategyHeader } from './components/StrategyHeader';
 import { StrategySectionWrapper } from './components/StrategySectionWrapper';
 import { InfoBox } from './components/InfoBox';
@@ -101,12 +101,12 @@ export function ScrBacenStrategy({ data }: QueryStrategyProps<ScrBacenResult>) {
               />
               <InfoBox 
                 label="Data Base" 
-                value={data.databaseDate} 
+                value={formatDisplayDate(data.databaseDate)} 
                 icon={<Calendar className="w-4 h-4 text-orange-500" />} 
               />
               <InfoBox 
                 label="Início Relac." 
-                value={data.relationshipStartDate} 
+                value={formatDisplayDate(data.relationshipStartDate)} 
                 icon={<Clock className="w-4 h-4 text-blue-500" />} 
               />
               <InfoBox 

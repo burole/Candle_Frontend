@@ -25,6 +25,7 @@ import { InfoBox } from './components/InfoBox';
 import { SummaryCard } from './components/SummaryCard';
 import { StrategyHeader } from './components/StrategyHeader';
 import { StrategySectionWrapper } from './components/StrategySectionWrapper';
+import { formatDisplayDate } from '@/lib/utils';
 import { StrategyContacts } from './components/StrategyContacts';
 
 export function CompletaPlusCnpjStrategy({ data }: QueryStrategyProps<CompletaPlusCnpjResult>) {
@@ -53,7 +54,7 @@ export function CompletaPlusCnpjStrategy({ data }: QueryStrategyProps<CompletaPl
                   title={data.company.socialReason}
                   subtitle={data.company.fantasyName}
                   protocol={data.protocol}
-                  status={data.company.status || 'N/A'}
+                  status={data.company.status}
                   statusVariant={data.company.status === 'ATIVA' ? 'success' : 'warning'}
                   pdfUrl={data.pdf}
                   className="mb-4"
@@ -67,7 +68,7 @@ export function CompletaPlusCnpjStrategy({ data }: QueryStrategyProps<CompletaPl
                   />
                   <InfoBox 
                     label="Fundação" 
-                    value={data.company.foundationDate} 
+                    value={formatDisplayDate(data.company.foundationDate)} 
                     icon={<Calendar className="w-4 h-4 text-purple-500" />} 
                   />
                   {data.company.email && (

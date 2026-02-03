@@ -10,6 +10,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { Card, Badge } from '@/design-system/ComponentsTailwind';
+import { formatDisplayDate } from '@/lib/utils';
 import type { QueryStrategyProps, QuodRestritivoAcoesPjResult } from '@/types/query-strategies';
 import {
   Table,
@@ -52,7 +53,7 @@ export function QuodRestritivoAcoesPjStrategy({ data }: QueryStrategyProps<QuodR
            />
            <InfoBox 
              label="Fundação" 
-             value={data.company.foundationDate}
+             value={formatDisplayDate(data.company.foundationDate)}
              icon={<Briefcase className="w-4 h-4 text-indigo-500" />}
            />
          </div>

@@ -10,6 +10,7 @@ import {
   Calendar
 } from 'lucide-react';
 import { Card, Badge } from '@/design-system/ComponentsTailwind';
+import { formatDisplayDate } from '@/lib/utils';
 import type { QueryStrategyProps, LocalizaResult } from '@/types/query-strategies';
 import { InfoBox } from './components/InfoBox';
 import { StrategyHeader } from './components/StrategyHeader';
@@ -42,7 +43,7 @@ export function LocalizaStrategy({ data }: QueryStrategyProps<LocalizaResult>) {
                  {data.basicInfo.birthDate && (
                    <InfoBox 
                       label="Nascimento" 
-                      value={data.basicInfo.birthDate}
+                      value={formatDisplayDate(data.basicInfo.birthDate)}
                       icon={<Calendar className="w-4 h-4 text-blue-500" />}
                    />
                  )}

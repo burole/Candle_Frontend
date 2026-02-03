@@ -27,6 +27,7 @@ import {
 import { cn } from '@/lib/utils';
 import { StrategyHeader } from './components/StrategyHeader';
 import { StrategySectionWrapper } from './components/StrategySectionWrapper';
+import { formatDisplayDate } from '@/lib/utils';
 
 export function CreditPremiumStrategy({ data }: QueryStrategyProps<PremiumCreditReportResponse>) {
   if (!data) return null;
@@ -77,7 +78,7 @@ export function CreditPremiumStrategy({ data }: QueryStrategyProps<PremiumCredit
                <StrategyHeader
                   title={data.person.name || 'Nome não informado'}
                   protocol={data.protocol}
-                  status={data.person.revenueStatus || 'N/A'}
+                  status={data.person.revenueStatus}
                   statusVariant={data.person.revenueStatus === 'REGULAR' ? 'success' : 'warning'}
                   pdfUrl={data.pdf}
                   className="mb-4"
@@ -91,12 +92,12 @@ export function CreditPremiumStrategy({ data }: QueryStrategyProps<PremiumCredit
                   />
                   <InfoBox
                     label="Nascimento"
-                    value={data.person.birthDate ? new Date(data.person.birthDate).toLocaleDateString('pt-BR') : 'N/A'}
+                    value={formatDisplayDate(data.person.birthDate)}
                     icon={<Calendar className="w-4 h-4 text-purple-500" />}
                   />
                   <InfoBox
                     label="Gênero"
-                    value={data.person.gender || 'N/A'}
+                    value={data.person.gender}
                     icon={<User className="w-4 h-4 text-purple-500" />}
                   />
                   <div className="md:col-span-2">
@@ -108,7 +109,7 @@ export function CreditPremiumStrategy({ data }: QueryStrategyProps<PremiumCredit
                   </div>
                    <InfoBox
                     label="Atividade"
-                    value={data.person.mainEconomicActivity || 'N/A'}
+                    value={data.person.mainEconomicActivity}
                     icon={<Briefcase className="w-4 h-4 text-purple-500" />}
                   />
                </div>
@@ -257,7 +258,7 @@ export function CreditPremiumStrategy({ data }: QueryStrategyProps<PremiumCredit
           <TableBody>
             {data.ccf?.map((entry, idx) => (
               <TableRow key={idx}>
-                <TableCell>{entry.date || 'N/A'}</TableCell>
+                <TableCell>{entry.date}</TableCell>
                 <TableCell className="font-medium">{entry.origin}</TableCell>
                 <TableCell className="text-right font-bold text-yellow-600">{entry.quantity}</TableCell>
               </TableRow>
