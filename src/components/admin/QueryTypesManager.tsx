@@ -256,6 +256,14 @@ export function QueryTypesManager() {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right">Descrição</Label>
+              <Input 
+                className="col-span-3"
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Endpoint</Label>
               <Input 
                 className="col-span-3"
