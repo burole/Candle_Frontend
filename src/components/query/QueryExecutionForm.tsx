@@ -27,12 +27,7 @@ const createSchema = (queryType: QueryType) => {
     input: z.string().min(1, 'Campo obrigatório'),
   };
 
-  if (['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ', 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'].includes(queryType.code)) {
-    schemaObj.uf = z
-      .string()
-      .length(2, 'UF deve ter 2 letras')
-      .transform((val) => val.toUpperCase());
-  }
+
 
   return z.object(schemaObj);
 };
@@ -187,14 +182,7 @@ export function QueryExecutionForm({
       ? ValidationService.cleanDocument(data.input) 
       : data.input;
 
-    let finalInput = cleanedInput;
-    
-    // Handle UF for REALTIME_PREMIUM_SCORE_PF/PJ and SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF
-    if (['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ', 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'].includes(queryType.code) && 'uf' in data) {
-      finalInput = `${cleanedInput};${(data as any).uf}`;
-    }
-
-    const result = await executeQuery(queryType.code, finalInput);
+    const result = await executeQuery(queryType.code, cleanedInput);
 
     if (result) {
       onSuccess?.(result);
@@ -250,30 +238,7 @@ export function QueryExecutionForm({
         )}
       </div>
 
-      {/* UF Input for Supported Proviers */}
-      {['REALTIME_PREMIUM_SCORE_PF', 'REALTIME_PREMIUM_SCORE_PJ', 'SERASA_CREDNET_PEFIN_PROTESTO_SPC_PF'].includes(queryType.code) && (
-        <div className="space-y-2">
-          <Label htmlFor="uf" className="text-sm font-medium text-gray-700">
-            UF (Estado)
-          </Label>
-          <Input
-            {...register('uf')}
-            id="uf"
-            placeholder="Ex: SP"
-            maxLength={2}
-            className="h-12 text-lg font-medium tracking-wide w-full"
-            disabled={isLoading || showConfirmation}
-            autoComplete="off"
-            style={{ textTransform: 'uppercase' }}
-          />
-          {(errors as any)?.uf?.message && (
-            <p className="text-sm text-red-600 flex items-center gap-1">
-              <AlertCircle className="w-4 h-4" />
-              {(errors as any).uf.message as string}
-            </p>
-          )}
-        </div>
-      )}
+
 
       {/* Price info */}
       <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
