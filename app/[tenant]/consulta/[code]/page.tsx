@@ -60,7 +60,7 @@ function QueryExecutionContent() {
   if (loadingHistory || (isTypeLoading && !isUUID)) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
       </div>
     );
   }
@@ -95,7 +95,7 @@ function QueryExecutionContent() {
         >
           <Link
             href="/consulta"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Voltar para Consultas
@@ -104,8 +104,8 @@ function QueryExecutionContent() {
         
         <div className="space-y-6">
           <div className="flex items-center flex-wrap gap-4 mb-8">
-             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6 text-blue-600" />
+             <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6 text-primary" />
              </div>
              <div>
                 <div className="mb-1"><Badge variant="info">{historyResult.queryType?.code || 'CONSULTA'}</Badge></div>
@@ -153,7 +153,7 @@ function QueryExecutionContent() {
       >
         <Link
           href={`/consulta?category=${categoryConfig?.slug || ''}`}
-          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors group"
+          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           Voltar para {categoryConfig?.name || 'Consultas'}
@@ -169,8 +169,8 @@ function QueryExecutionContent() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-start gap-4 sm:gap-6"
           >
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-100 to-white rounded-2xl border border-blue-50 shadow-sm flex items-center justify-center flex-shrink-0">
-              {IconComponent && <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />}
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/10 to-white rounded-2xl border border-primary/5 shadow-sm flex items-center justify-center flex-shrink-0">
+              {IconComponent && <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />}
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -197,10 +197,10 @@ function QueryExecutionContent() {
             transition={{ delay: 0.1 }}
             className="relative"
           >
-            <Card className="border-blue-100 shadow-xl shadow-blue-900/5">
+            <Card className="border-primary/20 shadow-xl shadow-primary/5">
               <div className="mb-6 pb-6 border-b border-gray-100">
                  <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                   <Zap className="w-5 h-5 text-blue-600" />
+                   <Zap className="w-5 h-5 text-primary" />
                    Executar Consulta
                  </h3>
                  <p className="text-sm text-gray-500 mt-1">

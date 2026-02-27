@@ -71,7 +71,7 @@ export default function HistoricoPage() {
         <div className="space-y-8 pb-20">
           {/* Header Section with Atmosphere */}
           <div className="relative">
-            <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full mix-blend-multiply pointer-events-none" />
+            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full mix-blend-multiply pointer-events-none" />
             <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
                 <h1 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mb-2">
@@ -87,13 +87,13 @@ export default function HistoricoPage() {
           {/* Glass Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card className="relative overflow-hidden border-0 bg-white/40 backdrop-blur-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="p-8 relative z-10">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/90 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-500">
                     <Search className="h-7 w-7 text-white" />
                   </div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-100/50 px-3 py-1 rounded-full border border-blue-200/50">
+                  <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                     Total
                   </span>
                 </div>
@@ -135,8 +135,8 @@ export default function HistoricoPage() {
               {/* Table Header Controls */}
               <div className="p-6 border-b border-gray-200/30 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-500/10 rounded-lg">
-                    <FileText className="w-5 h-5 text-blue-600" />
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <FileText className="w-5 h-5 text-primary" />
                   </div>
                   <h3 className="text-xl font-display font-bold text-gray-800">
                     Transações Recentes
@@ -172,8 +172,8 @@ export default function HistoricoPage() {
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-4">
                   <div className="relative">
-                    <div className="w-16 h-16 border-4 border-blue-100 rounded-full" />
-                    <div className="absolute inset-0 w-16 h-16 border-4 border-blue-500 rounded-full border-t-transparent animate-spin" />
+                    <div className="w-16 h-16 border-4 border-primary/20 rounded-full" />
+                    <div className="absolute inset-0 w-16 h-16 border-4 border-primary rounded-full border-t-transparent animate-spin" />
                   </div>
                   <p className="text-gray-500 font-medium animate-pulse">Carregando dados...</p>
                 </div>
@@ -187,7 +187,7 @@ export default function HistoricoPage() {
                     Não encontramos nenhuma consulta correspondente aos seus filtros atuais.
                   </p>
                   <Link href="/">
-                    <Button className="bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 rounded-xl px-8 py-6 font-bold h-auto">
+                    <Button className="bg-gradient-to-r from-primary to-primary/90 text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all duration-300 rounded-xl px-8 py-6 font-bold h-auto">
                       Nova Consulta
                     </Button>
                   </Link>
@@ -266,7 +266,7 @@ export default function HistoricoPage() {
                                   variant="ghost"
                                   size="icon"
                                   onClick={() => handleViewQuery(query)}
-                                  className="bg-white hover:bg-blue-50 text-blue-600 border border-blue-200 hover:border-blue-300 shadow-sm transition-all active:scale-95"
+                                  className="bg-white hover:bg-primary/10 text-primary border border-primary/20 hover:border-primary/30 shadow-sm transition-all active:scale-95"
                                   title="Ver Detalhes"
                                 >
                                   <Eye className="h-4 w-4" />

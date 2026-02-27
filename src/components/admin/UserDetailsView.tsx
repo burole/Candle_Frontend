@@ -254,7 +254,7 @@ export function UserDetailsView({ user: initialUser }: UserDetailsViewProps) {
                </div>
                <div className="flex justify-between items-center">
                  <span className="text-sm text-slate-500">Consultas Realizadas</span>
-                 <span className="font-bold text-blue-600">
+                 <span className="font-bold text-primary">
                    {user.stats?.totalQueries || 0}
                  </span>
                </div>

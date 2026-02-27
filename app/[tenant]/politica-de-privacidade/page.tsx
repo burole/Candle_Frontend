@@ -3,10 +3,14 @@
 import { motion } from 'framer-motion';
 import { Card } from '@/design-system/ComponentsTailwind';
 import { Shield, Lock, Eye, FileText } from 'lucide-react';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-20">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <main className="flex-1 pt-32 pb-20">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -24,21 +28,21 @@ export default function PrivacyPolicyPage() {
           </div>
 
           <Card className="bg-white/80 backdrop-blur-xl shadow-xl border-white/50 p-8 md:p-12 mb-8">
-            <div className="prose prose-lg prose-blue max-w-none">
-              <div className="flex items-center gap-4 mb-8 p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                <div className="p-3 bg-blue-100 rounded-xl">
-                  <Shield className="w-8 h-8 text-blue-600" />
+            <div className="prose prose-lg max-w-none">
+              <div className="flex items-center gap-4 mb-8 p-6 bg-primary/5 rounded-2xl border border-primary/20">
+                <div className="p-3 bg-primary/10 rounded-xl">
+                  <Shield className="w-8 h-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-blue-900 m-0">Compromisso com a Segurança</h3>
-                  <p className="text-blue-700 m-0 text-sm">
+                  <h3 className="text-lg font-bold text-primary m-0">Compromisso com a Segurança</h3>
+                  <p className="text-primary/80 m-0 text-sm">
                     Utilizamos criptografia de ponta a ponta e seguimos rigorosamente a LGPD.
                   </p>
                 </div>
               </div>
 
               <h2 className="flex items-center gap-3 text-2xl font-bold text-gray-900 mt-12 mb-6">
-                <Eye className="w-6 h-6 text-blue-500" />
+                <Eye className="w-6 h-6 text-primary" />
                 1. Coleta de Dados
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -52,14 +56,14 @@ export default function PrivacyPolicyPage() {
                   'Dados de navegação e uso da plataforma'
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 text-gray-700 text-base">
-                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                    <span className="w-2 h-2 rounded-full bg-primary" />
                     {item}
                   </li>
                 ))}
               </ul>
 
               <h2 className="flex items-center gap-3 text-2xl font-bold text-gray-900 mt-12 mb-6">
-                <Lock className="w-6 h-6 text-blue-500" />
+                <Lock className="w-6 h-6 text-primary" />
                 2. Uso das Informações
               </h2>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -81,7 +85,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <h2 className="flex items-center gap-3 text-2xl font-bold text-gray-900 mt-12 mb-6">
-                <FileText className="w-6 h-6 text-blue-500" />
+                <FileText className="w-6 h-6 text-primary" />
                 3. Seus Direitos (LGPD)
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -109,6 +113,8 @@ export default function PrivacyPolicyPage() {
           </Card>
         </motion.div>
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

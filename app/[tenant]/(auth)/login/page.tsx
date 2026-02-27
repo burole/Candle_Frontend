@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Lock, Loader2, Search, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { loginSchema } from '@/validators/auth.schemas';
@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { TenantBrand } from '@/components/ui/TenantBrand';
+import { TenantLogo } from '@/components/ui/TenantLogo';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -60,10 +62,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50">
+    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-gradient-to-br from-primary/5 via-primary/10 to-cyan-50">
       {/* Animated gradient orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-blue-500/40 to-transparent blur-3xl animate-pulse" />
-      <div className="absolute bottom-[-5%] right-[-5%] w-[400px] h-[400px] rounded-full bg-gradient-to-r from-blue-400/40 to-transparent blur-3xl animate-pulse delay-700" />
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-primary/40 to-transparent blur-3xl animate-pulse" />
+      <div className="absolute bottom-[-5%] right-[-5%] w-[400px] h-[400px] rounded-full bg-gradient-to-r from-primary/30 to-transparent blur-3xl animate-pulse delay-700" />
       <div className="absolute top-1/2 right-[20%] w-[300px] h-[300px] rounded-full bg-gradient-to-r from-cyan-500/40 to-transparent blur-3xl animate-pulse delay-1000" />
 
       <motion.div
@@ -87,15 +89,13 @@ export default function LoginPage() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl overflow-hidden shadow-lg shadow-primary/25 group-hover:shadow-primary/40 transition-all duration-300">
               <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <Search className="h-6 w-6 text-white stroke-[2.5px]" />
+              <TenantLogo className="w-12 h-12" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-display font-black tracking-tight text-slate-900 leading-none group-hover:text-blue-900 transition-colors">
-                Consulta<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Ai</span>
-              </span>
-              <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 leading-none mt-1 group-hover:text-blue-400 transition-colors">
+            <div className="flex flex-col text-left">
+              <TenantBrand className="text-2xl tracking-tight text-slate-900 leading-none group-hover:text-primary transition-colors" />
+              <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 leading-none mt-1 group-hover:text-primary/70 transition-colors">
                 Platform
               </span>
             </div>
@@ -144,30 +144,31 @@ export default function LoginPage() {
               )}
               {/* Email Field */}
               <div className="space-y-2">
-                <Label htmlFor="email" className={`text-sm font-semibold transition-colors ${focusedField === 'email' ? 'text-blue-600' : 'text-gray-700'}`}>
+                <Label htmlFor="email" className={`text-sm font-semibold transition-colors ${focusedField === 'email' ? 'text-primary' : 'text-gray-700'}`}>
                   Email
                 </Label>
                 <div className="relative">
+                  {focusedField === 'email' && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-primary rounded-xl opacity-20 blur-md"
+                      layoutId="input-glow"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
                   <Input
                     id="email"
                     type="email"
                     placeholder="seu@email.com"
                     {...register('email')}
-                    className={`h-12 bg-white/60 backdrop-blur-sm border-2 rounded-xl transition-all duration-200 ${
+                    className={`relative z-10 h-12 bg-white/60 backdrop-blur-sm border-2 rounded-xl transition-all duration-200 ${
                       focusedField === 'email'
-                        ? 'border-blue-500 bg-white shadow-lg shadow-blue-500/20 ring-0'
-                        : 'border-blue-100 hover:border-blue-200'
+                        ? 'border-primary bg-white shadow-lg shadow-primary/20 focus-visible:ring-0 focus-visible:ring-offset-0'
+                        : 'border-primary/20 hover:border-primary/30'
                     } ${errors.email ? 'border-red-500 focus:border-red-500' : ''}`}
                     onFocus={() => setFocusedField('email')}
                     onBlur={() => setFocusedField(null)}
                     disabled={isLoading}
                   />
-                  {focusedField === 'email' && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-primary rounded-xl opacity-20 blur-md -z-10"
-                      layoutId="input-glow"
-                    />
-                  )}
                 </div>
                 {errors.email && (
                   <p className="text-red-500 text-xs mt-1 font-medium">{errors.email.message}</p>
@@ -177,37 +178,38 @@ export default function LoginPage() {
               {/* Password Field */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <Label htmlFor="password" className={`text-sm font-semibold transition-colors ${focusedField === 'password' ? 'text-blue-600' : 'text-gray-700'}`}>
+                  <Label htmlFor="password" className={`text-sm font-semibold transition-colors ${focusedField === 'password' ? 'text-primary' : 'text-gray-700'}`}>
                     Senha
                   </Label>
                   <Link
                     href="/forgot-password"
-                    className="text-sm font-semibold text-blue-600 hover:text-blue-700 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
+                    className="text-sm font-semibold text-primary hover:text-primary/90 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
                   >
                     Esqueceu?
                   </Link>
                 </div>
                 <div className="relative">
+                  {focusedField === 'password' && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-primary rounded-xl opacity-20 blur-md"
+                      layoutId="input-glow"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
                   <Input
                     id="password"
                     type="password"
                     placeholder="••••••••"
                     {...register('password')}
-                    className={`h-12 bg-white/60 backdrop-blur-sm border-2 rounded-xl transition-all duration-200 ${
+                    className={`relative z-10 h-12 bg-white/60 backdrop-blur-sm border-2 rounded-xl transition-all duration-200 ${
                       focusedField === 'password'
-                        ? 'border-blue-500 bg-white shadow-lg shadow-blue-500/20 ring-0'
-                        : 'border-blue-100 hover:border-blue-200'
+                        ? 'border-primary bg-white shadow-lg shadow-primary/20 focus-visible:ring-0 focus-visible:ring-offset-0'
+                        : 'border-primary/20 hover:border-primary/30'
                     } ${errors.password ? 'border-red-500 focus:border-red-500' : ''}`}
                     onFocus={() => setFocusedField('password')}
                     onBlur={() => setFocusedField(null)}
                     disabled={isLoading}
                   />
-                  {focusedField === 'password' && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-primary rounded-xl opacity-20 blur-md -z-10"
-                      layoutId="input-glow"
-                    />
-                  )}
                 </div>
                  {errors.password && (
                   <p className="text-red-500 text-xs mt-1 font-medium">{errors.password.message}</p>
@@ -215,7 +217,7 @@ export default function LoginPage() {
               </div>
               
               <div className="flex items-center space-x-2">
-                 <Checkbox id="terms" className="border-blue-200 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600" />
+                 <Checkbox id="terms" className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
                  <label
                     htmlFor="terms"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-600"
@@ -228,7 +230,7 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-gradient-primary rounded-xl font-display font-bold text-base text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200 overflow-hidden group relative"
+                className="w-full h-12 bg-gradient-primary rounded-xl font-display font-bold text-base text-white shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-200 overflow-hidden group relative"
               >
                   <span className="absolute inset-0 bg-gradient-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   <span className="relative flex items-center justify-center gap-2">
@@ -257,7 +259,7 @@ export default function LoginPage() {
                 </span>
                 <Link
                   href="/register"
-                  className="font-semibold text-blue-600 hover:text-blue-700 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
+                  className="font-semibold text-primary hover:text-primary/90 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
                 >
                   Cadastre-se
                 </Link>
@@ -274,11 +276,11 @@ export default function LoginPage() {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <div className="flex items-center gap-2">
-            <Lock className="w-4 h-4 text-blue-500" />
+            <Lock className="w-4 h-4 text-primary" />
             Conexão Segura
           </div>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-blue-500" />
+            <ShieldCheck className="w-4 h-4 text-primary" />
             Dados Protegidos
           </div>
         </motion.div>

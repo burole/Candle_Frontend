@@ -93,7 +93,7 @@ export default function TransactionPage() {
         <Header />
         <main className="container mx-auto px-4 py-12">
           <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className="h-12 w-12 text-blue-500 animate-spin mb-4" />
+            <Loader2 className="h-12 w-12 text-primary animate-spin mb-4" />
             <p className="text-gray-500 font-medium">Carregando transação...</p>
           </div>
         </main>
@@ -202,8 +202,8 @@ export default function TransactionPage() {
                       </p>
                     </div>
                     
-                    <div className="bg-white p-6 rounded-3xl inline-block border-2 border-blue-100 shadow-lg relative group">
-                      <div className="absolute inset-0 border-2 border-blue-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none scale-105" />
+                    <div className="bg-white p-6 rounded-3xl inline-block border-2 border-primary/20 shadow-lg relative group">
+                      <div className="absolute inset-0 border-2 border-primary rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none scale-105" />
                       {paymentData.pixQrCode ? (
                         <img 
                           src={paymentData.pixQrCode.startsWith('data:image') ? paymentData.pixQrCode : `data:image/png;base64,${paymentData.pixQrCode}`}
@@ -223,7 +223,7 @@ export default function TransactionPage() {
                     <div className="max-w-md mx-auto space-y-3">
                       <div className="flex items-center justify-between text-sm font-medium text-gray-700 px-1">
                         <span>Código Copia e Cola</span>
-                        <span className="text-xs text-blue-600">Expira em 30 min</span>
+                        <span className="text-xs text-primary">Expira em 30 min</span>
                       </div>
                       <div className="flex gap-2">
                         <div className="bg-gray-100/80 p-4 rounded-xl flex-1 font-mono text-xs overflow-hidden text-ellipsis whitespace-nowrap border border-gray-200 text-gray-600 shadow-inner">
@@ -240,7 +240,7 @@ export default function TransactionPage() {
                     </div>
 
                     <div className="py-6 flex justify-center">
-                      <div className="flex items-center gap-3 text-blue-700 bg-blue-50 px-6 py-3 rounded-full animate-pulse border border-blue-100">
+                      <div className="flex items-center gap-3 text-primary bg-primary/10 px-6 py-3 rounded-full animate-pulse border border-primary/20">
                         <Clock className="h-5 w-5" />
                         <span className="text-sm font-bold">Aguardando pagamento...</span>
                       </div>
@@ -266,7 +266,7 @@ export default function TransactionPage() {
                        <Button 
                          onClick={() => paymentData.invoiceUrl && window.open(paymentData.invoiceUrl, '_blank')}
                          variant="primary"
-                         className="w-full h-14 font-bold text-lg shadow-lg shadow-blue-500/30"
+                         className="w-full h-14 font-bold text-lg shadow-lg shadow-primary/30"
                        >
                          <Barcode className="h-5 w-5 mr-3" />
                          Visualizar Boleto
@@ -304,16 +304,16 @@ export default function TransactionPage() {
                      <span className="text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full text-xs">GRÁTIS</span>
                    </div>
                    <div className="h-px bg-gradient-to-r from-gray-200 to-transparent my-2" />
-                   <div className="flex justify-between text-xl font-display font-bold text-blue-900 pt-2">
+                   <div className="flex justify-between text-xl font-display font-bold text-primary pt-2">
                      <span>Total</span>
                      <span>R$ {paymentData.amount.toFixed(2)}</span>
                    </div>
                  </div>
 
-                 <div className="mt-8 bg-blue-50/50 p-4 rounded-xl flex gap-3 text-sm text-blue-800 leading-relaxed border border-blue-100">
-                   <ShieldCheck className="h-5 w-5 shrink-0 text-blue-600" />
+                 <div className="mt-8 bg-primary/5 p-4 rounded-xl flex gap-3 text-sm text-primary leading-relaxed border border-primary/20">
+                   <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
                    <p>
-                     <span className="font-bold block text-blue-900 mb-1">Pagamento Seguro</span>
+                     <span className="font-bold block text-primary mb-1">Pagamento Seguro</span>
                      Seus dados estão protegidos com criptografia de ponta a ponta.
                    </p>
                  </div>

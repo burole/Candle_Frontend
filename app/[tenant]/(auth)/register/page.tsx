@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Lock, Loader2, Search, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { registerSchema, type RegisterFormData } from '@/validators/auth.schemas';
@@ -16,6 +16,8 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { formatCpf, formatPhone } from '@/lib/formatters';
+import { TenantBrand } from '@/components/ui/TenantBrand';
+import { TenantLogo } from '@/components/ui/TenantLogo';
 
 export default function RegisterPage() {
   const { register: registerUser } = useAuth();
@@ -86,10 +88,17 @@ export default function RegisterPage() {
     maskFunction?: (value: string) => string
   ) => (
     <div className="space-y-2">
-      <Label htmlFor={id} className={`text-sm font-semibold transition-colors ${focusedField === id ? 'text-blue-600' : 'text-gray-700'}`}>
+      <Label htmlFor={id} className={`text-sm font-semibold transition-colors ${focusedField === id ? 'text-primary' : 'text-gray-700'}`}>
         {label}
       </Label>
       <div className="relative">
+        {focusedField === id && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-primary rounded-xl opacity-20 blur-md"
+            layoutId="input-glow"
+            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+          />
+        )}
         <Input
           id={id}
           type={type}
@@ -101,21 +110,15 @@ export default function RegisterPage() {
              }
              reg.onChange(e);
           }}
-          className={`h-12 bg-white/60 backdrop-blur-sm border-2 rounded-xl transition-all duration-200 ${
+          className={`relative z-10 h-12 bg-white/60 backdrop-blur-sm border-2 rounded-xl transition-all duration-200 ${
             focusedField === id
-              ? 'border-blue-500 bg-white shadow-lg shadow-blue-500/20 ring-0'
-              : 'border-blue-100 hover:border-blue-200'
+              ? 'border-primary bg-white shadow-lg shadow-primary/20 focus-visible:ring-0 focus-visible:ring-offset-0'
+              : 'border-primary/20 hover:border-primary/30'
           } ${errors[id as keyof RegisterFormData] ? 'border-red-500 focus:border-red-500' : ''}`}
           onFocus={() => setFocusedField(id)}
           onBlur={() => setFocusedField(null)}
           disabled={isLoading}
         />
-        {focusedField === id && (
-          <motion.div
-            className="absolute inset-0 bg-gradient-primary rounded-xl opacity-20 blur-md -z-10"
-            layoutId={`input-glow-${id}`}
-          />
-        )}
       </div>
       {errors[id as keyof RegisterFormData] && (
         <p className="text-red-500 text-xs mt-1 font-medium">{errors[id as keyof RegisterFormData]?.message}</p>
@@ -124,9 +127,9 @@ export default function RegisterPage() {
   );
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50">
+    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-gradient-to-br from-primary/5 via-primary/10 to-cyan-50">
       {/* Animated gradient orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-blue-500/40 to-transparent blur-3xl animate-pulse" />
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-primary/40 to-transparent blur-3xl animate-pulse" />
       <div className="absolute bottom-[-10%] left-[20%] w-[400px] h-[400px] rounded-full bg-gradient-to-r from-purple-400/40 to-transparent blur-3xl animate-pulse delay-500" />
       <div className="absolute top-1/2 right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-cyan-500/40 to-transparent blur-3xl animate-pulse delay-1000" />
 
@@ -144,15 +147,13 @@ export default function RegisterPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 shadow-xl shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-500">
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden shadow-xl shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-500">
                 <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Search className="h-7 w-7 text-white stroke-[2.5px]" />
+                <TenantLogo className="w-14 h-14" />
               </div>
-              <div className="flex flex-col justify-center">
-                <span className="text-3xl font-display font-black tracking-tight text-slate-900 leading-none group-hover:text-blue-900 transition-colors duration-300">
-                  Consulta<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Ai</span>
-                </span>
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-400 leading-none mt-1.5 group-hover:text-blue-500 transition-colors duration-300 pl-0.5">
+              <div className="flex flex-col justify-center text-left">
+                <TenantBrand className="text-3xl tracking-tight text-slate-900 leading-none group-hover:text-primary transition-colors duration-300" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-400 leading-none mt-1.5 group-hover:text-primary transition-colors duration-300 pl-0.5">
                   Platform
                 </span>
               </div>
@@ -206,14 +207,14 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-blue-50/50 border border-blue-100">
+                <div className="flex items-start gap-3 p-3 rounded-xl bg-primary/5 border border-primary/20">
                   <Controller
                     name="terms"
                     control={control}
                     render={({ field }) => (
                       <Checkbox
                         id="terms"
-                        className="mt-1 border-blue-200 data-[state=checked]:bg-blue-600"
+                        className="mt-1 border-primary/30 data-[state=checked]:bg-primary"
                         checked={field.value as boolean}
                         onCheckedChange={field.onChange}
                       />
@@ -221,11 +222,11 @@ export default function RegisterPage() {
                   />
                   <Label htmlFor="terms" className="text-xs text-gray-600 leading-relaxed font-normal cursor-pointer">
                     Concordo com os{' '}
-                    <Link href="/termos" className="text-blue-600 hover:underline font-medium">
+                    <Link href="/termos" className="text-primary hover:underline font-medium">
                       Termos de Uso
                     </Link>{' '}
                     e{' '}
-                    <Link href="/privacidade" className="text-blue-600 hover:underline font-medium">
+                    <Link href="/privacidade" className="text-primary hover:underline font-medium">
                       Política de Privacidade
                     </Link>
                     . Seus dados estarão protegidos pela LGPD.
@@ -241,7 +242,7 @@ export default function RegisterPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-gradient-primary rounded-xl font-display font-bold text-base text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200 overflow-hidden group relative"
+                className="w-full h-12 bg-gradient-primary rounded-xl font-display font-bold text-base text-white shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-200 overflow-hidden group relative"
               >
                   <span className="absolute inset-0 bg-gradient-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   <span className="relative flex items-center justify-center gap-2">
@@ -270,7 +271,7 @@ export default function RegisterPage() {
                 </span>
                 <Link
                   href="/login"
-                  className="font-semibold text-blue-600 hover:text-blue-700 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
+                  className="font-semibold text-primary hover:text-primary/90 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-primary after:transition-all hover:after:w-full"
                 >
                   Fazer login
                 </Link>
@@ -287,11 +288,11 @@ export default function RegisterPage() {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <div className="flex items-center gap-2">
-            <Lock className="w-3 h-3 text-blue-500" />
+            <Lock className="w-3 h-3 text-primary" />
             Criptografia SSL
           </div>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3 h-3 text-blue-500" />
+            <ShieldCheck className="w-3 h-3 text-primary" />
             Dados Auditados
           </div>
         </motion.div>

@@ -76,7 +76,7 @@ export default function CarteiraPage() {
     <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
       {/* Background Atmosphere - Consistent with Design System */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-400/20 rounded-full blur-[100px] mix-blend-multiply animate-float" />
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] mix-blend-multiply animate-float" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-purple-400/20 rounded-full blur-[100px] mix-blend-multiply animate-float" style={{ animationDelay: '2s' }} />
       </div>
 
@@ -99,7 +99,7 @@ export default function CarteiraPage() {
               <Button
                 onClick={handleRefresh}
                 variant="outline"
-                className="gap-2 bg-white/50 backdrop-blur-md border-blue-200 text-blue-700 hover:bg-white shadow-sm"
+                className="gap-2 bg-white/50 backdrop-blur-md border-primary/20 text-primary hover:bg-white shadow-sm"
                 isLoading={isRefreshing}
               >
                 <RefreshCw className="h-4 w-4" />
@@ -108,22 +108,22 @@ export default function CarteiraPage() {
             </div>
 
             {/* Balance Card - Following Design System 'Card' with gradient prop */}
-            <div className="glass-strong rounded-3xl p-8 md:p-10 relative overflow-hidden bg-gradient-to-br from-white/90 to-blue-50/90 border border-white/60 shadow-glass-strong group">
+            <div className="glass-strong rounded-3xl p-8 md:p-10 relative overflow-hidden bg-gradient-to-br from-white/90 to-primary/5 border border-white/60 shadow-glass-strong group">
                {/* Decorative background elements matching the light aesthetic */}
-               <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100/50 to-cyan-100/50 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none opacity-60" />
+               <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none opacity-60" />
                
                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
                   <div className="space-y-3">
                      <div className="flex items-center gap-3 mb-1">
-                        <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shadow-sm">
+                        <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-sm">
                           <Wallet className="w-5 h-5" />
                         </div>
-                        <span className="font-display font-bold text-blue-900 uppercase tracking-wider text-sm">Saldo Disponível</span>
+                        <span className="font-display font-bold text-primary uppercase tracking-wider text-sm">Saldo Disponível</span>
                      </div>
                      
                      <div className="flex items-baseline gap-1">
                        <span className="text-2xl font-bold text-gray-400">R$</span>
-                       <span className="text-6xl md:text-7xl font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+                       <span className="text-6xl md:text-7xl font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">
                          {formattedBalance}
                        </span>
                      </div>
@@ -132,12 +132,12 @@ export default function CarteiraPage() {
                   <div className="flex flex-col gap-3 w-full md:w-auto">
                      <Button
                       onClick={() => router.push('/recarregar')}
-                      className="w-full md:w-auto px-8 py-4 h-auto text-lg rounded-2xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold"
+                      className="w-full md:w-auto px-8 py-4 h-auto text-lg rounded-2xl shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300 bg-gradient-to-r from-primary to-primary/90 text-white font-bold"
                     >
                       <Plus className="h-5 w-5 mr-2" />
                       Recarregar Agora
                     </Button>
-                    <p className="text-xs text-center text-blue-600/70 font-medium">
+                    <p className="text-xs text-center text-primary/70 font-medium">
                       <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
                       Processamento Instantâneo
                     </p>
@@ -147,9 +147,9 @@ export default function CarteiraPage() {
 
             {/* Transactions Section */}
             <div className="glass rounded-3xl border border-white/50 shadow-glass overflow-hidden">
-                <div className="p-6 border-b border-blue-100/50 bg-white/40 flex items-center justify-between">
+                <div className="p-6 border-b border-primary/10 bg-white/40 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                       <TrendingUp className="w-5 h-5" />
                     </div>
                     <div>
@@ -162,15 +162,15 @@ export default function CarteiraPage() {
                 {isLoading ? (
                   <div className="flex flex-col items-center justify-center py-24 gap-4 bg-white/30">
                     <div className="relative">
-                      <div className="w-12 h-12 border-4 border-blue-100 rounded-full" />
-                      <div className="absolute inset-0 w-12 h-12 border-4 border-blue-500 rounded-full border-t-transparent animate-spin" />
+                      <div className="w-12 h-12 border-4 border-primary/20 rounded-full" />
+                      <div className="absolute inset-0 w-12 h-12 border-4 border-primary rounded-full border-t-transparent animate-spin" />
                     </div>
-                    <p className="text-blue-600/80 font-medium animate-pulse text-sm">Atualizando extrato...</p>
+                    <p className="text-primary/80 font-medium animate-pulse text-sm">Atualizando extrato...</p>
                   </div>
                 ) : transactions.length === 0 ? (
                   <div className="text-center py-24 px-4 bg-white/30">
-                    <div className="w-20 h-20 bg-blue-50/50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                      <Wallet className="h-8 w-8 text-blue-300" />
+                    <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                      <Wallet className="h-8 w-8 text-primary/40" />
                     </div>
                     <h4 className="text-xl font-display font-bold text-gray-900 mb-2">Sua carteira está vazia</h4>
                      <p className="text-gray-500 mb-8 max-w-md mx-auto leading-relaxed">
@@ -179,7 +179,7 @@ export default function CarteiraPage() {
                     <Button
                       onClick={() => router.push('/recarregar')}
                       variant="outline"
-                      className="border-dashed border-2 px-8 py-3 hover:bg-blue-50"
+                      className="border-dashed border-2 px-8 py-3 hover:bg-primary/10"
                     >
                       Fazer primeira recarga
                     </Button>
@@ -188,12 +188,12 @@ export default function CarteiraPage() {
                   <div className="bg-white/20">
                     <Table>
                       <TableHeader>
-                        <TableRow className="border-b border-blue-100/50 bg-blue-50/30 hover:bg-blue-50/50">
-                          <TableHead className="w-[180px] pl-8 font-bold text-blue-900/60 uppercase text-xs tracking-wider py-4">Data</TableHead>
-                          <TableHead className="font-bold text-blue-900/60 uppercase text-xs tracking-wider py-4">Tipo</TableHead>
-                          <TableHead className="font-bold text-blue-900/60 uppercase text-xs tracking-wider py-4">Descrição</TableHead>
-                          <TableHead className="font-bold text-blue-900/60 uppercase text-xs tracking-wider py-4">Status</TableHead>
-                          <TableHead className="text-right pr-8 font-bold text-blue-900/60 uppercase text-xs tracking-wider py-4">Valor</TableHead>
+                        <TableRow className="border-b border-primary/10 bg-primary/5 hover:bg-primary/10">
+                          <TableHead className="w-[180px] pl-8 font-bold text-primary/70 uppercase text-xs tracking-wider py-4">Data</TableHead>
+                          <TableHead className="font-bold text-primary/70 uppercase text-xs tracking-wider py-4">Tipo</TableHead>
+                          <TableHead className="font-bold text-primary/70 uppercase text-xs tracking-wider py-4">Descrição</TableHead>
+                          <TableHead className="font-bold text-primary/70 uppercase text-xs tracking-wider py-4">Status</TableHead>
+                          <TableHead className="text-right pr-8 font-bold text-primary/70 uppercase text-xs tracking-wider py-4">Valor</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -204,7 +204,7 @@ export default function CarteiraPage() {
                           const statusConfig = STATUS_CONFIG[transaction.status];
 
                           return (
-                            <TableRow key={transaction.id} className="border-b border-blue-50/50 hover:bg-white/60 transition-colors group">
+                            <TableRow key={transaction.id} className="border-b border-primary/5 hover:bg-white/60 transition-colors group">
                               <TableCell className="pl-8 py-5">
                                 <div className="flex flex-col">
                                   <span className="font-bold text-gray-700">

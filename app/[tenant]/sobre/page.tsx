@@ -11,10 +11,18 @@ import {
   CheckCircle2, 
   Mail 
 } from 'lucide-react';
+import { TenantBrand } from '@/components/ui/TenantBrand';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { useTenant } from '@/components/layout/TenantThemeProvider';
 
 export default function AboutPage() {
+  const tenant = useTenant();
+
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-20">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <main className="flex-1 pt-32 pb-20">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -32,28 +40,28 @@ export default function AboutPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-3xl blur-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 rounded-3xl blur-3xl" />
             <Card className="relative bg-white/80 backdrop-blur-xl shadow-xl border-white/50 overflow-hidden">
               <div className="grid md:grid-cols-[1fr,2fr] gap-8 p-8 md:p-12 items-center">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl opacity-10 rotate-3" />
-                  <div className="relative bg-white rounded-2xl p-8 border border-blue-100 shadow-sm text-center">
-                    <Building2 className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                    <div className="font-display font-bold text-gray-900">ConsultaAi</div>
-                    <div className="text-xs font-bold text-blue-500 uppercase tracking-widest mt-1">Platform</div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 rounded-2xl opacity-10 rotate-3" />
+                  <div className="relative bg-white rounded-2xl p-8 border border-primary/20 shadow-sm text-center">
+                    <Building2 className="w-16 h-16 text-primary mx-auto mb-4" />
+                    <div className="font-display font-bold text-gray-900"><TenantBrand /></div>
+                    <div className="text-xs font-bold text-primary uppercase tracking-widest mt-1">Platform</div>
                   </div>
                 </div>
                 
                 <div className="space-y-6">
                   <p className="text-xl text-gray-700 font-medium leading-relaxed">
-                    A <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 font-bold">ConsultaAi</span> nasceu com o propósito de simplificar o acesso às informações de crédito e dados públicos.
+                    A <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 font-bold"><TenantBrand /></span> nasceu com o propósito de simplificar o acesso às informações de crédito e dados públicos.
                   </p>
                   <p className="text-gray-600 leading-relaxed">
                     A partir do CPF ou CNPJ, você pode obter dados atualizados e oficiais sobre situação cadastral, score e histórico financeiro. Reunimos em um só lugar consultas rápidas, seguras e completas.
                   </p>
                   <div className="flex flex-wrap gap-3 pt-2">
                     {['Análise de Risco', 'Vendas', 'Parcerias', 'Negociações'].map((tag, i) => (
-                      <span key={i} className="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold border border-blue-100">
+                      <span key={i} className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
                         {tag}
                       </span>
                     ))}
@@ -65,8 +73,8 @@ export default function AboutPage() {
 
           {/* Services Section */}
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="p-8 bg-blue-50/50 border-blue-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-4">
+            <Card className="p-8 bg-primary/5 border-primary/20">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4">
                 <Search className="w-6 h-6" />
               </div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-3">Consulta Básica</h3>
@@ -75,8 +83,8 @@ export default function AboutPage() {
               </p>
             </Card>
 
-            <Card className="p-8 bg-cyan-50/50 border-cyan-100">
-              <div className="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center text-cyan-600 mb-4">
+            <Card className="p-8 bg-primary/5 border-primary/10">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4">
                 <FileText className="w-6 h-6" />
               </div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-3">Consulta Completa</h3>
@@ -126,7 +134,7 @@ export default function AboutPage() {
                 Por que escolher
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Com a ConsultaAi, você tem acesso a informações completas, atualizadas e organizadas, sem complicação ou burocracia. Nosso foco é entregar a melhor experiência de análise de dados — simples, direta e 100% confiável.
+                Com a plataforma, você tem acesso a informações completas, atualizadas e organizadas, sem complicação ou burocracia. Nosso foco é entregar a melhor experiência de análise de dados — simples, direta e 100% confiável.
               </p>
             </div>
           </div>
@@ -140,16 +148,18 @@ export default function AboutPage() {
               Em caso de dúvidas, suporte técnico ou solicitações comerciais, entre em contato com nossa equipe especializada.
             </p>
             <a 
-              href="mailto:contato@candle.com.br"
+              href={`mailto:${tenant.contactEmail}`}
               className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors"
             >
               <Mail className="w-5 h-5" />
-              contato@candle.com.br
+              {tenant.contactEmail}
             </a>
           </Card>
 
         </motion.div>
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }
