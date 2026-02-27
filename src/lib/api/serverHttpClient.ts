@@ -118,7 +118,6 @@ serverAxios.interceptors.response.use(
         return serverAxios(originalRequest);
 
       } catch (refreshError) {
-        console.error('Server refresh token failed:', refreshError);
         // Clear session on failure
         try {
             const cookieStore = await cookies();

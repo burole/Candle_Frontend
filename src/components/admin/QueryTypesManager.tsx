@@ -69,7 +69,11 @@ export function QueryTypesManager() {
       const response = await httpClient.get<Provider[]>('/admin/providers');
       setProviders(response.data);
     } catch (error) {
-      console.error('Failed to fetch providers', error);
+      toast({
+        title: 'Erro',
+        description: 'Não foi possível carregar os provedores.',
+        variant: 'destructive'
+      });
     }
   };
 

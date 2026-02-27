@@ -90,7 +90,6 @@ export function UserDetailsView({ user: initialUser }: UserDetailsViewProps) {
 
         router.refresh();
     } catch (error) {
-        console.error(error);
         toast.error('Erro ao ajustar saldo');
     } finally {
         setIsSubmitting(false);
